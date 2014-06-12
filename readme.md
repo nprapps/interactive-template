@@ -8,22 +8,24 @@ sensible defaults and automatic tasks similar to those provided by
 [Tarbell](http://tarbell.tribapps.com/), but optimized for a NodeJS workflow.
 The resulting folder layout is as follows:
 
-- /src
-  - /css - Styles as LESS files
-    - seed.less - Pre-configured LESS source
-  - /js
-    - main.js - Starting point for JavaScript
-  - index.html - Entry point for the app
-- /csv - CSV files placed here will be made available on `grunt.data` during builds
-- /tasks - Grunt tasks (see below)
-- /lib - Bower components automatically install here
-- /build - All built files
-- project.json - Contains project-specific configuration, such as deployment locations
-- auth.json - Sensitive information like AWS keys, which will not be checked in to Git
-- .gitignore
-- .bowerrc
-- package.json
-- Gruntfile.js
+```
+/src
+  /css - Styles as LESS files
+    seed.less - Pre-configured LESS source
+  /js
+    main.js - Starting point for JavaScript
+  index.html - Entry point for the app
+/csv - CSV files placed here will be made available on `grunt.data` during builds
+/tasks - Grunt tasks (see below)
+/lib - Bower components automatically install here
+/build - All built files
+project.json - Contains project-specific configuration, such as deployment locations
+auth.json - Sensitive information like AWS keys, which will not be checked in to Git
+.gitignore
+.bowerrc
+package.json
+Gruntfile.js
+```
 
 The app template also creates the following Grunt tasks for your convenience:
 
