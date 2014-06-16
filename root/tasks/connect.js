@@ -12,7 +12,9 @@ module.exports = function(grunt) {
   grunt.config.merge({
     connect: {
       dev: {
-        base: "./build"
+        options: {
+          base: "./build"
+        }
       }
     }
   })
