@@ -19,8 +19,12 @@ module.exports = function(grunt) {
         tasks: ["less"]
       },
       templates: {
-        files: ["src/**/*.html"],
+        files: ["src/**/*.html", "csv/**/*.csv"],
         tasks: ["template"]
+      },
+      js: {
+        files: ["src/js/**/*.js"],
+        tasks: ["amd"]
       }
     }
   });
