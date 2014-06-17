@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     return grunt.template.process(file, data || this);
   };
 
-  grunt.registerTask("build", function() {
+  grunt.registerTask("build", "Processes index.html using shared data (if available)", function() {
     var index = grunt.file.read("src/index.html");
     var data = Object.create(grunt.data) || {};
     data.t = grunt.template;
