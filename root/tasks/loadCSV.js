@@ -16,6 +16,8 @@ module.exports = function(grunt) {
 
     var files = grunt.file.expand("csv/**/*.csv");
 
+    grunt.data.csv = {};
+
     files.forEach(function(filename) {
       var file = grunt.file.read(filename);
       //strip out the empty lines that Excel likes to leave in.
@@ -42,7 +44,7 @@ module.exports = function(grunt) {
           .replace(".csv", "")
           .replace(/\W(\w)/g, function(_, letter) { return letter.toUpperCase() });
         console.log("Loaded onto grunt.data as", sanitized);
-        grunt.data[sanitized] = parsed;
+        grunt.data.csv[sanitized] = parsed;
       });
       parser.write(file);
       parser.end();
