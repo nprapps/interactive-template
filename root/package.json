@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "author": "{% author_name %}",
   "dependencies": {
+    "async": "^0.9.0",
     "aws-sdk": "^2.0.0-rc.19",
     "csv": "^0.4.0",
     "grunt": "^0.4.5",
