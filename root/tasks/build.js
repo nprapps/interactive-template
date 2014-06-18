@@ -28,11 +28,15 @@ module.exports = function(grunt) {
   };
 
   grunt.registerTask("build", "Processes index.html using shared data (if available)", function() {
-    var index = grunt.file.read("src/index.html");
-    var data = Object.create(grunt.data) || {};
+    var files = grunt.file.expandMapping(["**/*.html", "!**/_*.html"], "build", { cwd: "src" });
+    var data = Object.create(grunt.data || {});
     data.t = grunt.template;
-    var output = grunt.template.process(index, { data: data });
-    grunt.file.write("build/index.html", output);
+    files.forEach(function(file) {
+      var src = file.src.shift();
+      var input = grunt.file.read(src);
+      var output = grunt.template.process(input, { data: data });
+      grunt.file.write(file.dest, output);
+    });
   });
 
 }
