@@ -1,82 +1,55 @@
 Seattle Times News App Template
 ===============================
 
-This template for [grunt-init](http://gruntjs.com/project-scaffolding)
-contains all the setup required to start building a flat-file news application
-(It may be useful for dynamic apps as well). The goal is to have a set of
-sensible defaults and automatic tasks similar to those provided by
-[Tarbell](http://tarbell.tribapps.com/), but optimized for a NodeJS workflow.
-The resulting folder layout is as follows:
+Seattle Times News App Template
+===============================
 
-```
-/src
-  /css - Styles as LESS files
-    seed.less - Pre-configured LESS source
-  /js
-    main.js - Starting point for JavaScript
-  /lib - Bower components automatically install here
-  index.html - Entry point for the app
-/csv - CSV files placed here will be made available on `grunt.data` during builds
-/tasks - Grunt tasks (see below)
-/build - All built files
-  app.js - Optimized output based on AMD modules
-  index.html - Template output
-  style.css - Output from LESS files
-project.json - Contains project-specific configuration, such as deployment locations
-auth.json - Sensitive information like AWS keys, which will not be checked in to Git
-.gitignore
-.bowerrc
-package.json
-Gruntfile.js
+What is it?
+-----------
+
+This template for [grunt-init](http://gruntjs.com/project-scaffolding) contains all the setup required to start building a flat-file news application (It may be useful for dynamic apps as well). The goal is to have a set of sensible defaults and automatic tasks similar to those provided by [Tarbell](http://tarbell.tribapps.com/), but optimized for a NodeJS workflow. Among other things, app built on this framework will automatically parse CSVs and make them available for your HTML templates, build LESS into CSS and JavaScript into AMD modules, and set up a local development server with watch tasks to make rapid development easy as pie.
+
+*Executive summary:* Provides everything you need to start building a news app for the Seattle Times (or anywhere else).
+
+Installation
+------------
+
+Before you begin, you'll need to have the following installed:
+
+* NodeJS/NPM
+* The Grunt command line utility (grunt-cli, installed globally)
+* Grunt project scaffolding (grunt-init, installed globally)
+
+Find your `.grunt-init` folder and clone this repo into it using the following command:
+
+```sh
+git clone git@github.com:seattletimes/newsapps-template newsapp
 ```
 
-The app template also creates the following Grunt tasks for your convenience:
+(We want to clone into the "newsapp" folder so that we can run `grunt-init newsapp` and not `grunt-init newsapp-template`.)
 
-- `template` - Process src/index.html as a template, using `grunt.data` as the source
-- `loadCSV` - Load any CSVs onto `grunt.data.csv`
-- `loadSheet` - Load tabular data from a Google Sheet onto `grunt.data`
-- `publish` - Push the files to staging on S3 (use `publish:live` to go to the final destination)
-- `connect` - Start a Connect server based in the /build directory
-- `less` - Compile LESS files into the /build/style.css
-- `watch` - Trigger individual build tasks when files change
-- `amd` - Build src/js/main.js into build/app.js
+That's it! Now let's start a sample project to see how it all works.
 
-Extra documentation for each task is available in its source file. By default,
-running `grunt` or `grunt default` will start a dev server, rebuild all files,
-and start a watch task for development.
+Getting Started
+---------------
 
-How do I use this?
-------------------
-
-First, you'll need to install `grunt-init` and copy this repo to your `.grunt-
-init` folder (see [the instructions here](http://gruntjs.com/project-
-scaffolding#installing-templates) for help). Once it's installed, you can use
-it to get up and running. Let's say you're starting a newsapp project. You
-create a folder for it, open that folder up in your favorite shell, and run
-the template:
+For our first project, we'll do something pretty simple. Make a new folder for your project, open a shell there, and type:
 
 ```sh
 grunt-init newsapp
 ```
 
-The scaffolding will set up the folder and tasks for you. At that point, you
-can simply run `grunt` to compile your resources, begin the watch task, and
-start a local development server on port 8000.
+The scaffolding wizard will ask you to fill in some information, such as your name, the name of the project, a description. Once that's done, it'll set up some folders and source files for you, and install the NPM modules needed for this project. After it hands you back to the prompt, type `grunt` at the command line to compile the project and start a local development server at `http://localhost:8000`.
 
-Your entry points for development should be set up for you automatically.
-These include:
+This is all well and good, but the page itself isn't very exciting at the start, because there's nothing in it. There are three default files that are created for you to start your project:
 
-- `/src/index.html` - This is the starting HTML template. You can set up others, if you want, but you'll need to add them to your build task.
-- `/src/js/main.js` - Entry point for your application. By default, JavaScript is compiled as a set of AMD modules, so you should `require()` other code from this file to bootstrap the JavaScript portion of the app.
-- `/src/css/seed.less` - Entry point for all CSS. You don't have to write all styles in this file: it's better to `@import` additional files from here, in order to organize your code.
+- `/src/index.html` - The primary HTML file for the project
+- `/src/js/main.js` - The entry point for all JavaScript on the page
+- `/src/css/seed.less` - The bootstrap file for LESS compilation into CSS
 
-Any CSV files located in `/csv` will be loaded and hung off the `csv` template
-variable based on their filename. These files will be provided the same way as
-Tarbell does: if they have a column named `key`, they'll be loaded onto an
-object hash as that key, otherwise they'll be loaded as an array of objects.
-For example, if we loaded CSV named `ceoData.csv` with the columns "name",
-"company", and "salary", we could build a table with the following template
-code:
+If you open up `src/index.html`, and edit it while Grunt is running, you should see the watch task "see" your changes and re-run the relevant task. Likewise, editing `seed.less` (or any other LESS file in the `src/css` directory) will cause the LESS compiler to recompile your CSS, and editing any JavaScript files in the `src/js` file will cause the RequireJS optimizer to rebuild `/build/app.js` based on your AMD dependencies. These changes will be served from the development server, but they're also being baked out into the `build` folder for publishing.
+
+The `index.html` template (and any other templates you choose to add to the project) are processed using Grunt's built in Lo-dash templating. If you have any CSV files located in your `csv` directory, these will be published and made available to your templates via the `csv` object. For example, maybe you have a CSV file located at `csv/ceoData.csv` containing columns of data named "company", "name", "age", "gender", and "salary". We could write the following template in our `index.html` file to output this as an HTML table:
 
 ```
 <table>
@@ -90,17 +63,91 @@ code:
     <tr>
       <td><%= ceo.name %>
       <td><%= ceo.company %>
-      <td><%= ceo.salary %>
+      <td><%= t.formatMoney(ceo.salary) %>
     <% }); %>
 </table>
 ```
 
-The build task also aliases `grunt.template` to `t`, which makes it easy to
-call any template helper functions that you add there within the template.
-Currently, the task includes helpers `t.formatNumber` and `t.formatMoney`.
+In addition to populating data from CSV, there are some helper functions that are also made available via `t`, as seen above with `t.formatMoney()`. These are defined in `tasks/build.js`, but you should feel free to add your own. One that may prove useful is `t.include()`, which will import another file into the template for processing.
 
-If you need any additional JavaScript libraries, you should feel free to use
-`bower install` to load them into the `/src/js/lib` folder. Once there, they
-will be combined with your other files if you `require()` them from your
-application JS, or you can set up a task to copy them over to the `/build`
-folder (it's recommended to go the AMD route).
+Let's install jQuery and add it to our JavaScript bundle. From the project folder, run the following command:
+
+```sh
+bower install jquery
+```
+
+All libraries installed by Bower are placed in `src/js/lib` by default, although this can be changed by editing the `.bowerrc` file in the project folder root. Now we'll change `src/js/main.js` to load jQuery:
+
+```javascript
+require([
+  "lib/jquery/dist/jquery.min.js" //load jQuery from its relative path in src/js
+], function() {
+  console.log($);
+});
+```
+
+When we restart our dev server by running the `grunt` command, the `amd` task will scan the dependencies it finds, starting in `src/js/main.js`, and build those into a single file at `build/app.js` (which is already included in the default HTML template). For more help on how AMD modules can organize your front-end code, check out the [RequireJS documentation](http://requirejs.org).
+
+In a similar fashion, to add more CSS to our project, we would create a new LESS file in `src/css`, then update our `src/css/seed.less` file to import it like so:
+
+```less
+@import "variables"; //import src/css/variables.less
+@import "base"; //import src/css/base.less
+@import "project"; //import src/css/project.less
+```
+
+From this point, we can continue adding new HTML templates, new JavaScript files, and new LESS imports, just by following these conventions. Beyond that, we may need to update the Grunt tasks--luckily, they're also organized into a common structure, as we will soon see.
+
+Where does everything go?
+-------------------------
+
+```
+├── auth.json - authentication information for S3 and other endpoints
+├── build
+│   ├── app.js
+│   ├── index.html
+│   └── style.css
+├── csv - folder for all CSV data files
+├── Gruntfile.js
+├── package.json
+├── project.json - various project configuration
+├── src
+│   ├── css
+│   │   └── seed.less
+│   ├── index.html
+│   └── js
+│       └── main.js
+└── tasks - All Grunt tasks
+    ├── build.js
+    ├── connect.js
+    ├── less.js
+    ├── loadCSV.js
+    ├── loadSheets.js
+    ├── publish.js
+    ├── require.js
+    ├── state.js
+    └── watch.js
+```
+
+What else does it do?
+---------------------
+
+The default Grunt task built into the template will run all the build processes, start the dev server, and set up watches for the various source files. But of course, these are provided as separate Grunt tasks, alongside some tasks that do not run as a part of the normal build.
+
+* `template` - Load CSV files and process HTML templates
+* `less` - Compile LESS files into CSS
+* `amd` - Compile JS into the app.js file
+* `publish` - Push files to S3 or other endpoints
+* `connect` - Start the dev server
+* `static` - Run all dev tasks, but do not start the watches or dev server
+
+The publish task deserves a little more attention. When you run `grunt publish`, it will load your AWS credentials from `auth.json`, as well as the bucket configuration from `project.json`, then push the contents of the `build` folder up to the stage bucket. If you want to publish to live, you should run `grunt publish:live`. Make sure your files have been rebuilt first, either by running the default task or by running the `static` task (`grunt static publish` will take care of this).
+
+How do I extend the template?
+-----------------------------
+
+The news app template is just a starting place for projects, and should not be seen as a complete end-to-end solution. As you work on a project, you may need to extend it with tasks to do specialized build steps, copy extra files, or load network resources. Here are a few tips on how to go about extending the scaffolding on a per-project basis:
+
+* Any .js files located in `tasks` will be loaded automatically by Grunt. Try to keep new tasks relatively self-contained, instead of ending up with a sprawling Gruntfile. Each task can add its own config to the overall configuration with `grunt.config.merge`, as the existing tasks do.
+* As with Tarbell, CSV files can be loaded in one of two ways. By default, they will use the columns as the keys, and appear to the HTML template as an array of objects. However, if one of your columns is named "key", the result will be an object mapping the key value to the row data. This is useful for localization, among other purposes.
+* The setup process will install the [ShellJS](https://github.com/arturadib/shelljs) module in your project, which is used by several of the built-in tasks for file management and setup. In addition to UNIX file operations like `cp` and `mv`, ShellJS also provides cross-platform implementations of `sed`, `grep`, and `ln`, as well as easy access to environment variables. Using ShellJS means you don't have to resort to Bash scripting for basic `make`-like tasks.

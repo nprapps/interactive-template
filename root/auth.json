@@ -1,0 +1,5 @@
+{
+  "accessKeyId": "",
+  "secretAccessKey": "",
+  "region": ""
+}
