@@ -1,9 +1,6 @@
 Seattle Times News App Template
 ===============================
 
-Seattle Times News App Template
-===============================
-
 What is it?
 -----------
 
