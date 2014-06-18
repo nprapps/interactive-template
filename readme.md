@@ -20,7 +20,7 @@ Before you begin, you'll need to have the following installed:
 Find your `.grunt-init` folder and clone this repo into it using the following command:
 
 ```sh
-git clone git@github.com:seattletimes/newsapps-template newsapp
+git clone git@github.com:seattletimes/newsapp-template newsapp
 ```
 
 (We want to clone into the "newsapp" folder so that we can run `grunt-init newsapp` and not `grunt-init newsapp-template`.)
@@ -44,9 +44,9 @@ This is all well and good, but the page itself isn't very exciting at the start,
 - `/src/js/main.js` - The entry point for all JavaScript on the page
 - `/src/css/seed.less` - The bootstrap file for LESS compilation into CSS
 
-If you open up `src/index.html`, and edit it while Grunt is running, you should see the watch task "see" your changes and re-run the relevant task. Likewise, editing `seed.less` (or any other LESS file in the `src/css` directory) will cause the LESS compiler to recompile your CSS, and editing any JavaScript files in the `src/js` file will cause the RequireJS optimizer to rebuild `/build/app.js` based on your AMD dependencies. These changes will be served from the development server, but they're also being baked out into the `build` folder for publishing.
+If you open up `src/index.html`, and edit it while Grunt is running, the watch task will see your changes and re-run the relevant task. Likewise, editing `seed.less` (or any other LESS file in the `src/css` directory) will cause the LESS compiler to recompile your CSS, and editing any JavaScript files in the `src/js` file will cause the RequireJS optimizer to rebuild `/build/app.js` based on your AMD dependencies from `src/js/main.js`. These changes are baked out into the `build` folder for publishing, but also served up via the local development server on port 8000.
 
-The `index.html` template (and any other templates you choose to add to the project) are processed using Grunt's built in Lo-dash templating. If you have any CSV files located in your `csv` directory, these will be published and made available to your templates via the `csv` object. For example, maybe you have a CSV file located at `csv/ceoData.csv` containing columns of data named "company", "name", "age", "gender", and "salary". We could write the following template in our `index.html` file to output this as an HTML table:
+The `index.html` template (and any other templates you choose to add to the project) are processed using Grunt's built in Lo-dash templating (HTML files starting with an `_` will be ignored). If you have any CSV files located in your `csv` directory, these will be parsed and made available to your templates via the `csv` object. For example, maybe you have a CSV file located at `csv/ceoData.csv` containing columns of data named "company", "name", "age", "gender", and "salary". We could write the following template in our `index.html` file to output this as an HTML table:
 
 ```
 <table>
@@ -65,7 +65,13 @@ The `index.html` template (and any other templates you choose to add to the proj
 </table>
 ```
 
-In addition to populating data from CSV, there are some helper functions that are also made available via `t`, as seen above with `t.formatMoney()`. These are defined in `tasks/build.js`, but you should feel free to add your own. One that may prove useful is `t.include()`, which will import another file into the template for processing.
+In addition to populating data from CSV, there are some helper functions that are also made available via `t`, as seen above with `t.formatMoney()`. These are defined in `tasks/build.js`, but you should feel free to add your own. One that may prove useful is `t.include()`, which will import another file into the template for processing. For example, we might import a header and footer with the following template:
+
+```
+<%= t.include("_head.html") %>
+This space intentionally left blank.
+<%= t.include("_foot.html") %>
+```
 
 Let's install jQuery and add it to our JavaScript bundle. From the project folder, run the following command:
 
@@ -93,7 +99,7 @@ In a similar fashion, to add more CSS to our project, we would create a new LESS
 @import "project"; //import src/css/project.less
 ```
 
-From this point, we can continue adding new HTML templates, new JavaScript files, and new LESS imports, just by following these conventions. Beyond that, we may need to update the Grunt tasks--luckily, they're also organized into a common structure, as we will soon see.
+From this point, we can continue adding new HTML templates, new JavaScript files, and new LESS imports, just by following these conventions. Our page will be regenerated as we make changes as long as the default Grunt task is running, so we can simply refresh to see changes (live reload coming soon).
 
 Where does everything go?
 -------------------------
@@ -129,14 +135,14 @@ Where does everything go?
 What else does it do?
 ---------------------
 
-The default Grunt task built into the template will run all the build processes, start the dev server, and set up watches for the various source files. But of course, these are provided as separate Grunt tasks, alongside some tasks that do not run as a part of the normal build.
+The default Grunt task built into the template will run all the build processes, start the dev server, and set up watches for the various source files. Of course, you can also run these as individual tasks, including some tasks that do not run as a part of the normal build.
 
 * `template` - Load CSV files and process HTML templates
 * `less` - Compile LESS files into CSS
 * `amd` - Compile JS into the app.js file
 * `publish` - Push files to S3 or other endpoints
 * `connect` - Start the dev server
-* `static` - Run all dev tasks, but do not start the watches or dev server
+* `static` - Run all generation tasks, but do not start the watches or dev server
 
 The publish task deserves a little more attention. When you run `grunt publish`, it will load your AWS credentials from `auth.json`, as well as the bucket configuration from `project.json`, then push the contents of the `build` folder up to the stage bucket. If you want to publish to live, you should run `grunt publish:live`. Make sure your files have been rebuilt first, either by running the default task or by running the `static` task (`grunt static publish` will take care of this).
 
