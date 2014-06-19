@@ -18,10 +18,11 @@ module.exports = function(grunt) {
     }
 
     //build an optimized app bundle
+    //include almond for resource loading
     r.optimize({
       baseUrl: "src/js",
       name: "main",
-      include: ["require.js"],
+      include: ["almond.js"],
       out: "build/app.js",
       generateSourceMaps: true,
       preserveLicenseComments: false,
