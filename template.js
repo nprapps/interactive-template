@@ -11,6 +11,7 @@ exports.template = function(grunt, init, done) {
     var root = init.filesToCopy();
     init.copyAndProcess(root, props);
     grunt.file.mkdir("csv");
+    grunt.file.mkdir("json");
     //install node modules
     console.log("Installing Node modules...")
     exec("npm install", done);

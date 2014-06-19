@@ -46,7 +46,7 @@ This is all well and good, but the page itself isn't very exciting at the start,
 
 If you open up `src/index.html`, and edit it while Grunt is running, the watch task will see your changes and re-run the relevant task. Likewise, editing `seed.less` (or any other LESS file in the `src/css` directory) will cause the LESS compiler to recompile your CSS, and editing any JavaScript files in the `src/js` file will cause the RequireJS optimizer to rebuild `/build/app.js` based on your AMD dependencies from `src/js/main.js`. These changes are baked out into the `build` folder for publishing, but also served up via the local development server on port 8000.
 
-The `index.html` template (and any other templates you choose to add to the project) are processed using Grunt's built in Lo-dash templating (HTML files starting with an `_` will be ignored). If you have any CSV files located in your `csv` directory, these will be parsed and made available to your templates via the `csv` object. For example, maybe you have a CSV file located at `csv/ceoData.csv` containing columns of data named "company", "name", "age", "gender", and "salary". We could write the following template in our `index.html` file to output this as an HTML table:
+The `index.html` template (and any other templates you choose to add to the project) are processed using Grunt's built in Lo-dash templating (HTML files starting with an `_` will be ignored). If you have any CSV files located in your `csv` directory, these will be parsed and made available to your templates via the `csv` object (likewise, JSON files in the `json` directory will be loaded to the `json` object, keyed by their filename). For example, maybe you have a CSV file located at `csv/ceoData.csv` containing columns of data named "company", "name", "age", "gender", and "salary". We could write the following template in our `index.html` file to output this as an HTML table:
 
 ```
 <table>
@@ -110,6 +110,7 @@ Where does everything go?
 │   ├── app.js
 │   ├── index.html
 │   └── style.css
+├── json - folder for all JSON data files
 ├── csv - folder for all CSV data files
 ├── Gruntfile.js
 ├── package.json
