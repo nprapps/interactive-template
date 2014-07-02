@@ -14,6 +14,9 @@ module.exports = function(grunt) {
 
   grunt.config.merge({
     watch: {
+      options: {
+        livereload: true
+      },
       less: {
         files: ["src/**/*.less"],
         tasks: ["less"]
