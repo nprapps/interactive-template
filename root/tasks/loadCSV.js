@@ -22,11 +22,10 @@ module.exports = function(grunt) {
       var file = grunt.file.read(filename);
       //strip out the empty lines that Excel likes to leave in.
       file = file.replace(/\r/g, "").split("\n").filter(function(line) { return line.match(/[^,]/) }).join("\n");
-      var isKeyed = file.split("\n").shift().indexOf(/(^|,)key(,|$)/) != -1;
+      var isKeyed = !!(file.split("\n").shift().match(/(^|,)key(,|$)/));
       var parsed = isKeyed ? {} : [];
       var parser = csv.parse({
-        columns: true,
-        auto_parse: true
+        columns: true
       });
       parser.on("data", function(line) {
         //if "key" is a column, make this an object hash
