@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         return console.log(err);
       }
       var uploads = walk("./build");
-      var gzippable = ["js", "html", "json", "map", "csv", "txt"];
+      var gzippable = ["js", "html", "json", "map", "css", "txt"];
       async.each(uploads, function(upload, c) {
         var obj = {
           Bucket: bucketConfig.bucket,
