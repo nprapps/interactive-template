@@ -1,6 +1,7 @@
 var async = require("async");
 var fs = require("fs");
 var path = require("path");
+var gzip = require("zlib").gzip;
 var mime = require("mime");
 var join = function() {
   return path.join.apply(path, arguments).replace(/\\/g, "/");
@@ -51,15 +52,28 @@ module.exports = function(grunt) {
         return console.log(err);
       }
       var uploads = walk("./build");
+      var gzippable = ["js", "html", "json", "map", "csv", "txt"];
       async.each(uploads, function(upload, c) {
         var obj = {
           Bucket: bucketConfig.bucket,
           Key: join(bucketConfig.path, upload.path.replace(/^\\?build/, "")),
           Body: upload.buffer,
           ACL: "public-read",
-          ContentType: mime.lookup(upload.path)
+          ContentType: mime.lookup(upload.path),
+          CacheControl: "public,max-age=3000"
         };
-        //console.log(obj), c();
+        //if this matches GZip support, compress them before uploading to S3
+        var extension = upload.path.split(".").pop();
+        if (gzippable.indexOf(extension) > -1) {
+          return gzip(upload.buffer, function(err, zipped) {
+            if (!err) {
+              obj.Body = zipped;
+              obj.ContentEncoding = "gzip";
+              console.info("Uploading gzipped", obj.Key);
+              s3.putObject(obj, c);
+            }
+          });
+        }
         console.info("Uploading", obj.Key);
         s3.putObject(obj, c);
       }, function(err) {
