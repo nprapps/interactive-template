@@ -1,0 +1,46 @@
+<!-- Favicon -->
+<link rel="shortcut icon" href="http://apps-production.s3.amazonaws.com/static/images/favicon.ico" type="image/x-icon">
+
+<!-- Social sharing meta -->
+<meta property="og:title" content="<%= grunt.data.json.project.title %>">
+<meta property="og:site_name" content="The Seattle Times">
+<meta property="og:image" content="http://seattletimes.com/art/ui/fb_icon_large.jpg">
+<meta property="og:type" content="article">
+<meta property="og:url" content="<%= grunt.data.json.project.url %>">
+<meta property="og:description" content="<%= grunt.data.json.project.description %>">
+
+<!-- BEGIN TWITTER SUMMARY CARD -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:url" content="<%= grunt.data.json.project.url %>">
+<meta name="twitter:site" content="@seattletimes">
+<meta name="twitter:title" content="<%= grunt.data.json.project.title %>">
+<meta name="twitter:description" content="<%= grunt.data.json.project.description %>">
+<meta name="twitter:image" content="http://seattletimes.com/art/ui/fb_icon_large.jpg">
+
+<!-- start Omniture -->
+
+<meta name="t_omni_pubdate" content="06/09/2014 20:00" />
+<meta name="t_omni_articleid" content="<%= grunt.data.json.project.slug %>" />
+<meta name="t_omni_author" content="Seattle Times staff" />
+<meta name="t_omni_pagename" content="st|businesstechnology|bidding-wars" />
+<meta name="t_omni_site" content="st" />
+<meta name="t_omni_pagetype" content="newsapp" />
+<meta name="t_omni_contenttitle" content="<%= grunt.data.json.project.title %> | The Seattle Times" />
+<meta name="t_omni_path" content="st|businesstechnology|bidding-wars|newsapp" />
+
+<!-- end Omniture -->
+
+<!-- Chartbeat top -->
+<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+
+<!-- start ad set-up -->
+<script type="text/javascript">
+<!--
+//modify for specific page info
+OAS_sitepage = 'www.seattletimes.com/business';
+OAS_query = '?<%= grunt.data.json.project.tags && grunt.data.json.project.tags.join("&") %>';
+OAS_listpos = 'Position1,TopRight,Right1,Top,Top1,Middle3,Position3,Right,Right2,Bottom,Top3';
+//-->
+</script>
+<script src="http://seattletimes.com/js/standardFunctionality/AdTags.js"></script>
+<!-- end ad set-up -->
