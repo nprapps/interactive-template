@@ -138,11 +138,15 @@ What else does it do?
 
 The default Grunt task built into the template will run all the build processes, start the dev server, and set up watches for the various source files. Of course, you can also run these as individual tasks, including some tasks that do not run as a part of the normal build.
 
-* `template` - Load CSV files and process HTML templates
+* `csv` - Load CSV files into the `grunt.data.csv` object for templating
+* `json` - Load JSON files onto `grunt.data.json`
+* `sheets` - Download data from Google Sheets and save as JSON files
+* `template` - Load data files and process HTML templates
 * `less` - Compile LESS files into CSS
 * `amd` - Compile JS into the app.js file
 * `publish` - Push files to S3 or other endpoints
 * `connect` - Start the dev server
+* `watch` - Watch various directories and perform partial builds when they change
 * `static` - Run all generation tasks, but do not start the watches or dev server
 
 The publish task deserves a little more attention. When you run `grunt publish`, it will load your AWS credentials from `auth.json`, as well as the bucket configuration from `project.json`, then push the contents of the `build` folder up to the stage bucket. If you want to publish to live, you should run `grunt publish:live`. Make sure your files have been rebuilt first, either by running the default task or by running the `static` task (`grunt static publish` will take care of this).

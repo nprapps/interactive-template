@@ -15,7 +15,7 @@ var sheets = require("google-spreadsheets");
 
 module.exports = function(grunt) {
 
-  grunt.registerTask("sheets", "Downloads from Google Sheets -> CSV", function() {
+  grunt.registerTask("sheets", "Downloads from Google Sheets -> JSON", function() {
 
     var sheetKeys = project.sheets;
 
