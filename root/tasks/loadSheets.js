@@ -52,6 +52,13 @@ module.exports = function(grunt) {
               delete row.updated;
               delete row.content;
               delete row.id;
+              //eliminate empty cells, which get a weird placeholder object
+              for (var key in row) {
+                var prop = row[key];
+                if (typeof prop == "object" && "$t" in prop && prop.$t == "") {
+                  row[key] = "";
+                }
+              }
             });
             var filename = "json/" + camelCase(book.title) + "_" + camelCase(page.title) + ".json";
             grunt.file.write(filename, JSON.stringify(rows, null, 2));
