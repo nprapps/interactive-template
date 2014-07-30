@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 
   grunt.template.include = function(where, data) {
     var file = grunt.file.read(path.resolve("src/", where));
-    return grunt.template.process(file, data || this);
+    return grunt.template.process(file, {data: data || grunt.data});
   };
 
   grunt.registerTask("build", "Processes index.html using shared data (if available)", function() {
