@@ -13,6 +13,12 @@ var project = require("../project.json");
 var async = require("async");
 var sheets = require("google-spreadsheets");
 
+var camelCase = function(str) {
+  return str.replace(/[^\w]+(\w)/g, function(all, match) {
+    return match.toUpperCase();
+  });
+}
+
 module.exports = function(grunt) {
 
   grunt.registerTask("sheets", "Downloads from Google Sheets -> JSON", function() {
@@ -25,30 +31,36 @@ module.exports = function(grunt) {
 
     var done = this.async();
 
-    async.each(sheetKeys, function(key, c) {
+    async.each(sheetKeys, function(key, bookDone) {
       sheets({
         key: key,
         worksheet: 1
       }, function(err, book) {
         if (err) {
           grunt.fail.warn("Unable to access book for " + key);
-          c();
+          return bookDone();
         }
-        var page = book.worksheets[0];
-        page.rows({}, function(err, rows) {
-          if (err) {
-            grunt.fail.warn("Couldn't load sheet for " + book.title)
-          }
-          //remove extraneous GApps detail
-          rows.forEach(function(row) {
-            delete row.updated;
-            delete row.content;
-            delete row.id;
+        //download each worksheet
+        async.each(book.worksheets, function(page, pageDone) {
+          page.rows({}, function(err, rows) {
+            if (err) {
+              grunt.fail.warn("Couldn't load sheet for " + book.title)
+              return pageDone();
+            }
+            //remove extraneous GApps detail
+            rows.forEach(function(row) {
+              delete row.updated;
+              delete row.content;
+              delete row.id;
+            });
+            var filename = "json/" + camelCase(book.title) + "_" + camelCase(page.title) + ".json";
+            grunt.file.write(filename, JSON.stringify(rows, null, 2));
+            pageDone();
           });
-          var filename = "json/" + book.title.replace(/[^\w]/g, "") + ".json";
-          grunt.file.write(filename, JSON.stringify(rows, null, 2));
-          c();
-        })
+        }, function() {
+          //when done with all sheets, continue
+          bookDone();
+        });
       });
     }, function() {
       return done();
@@ -56,4 +68,4 @@ module.exports = function(grunt) {
 
   });
 
-};
+}
