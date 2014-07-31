@@ -47,11 +47,13 @@ module.exports = function(grunt) {
               grunt.fail.warn("Couldn't load sheet for " + book.title)
               return pageDone();
             }
+            //don't break on zero-length sheets
+            if (rows.length == 0) return pageDone();
             //remove extraneous GApps detail
             rows.forEach(function(row) {
               delete row.updated;
               delete row.content;
-              delete row.id;
+              if (typeof row.id == "object") delete row.id;
               //eliminate empty cells, which get a weird placeholder object
               for (var key in row) {
                 var prop = row[key];
@@ -60,6 +62,17 @@ module.exports = function(grunt) {
                 }
               }
             });
+            //is this a keyed sheet, instead of a numbered list?
+            if ("key" in rows[0]) {
+              var obj = {};
+              rows.forEach(function(row) {
+                obj[row.key] = row;
+                //sheets adds a title for some reason
+                if (row.title == row.key) delete row.title;
+                delete row.key;
+              });
+              rows = obj;
+            }
             var filename = "json/" + camelCase(book.title) + "_" + camelCase(page.title) + ".json";
             grunt.file.write(filename, JSON.stringify(rows, null, 2));
             pageDone();
