@@ -8,7 +8,7 @@ exports.template = function(grunt, init, done) {
     init.prompt("app_name"),
     init.prompt("app_description")
   ], function(err, props) {
-    var root = init.filesToCopy();
+    var root = init.filesToCopy(props);
     init.copyAndProcess(root, props);
     grunt.file.mkdir("csv");
     grunt.file.mkdir("json");
