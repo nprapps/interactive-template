@@ -6,6 +6,6 @@ module.exports = function(grunt) {
   grunt.loadTasks("./tasks");
 
   grunt.registerTask("template", "Perform a complete build of data and templates", ["state", "json", "csv", "build"]);
-  grunt.registerTask("default", ["amd", "less", "template", "connect:dev", "watch"]);
-  grunt.registerTask("static", ["amd", "less", "template"]);
+  grunt.registerTask("static", ["copy", "amd", "less", "template"]);
+  grunt.registerTask("default", ["static", "connect:dev", "watch"]);
 }
