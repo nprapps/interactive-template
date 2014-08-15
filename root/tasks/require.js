@@ -26,7 +26,8 @@ module.exports = function(grunt) {
       paths: {
         jquery: "lib/jquery/dist/jquery.min",
         pym: "lib/pym.js/src/pym",
-        angular: "lib/angular/angular.min.js"
+        angular: "./lib/angular/angular.min.js",
+        leaflet: "lib/leaflet/dist/leaflet"
       }
     };
 

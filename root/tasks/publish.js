@@ -27,6 +27,16 @@ var walk = function(dir) {
   return list;
 };
 
+var formatSize = function(input) {
+  if (input > 1024 * 1024) {
+    return Math.round(input * 10 / 1024 * 1024) / 10 + "MB";
+  }
+  if (input > 1024) {
+    return Math.round(input / 1024) + "KB";
+  }
+  return input + "B";
+}
+
 module.exports = function(grunt) {
 
   var creds = require("../auth.json");
@@ -65,11 +75,13 @@ module.exports = function(grunt) {
         //if this matches GZip support, compress them before uploading to S3
         var extension = upload.path.split(".").pop();
         if (gzippable.indexOf(extension) > -1) {
+          var before = upload.buffer.length;
           return gzip(upload.buffer, function(err, zipped) {
             if (!err) {
               obj.Body = zipped;
+              var after = zipped.length;
               obj.ContentEncoding = "gzip";
-              console.info("Uploading gzipped", obj.Key);
+              grunt.log.writeln("Uploading gzipped", obj.Key, "(", formatSize(before), "=>", formatSize(after), ")");
               s3.putObject(obj, c);
             }
           });
