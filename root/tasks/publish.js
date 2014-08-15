@@ -1,6 +1,7 @@
 var async = require("async");
 var fs = require("fs");
 var path = require("path");
+var chalk = require("chalk");
 var gzip = require("zlib").gzip;
 var mime = require("mime");
 var join = function() {
@@ -81,7 +82,14 @@ module.exports = function(grunt) {
               obj.Body = zipped;
               var after = zipped.length;
               obj.ContentEncoding = "gzip";
-              grunt.log.writeln("Uploading gzipped", obj.Key, "(", formatSize(before), "=>", formatSize(after), ")");
+              console.log("Uploading gzipped %s - %s %s %s (%s)",
+                upload.path,
+
+                chalk.cyan(formatSize(before)),
+                chalk.yellow("=>"),
+                chalk.cyan(formatSize(after)),
+                chalk.bold.green(Math.round(after / before * 100) + "%")
+              );
               s3.putObject(obj, c);
             }
           });
