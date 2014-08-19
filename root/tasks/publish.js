@@ -30,7 +30,7 @@ var walk = function(dir) {
 
 var formatSize = function(input) {
   if (input > 1024 * 1024) {
-    return Math.round(input * 10 / 1024 * 1024) / 10 + "MB";
+    return Math.round(input * 10 / (1024 * 1024)) / 10 + "MB";
   }
   if (input > 1024) {
     return Math.round(input / 1024) + "KB";
