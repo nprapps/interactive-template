@@ -22,6 +22,6 @@ exports.template = function(grunt, init, done) {
 
     //install node modules
     console.log("Installing Node modules...")
-    exec("npm install", done);
+    exec("npm install --cache-min 999999", done);
   });
 };
