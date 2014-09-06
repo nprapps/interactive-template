@@ -1,13 +1,17 @@
 var exec = require("child_process").exec;
+var path = require("path");
 
 exports.description = "A standard starting-point for news app development at the Seattle Times."
 exports.template = function(grunt, init, done) {
+  //prelims
+  var here = path.basename(process.cwd());
+
   //process
   init.process(init.defaults, [
     init.prompt("author_name"),
-    init.prompt("app_name"),
+    init.prompt("app_name", here),
     init.prompt("app_description"),
-    init.prompt("github_repo", "seattletimes/insert_repo_here")
+    init.prompt("github_repo", "seattletimes/" + here)
   ], function(err, props) {
     //add environment variables, dynamic properties
     props.s3_key = process.env.AWS_ACCESS_KEY_ID || "";
