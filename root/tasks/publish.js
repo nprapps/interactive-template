@@ -9,24 +9,6 @@ var join = function() {
 }
 
 var aws = require("aws-sdk");
-var walk = function(dir) {
-  var list = [];
-  var files = fs.readdirSync(dir);
-  files.forEach(function(f) {
-    f = join(dir, f);
-    var stat = fs.statSync(f);
-    if (stat.isDirectory()) {
-      list.push.apply(list, walk(f));
-    } else {
-      var buffer = fs.readFileSync(f);
-      list.push({
-        path: f,
-        buffer: buffer
-      });
-    }
-  });
-  return list;
-};
 
 var formatSize = function(input) {
   if (input > 1024 * 1024) {
@@ -38,6 +20,8 @@ var formatSize = function(input) {
   return input + "B";
 }
 
+var gzippable = ["js", "html", "json", "map", "css", "txt"];
+
 module.exports = function(grunt) {
 
   var creds = require("../auth.json");
@@ -47,9 +31,44 @@ module.exports = function(grunt) {
     publish: config.s3
   });
 
+  var findBuiltFiles = function() {
+    var pattern = ["**/*"];
+    var embargo = config.embargo;
+    if (embargo) {
+      if (!(embargo instanceof Array)) embargo = [embargo];
+      embargo.forEach(function(item) {
+        pattern.push("!" + item);
+        console.log(chalk.bgRed.white("File embargoed: %s"), item);
+      });
+    }
+    var files = grunt.file.expand({ cwd: "build", filter: "isFile" }, pattern);
+    var list = files.map(function(file) {
+      var buffer = fs.readFileSync(path.join("build", file));
+      return {
+        path: file,
+        buffer: buffer
+      }
+    });
+    return list;
+  }
+
   grunt.registerTask("publish", "Pushes the build folder to S3", function(deploy) {
 
     deploy = deploy || "stage";
+
+    if (deploy == "simulated") {
+      var uploads = findBuiltFiles();
+      uploads.forEach(function(upload) {
+        var extension = upload.path.split(".").pop();
+        if (gzippable.indexOf(extension) > -1) {
+          console.log("Uploading gzipped %s", upload.path);
+        } else {
+          console.log("Uploading %s", upload.path);
+        }
+      });
+      return;
+    }
+
     var c = this.async();
 
     var bucketConfig = config.s3[deploy];
@@ -62,8 +81,7 @@ module.exports = function(grunt) {
       if (err && err.code != "BucketAlreadyOwnedByYou") {
         return console.log(err);
       }
-      var uploads = walk("./build");
-      var gzippable = ["js", "html", "json", "map", "css", "txt"];
+      var uploads = findBuiltFiles();
       async.each(uploads, function(upload, c) {
         var obj = {
           Bucket: bucketConfig.bucket,
