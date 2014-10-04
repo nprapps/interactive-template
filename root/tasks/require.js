@@ -26,7 +26,7 @@ module.exports = function(grunt) {
       paths: {
         share: "lib/share.min",
         jquery: "lib/jquery/dist/jquery.min",
-        pym: "lib/pym.js/src/pym",
+        pym: "lib/seattletimes-pym/src/pym",
         angular: "lib/angular/angular.min",
         leaflet: "lib/leaflet/dist/leaflet",
         icanhaz: "lib/icanhaz/ICanHaz.min"
