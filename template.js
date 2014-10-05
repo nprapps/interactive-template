@@ -25,7 +25,10 @@ exports.template = function(grunt, init, done) {
     grunt.file.mkdir("src/assets");
 
     //install node modules
-    console.log("Installing Node modules...")
-    exec("npm install --cache-min 999999", done);
+    console.log("Installing Node modules...");
+    exec("npm install --cache-min 999999", function(err, stdout, stderr) {
+      console.log("Installing libraries from Bower...");
+      exec("bower install", done);
+    });
   });
 };
