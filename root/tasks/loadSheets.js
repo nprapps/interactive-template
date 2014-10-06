@@ -10,6 +10,7 @@ can be accessed by this task.
 */
 
 var project = require("../project.json");
+var auth = require("../auth.json");
 var async = require("async");
 var sheets = require("google-spreadsheets");
 
@@ -17,16 +18,16 @@ var camelCase = function(str) {
   return str.replace(/[^\w]+(\w)/g, function(all, match) {
     return match.toUpperCase();
   });
-}
+};
 
 module.exports = function(grunt) {
 
   grunt.registerTask("sheets", "Downloads from Google Sheets -> JSON", function() {
 
-    var sheetKeys = project.sheets;
+    var sheetKeys = project.sheets || (auth.google && auth.google.sheets);
 
     if (!sheetKeys) {
-      return grunt.fail.fatal("You must specify a spreadsheet key in project.json!");
+      return grunt.fail.fatal("You must specify a spreadsheet key in project.json or auth.json!");
     }
 
     var done = this.async();
@@ -44,11 +45,11 @@ module.exports = function(grunt) {
         async.each(book.worksheets, function(page, pageDone) {
           page.rows({}, function(err, rows) {
             if (err) {
-              grunt.fail.warn("Couldn't load sheet for " + book.title)
+              grunt.fail.warn("Couldn't load sheet for " + book.title);
               return pageDone();
             }
             //don't break on zero-length sheets
-            if (rows.length == 0) return pageDone();
+            if (rows.length === 0) return pageDone();
             //remove extraneous GApps detail
             rows.forEach(function(row) {
               delete row.updated;
@@ -57,7 +58,7 @@ module.exports = function(grunt) {
               //eliminate empty cells, which get a weird placeholder object
               for (var key in row) {
                 var prop = row[key];
-                if (typeof prop == "object" && "$t" in prop && prop.$t == "") {
+                if (typeof prop == "object" && "$t" in prop && prop.$t === "") {
                   row[key] = "";
                 }
               }
@@ -88,4 +89,4 @@ module.exports = function(grunt) {
 
   });
 
-}
+};

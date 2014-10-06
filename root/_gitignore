@@ -2,3 +2,4 @@ node_modules
 build
 temp
 auth.json
+.DS_Store
