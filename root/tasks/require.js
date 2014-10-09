@@ -5,7 +5,6 @@ Builds a source package, starting from src/js/main.js
 */
 
 var r = require("requirejs");
-var shell = require("shelljs");
 var project = require("../project.json");
 
 module.exports = function(grunt) {
@@ -21,6 +20,7 @@ module.exports = function(grunt) {
       generateSourceMaps: true,
       preserveLicenseComments: false,
       optimize: "none",
+      stubModules: ["text", "less"],
       //common paths for bower packages
       //luckily, require won't complain unless we use them
       paths: {
@@ -40,6 +40,6 @@ module.exports = function(grunt) {
     //build an optimized app bundle
     //include almond for resource loading
     r.optimize(config, c);
-  })
+  });
 
 };

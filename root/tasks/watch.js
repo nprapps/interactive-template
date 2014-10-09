@@ -26,10 +26,10 @@ module.exports = function(grunt) {
         tasks: ["template"]
       },
       js: {
-        files: ["src/js/**/*.js", "src/js/**/*.html"],
+        files: ["src/js/**/*"], //everything, due to templating, GLSL, LESS, etc.
         tasks: ["amd"]
       }
     }
   });
 
-}
+};
