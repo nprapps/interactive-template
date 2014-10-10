@@ -24,6 +24,7 @@ module.exports = function(grunt) {
     parser.parse(seed, function(err, tree) {
       var css = tree.toCSS();
       grunt.file.write("build/style.css", css);
+      c();
     });
     
   });
