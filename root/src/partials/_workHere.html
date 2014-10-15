@@ -1,0 +1,41 @@
+<script>
+
+if (!localStorage.getItem("noBanner") && console && console.log) (function() {
+/*
+      #######     /###           / 
+    /       ###  /  ############/  
+   /         ## /     #########    
+   ##        #  #     /  #         
+    ###          ##  /  ##         
+   ## ###           /  ###         
+    ### ###        ##   ##         
+      ### ###      ##   ##         
+        ### /##    ##   ##         
+          #/ /##   ##   ##         
+           #/ ##    ##  ##         
+            # /      ## #      /   
+  /##        /        ###     /    
+ /  ########/          ######/     
+/     #####              ###       
+|                                  
+ \)                           
+
+Hello! Welcome to a Seattle Times project! Interested in how we built this and
+other news apps? Check out our dev blog:
+
+http://dev.seattletimes.com
+
+Want to be a part of a team working on innovative digital journalism in
+beautiful downtown Seattle? Of course you do. We're hiring, so take a look at
+our current open positions:
+
+http://company.seattletimes.com/careers/
+
+*/
+})
+.toString()
+.replace(/^[\w\W]*\/\*|\n\*\/[\w\W]*$/gm, "")
+.split("$")
+.forEach(function(line) { console.info(line) });
+
+</script>
