@@ -11,12 +11,7 @@ module.exports = function(grunt) {
 
     var done = this.async();
 
-    var options = {
-      debug: true,
-
-    }
-
-    var b = browserify(options);
+    var b = browserify({ debug: true });
 
     var output = fs.createWriteStream("build/app.js");
 
