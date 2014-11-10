@@ -6,7 +6,6 @@ Run the LESS compiler against seed.less and output to style.css.
 
 module.exports = function(grunt) {
 
-  var fs = require("fs");
   var less = require("less");
   
   var options = {
@@ -20,10 +19,12 @@ module.exports = function(grunt) {
     
     var seed = grunt.file.read("src/css/seed.less");
     
-    var parser = new less.Parser(options);
-    parser.parse(seed, function(err, tree) {
-      var css = tree.toCSS();
-      grunt.file.write("build/style.css", css);
+    less.render(seed, options, function(err, result) {
+      if (err) {
+        console.error(err);
+      } else {
+        grunt.file.write("build/style.css", result.css);
+      }
       c();
     });
     

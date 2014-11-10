@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       },
       js: {
         files: ["src/js/**/*"], //everything, due to templating, GLSL, LESS, etc.
-        tasks: ["amd"]
+        tasks: ["bundle"]
       }
     }
   });

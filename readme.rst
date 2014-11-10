@@ -4,17 +4,16 @@ Seattle Times News App Template
 What is it?
 -----------
 
-This template for
-`grunt-init <http://gruntjs.com/project-scaffolding>`__ contains all the
-setup required to start building a flat-file news application (It may be
-useful for dynamic apps as well). The goal is to have a set of sensible
-defaults and automatic tasks similar to those provided by
-`Tarbell <http://tarbell.tribapps.com/>`__, but optimized for a NodeJS
-workflow. Among other things, app built on this scaffolding will
-automatically parse CSV and JSON for your HTML templates, import data
-from Google Drive, build LESS into CSS and JavaScript into AMD modules,
-and set up a local development server with watch tasks and live reload
-to make rapid development easy as pie.
+This template for `grunt-init <http://gruntjs.com/project-scaffolding>`__
+contains all the setup required to start building a flat-file news application
+(It may be useful for dynamic apps as well). The goal is to have a set of
+sensible defaults and automatic tasks similar to those provided by `Tarbell
+<http://tarbell.tribapps.com/>`__, but optimized for a NodeJS workflow. Among
+other things, app built on this scaffolding will automatically parse CSV and
+JSON for your HTML templates, import data from Google Drive, build LESS into
+CSS, browserify JavaScript from CommonJS modules, and set up a local
+development server with watch tasks and live reload to make rapid development
+easy as pie.
 
 *Executive summary:* Provides everything you need to start building a
 news app for the Seattle Times (or anywhere else).
@@ -66,15 +65,14 @@ that are created for you to start your project:
 -  ``/src/css/seed.less`` - The bootstrap file for LESS compilation into
    CSS
 
-If you open up ``src/index.html``, and edit it while Grunt is running,
-the watch task will see your changes and re-run the relevant task.
-Likewise, editing ``seed.less`` (or any other LESS file in the
-``src/css`` directory) will cause the LESS compiler to recompile your
-CSS, and editing any JavaScript files in the ``src/js`` file will cause
-the RequireJS optimizer to rebuild ``/build/app.js`` based on your AMD
-dependencies from ``src/js/main.js``. These changes are baked out into
-the ``build`` folder for publishing, but also served up via the local
-development server on port 8000.
+If you open up ``src/index.html``, and edit it while Grunt is running, the
+watch task will see your changes and re-run the relevant task. Likewise,
+editing ``seed.less`` (or any other LESS file in the ``src/css`` directory)
+will cause the LESS compiler to recompile your CSS, and editing any JavaScript
+files in the ``src/js`` file will cause the browserify to rebuild
+``/build/app.js`` based on your  dependencies from ``src/js/main.js``. These
+changes are baked out into the ``build`` folder for publishing, but also
+served up via the local development server on port 8000.
 
 Data and Templating
 -------------------
@@ -136,6 +134,13 @@ following template:
 Client-side Code
 ----------------
 
+**Note:** This template previously used RequireJS to build from AMD modules,
+but has switched over to CommonJS and Browserify in order to support
+asynchronous build processes. If you have old projects that you update to a
+new version of the template, you will need to either bring over the old
+``amd`` task (located in ``tasks/require.js``) or convert to the new CommonJS
+module style.
+
 Let's install jQuery and add it to our JavaScript bundle. From the
 project folder, run the following command:
 
@@ -150,20 +155,15 @@ jQuery:
 
 .. code:: javascript
 
-    require([
-      "lib/jquery/dist/jquery.min.js" //load jQuery from its relative path in src/js
-    ], function() {
-      console.log($);
-    });
+    var $ = require("./lib/jquery/dist/jquery.min.js") //load jQuery from its relative path in src/js
+    console.log($);
 
 When we restart our dev server by running the ``grunt`` command, the
-``amd`` task will scan the dependencies it finds, starting in
-``src/js/main.js``, and build those into a single file at
-``build/app.js`` (which is already included in the default HTML
-template). For more help on how AMD modules can organize your front-end
-code, check out the `RequireJS documentation <http://requirejs.org>`__.
-The AMD text plugin is also included by default, which makes it easy to
-include HTML templates and text data in your JavaScript builds.
+``bundle`` task will scan the dependencies it finds, starting in
+``src/js/main.js``, and build those into a single file at ``build/app.js``
+(which is already included in the default HTML template). Browserify plugins
+for loading text files (with extensions ``.txt`` and ``.html``) and LESS files
+(for creating web components) are included with the template.
 
 In a similar fashion, to add more CSS to our project, we would create a
 new LESS file in ``src/css``, then update our ``src/css/seed.less`` file
@@ -197,7 +197,7 @@ the project.
 -  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``template`` - Load data files and process HTML templates
 -  ``less`` - Compile LESS files into CSS
--  ``amd`` - Compile JS into the app.js file
+-  ``bundle`` - Compile JS into the app.js file
 -  ``publish`` - Push files to S3 or other endpoints
 -  ``connect`` - Start the dev server
 -  ``watch`` - Watch various directories and perform partial builds when

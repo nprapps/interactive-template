@@ -1,7 +1,1 @@
-require([
-  //load root dependencies from here
-], function() {
-  
-  // Code kicks off here
-  
-});
+//Use CommonJS style via browserify to load other modules
