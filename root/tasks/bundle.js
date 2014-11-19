@@ -7,16 +7,24 @@ module.exports = function(grunt) {
   var exorcist = require("exorcist");
   var fs = require("fs");
 
-  grunt.registerTask("bundle", "Build app.js using browserify", function() {
-
+  grunt.registerTask("bundle", "Build app.js using browserify", function(mode) {
+    //run in dev mode unless otherwise specified
+    var mode = mode || "dev";
     var done = this.async();
 
-    var b = browserify({ debug: true });
+    var b = browserify({ debug: mode == "dev" });
 
+    //make sure build/ exists
+    grunt.file.mkdir("build");
     var output = fs.createWriteStream("build/app.js");
 
     b.add("./src/js/main.js");
-    b.bundle().pipe(exorcist("build/app.js.map")).pipe(output).on("finish", function() {
+    var assembly = b.bundle();
+    if (mode == "dev") {
+      //output sourcemap
+      assembly = assembly.pipe(exorcist("build/app.js.map"));
+    }
+    assembly.pipe(output).on("finish", function() {
       done();
     });
 
