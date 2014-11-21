@@ -10,7 +10,6 @@ can be accessed by this task.
 */
 
 var project = require("../project.json");
-var auth = require("../auth.json");
 var async = require("async");
 var sheets = require("google-spreadsheets");
 
@@ -24,9 +23,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask("sheets", "Downloads from Google Sheets -> JSON", function() {
 
+    var auth = require("../auth.json");
     var sheetKeys = project.sheets || (auth.google && auth.google.sheets);
 
-    if (!sheetKeys) {
+    if (!sheetKeys || !sheetKeys.length) {
       return grunt.fail.fatal("You must specify a spreadsheet key in project.json or auth.json!");
     }
 

@@ -6,7 +6,7 @@ var gzip = require("zlib").gzip;
 var mime = require("mime");
 var join = function() {
   return path.join.apply(path, arguments).replace(/\\/g, "/");
-}
+};
 
 var aws = require("aws-sdk");
 
@@ -18,18 +18,13 @@ var formatSize = function(input) {
     return Math.round(input / 1024) + "KB";
   }
   return input + "B";
-}
+};
 
 var gzippable = ["js", "html", "json", "map", "css", "txt"];
 
 module.exports = function(grunt) {
 
-  var creds = require("../auth.json");
   var config = require("../project.json");
-
-  grunt.config.merge({
-    publish: config.s3
-  });
 
   var findBuiltFiles = function() {
     var pattern = ["**/*"];
@@ -47,10 +42,10 @@ module.exports = function(grunt) {
       return {
         path: file,
         buffer: buffer
-      }
+      };
     });
     return list;
-  }
+  };
 
   grunt.registerTask("publish", "Pushes the build folder to S3", function(deploy) {
 
@@ -72,6 +67,8 @@ module.exports = function(grunt) {
     var c = this.async();
 
     var bucketConfig = config.s3[deploy];
+
+    var creds = require("../auth.json");
     aws.config.update(creds.s3);
 
     var s3 = new aws.S3();
