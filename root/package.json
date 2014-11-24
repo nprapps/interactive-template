@@ -21,7 +21,8 @@
     "less": "^2.0.0",
     "mime": "^1.2.11",
     "shelljs": "^0.3.0",
-    "through2": "^0.6.3"
+    "through2": "^0.6.3",
+    "typogr": "^0.6.4"
   },
   "browser": {
     "share": "./src/js/lib/share.min.js",
