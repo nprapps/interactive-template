@@ -21,7 +21,7 @@ module.exports = function(grunt) {
     
     less.render(seed, options, function(err, result) {
       if (err) {
-        console.error(err);
+        grunt.fail.fatal(err.message + " - " + err.filename + ":" + err.line);
       } else {
         grunt.file.write("build/style.css", result.css);
       }
