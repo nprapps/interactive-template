@@ -1,4 +1,18 @@
 /*global fyre, callback, authDelegate*/
+//note that these libraries require jQuery or a jQuery shim, or they will throw errors
+//a no-op shim is included below, but may be disabled with the following variable:
+
+var shim$ = !("$" in window);
+
+if (shim$) {
+  var noop = function() {};
+  var ish = {
+    ready: function(f) { f() }
+  };
+  ["append", "bind", "html", "removeClass"].forEach(function(p) { ish[p] = noop });
+
+  window.$ = function() { return ish; };
+}
 
 var css = ["http://discussions.seattletimes.com/comments/css/st-commenting.css"];
 var async = [
