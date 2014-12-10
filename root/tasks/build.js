@@ -25,6 +25,7 @@ module.exports = function(grunt) {
   };
 
   grunt.template.include = function(where, data) {
+    grunt.log.writeln(" - Including file: " +  where);
     var file = grunt.file.read(path.resolve("src/", where));
     return grunt.template.process(file, {data: data || grunt.data});
   };
@@ -35,6 +36,7 @@ module.exports = function(grunt) {
     data.t = grunt.template;
     files.forEach(function(file) {
       var src = file.src.shift();
+      grunt.log.writeln("Processing file: " +  src);
       var input = grunt.file.read(src);
       var output = grunt.template.process(input, { data: data });
       grunt.file.write(file.dest, output);
