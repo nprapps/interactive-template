@@ -18,6 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "seattletimes-pym": "~1.0.0"
+    "component-responsive-frame": "~0.0.5"
   }
 }
