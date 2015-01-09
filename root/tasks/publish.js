@@ -64,7 +64,7 @@ module.exports = function(grunt) {
       return;
     }
 
-    var c = this.async();
+    var done = this.async();
 
     var bucketConfig = config.s3[deploy];
 
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         return console.log(err);
       }
       var uploads = findBuiltFiles();
-      async.each(uploads, function(upload, c) {
+      async.eachLimit(uploads, 10, function(upload, c) {
         var obj = {
           Bucket: bucketConfig.bucket,
           Key: join(bucketConfig.path, upload.path.replace(/^\\?build/, "")),
@@ -114,8 +114,9 @@ module.exports = function(grunt) {
       }, function(err) {
         if (err) return console.log(err);
         console.log("All files uploaded successfully");
-      })
+        done();
+      });
     });
   });
 
-}
+};
