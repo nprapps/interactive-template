@@ -1,0 +1,9 @@
+
+
+Warning: This project is not marked as production-ready. Please make sure the
+following checklist items are complete, then set `"production": true` in your
+project.json to allow live publishes.
+
+- Do all share buttons work?
+- Has this gone through QA?
+- Has it been tested in IE?

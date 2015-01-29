@@ -64,6 +64,11 @@ module.exports = function(grunt) {
       return;
     }
 
+    if (deploy == "live" && !config.production) {
+      var checklist = grunt.file.read("tasks/checklist.txt");
+      grunt.fail.fatal(checklist);
+    }
+
     var done = this.async();
 
     var bucketConfig = config.s3[deploy];

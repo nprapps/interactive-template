@@ -13,5 +13,6 @@
   "description": "",
   "url": "",
   "slug": "",
-  "tags": []
+  "tags": [],
+  "production": false
 }
