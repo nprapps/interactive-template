@@ -27,10 +27,7 @@
   "browser": {
     "share": "./src/js/lib/share.min.js",
     "jquery": "./src/js/lib/jquery/dist/jquery.min.js",
-    "pym": "./src/js/lib/seattletimes-pym/src/pym.js",
-    "angular": "./src/js/lib/angular/angular.min.js",
-    "leaflet": "./src/js/lib/leaflet/dist/leaflet.js",
-    "icanhaz": "./src/js/lib/icanhaz/ICanHaz.min.js"
+    "angular": "./src/js/lib/angular/angular.min.js"
   },
   "browserify": {
     "transform": [
