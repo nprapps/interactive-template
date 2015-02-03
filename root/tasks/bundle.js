@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask("bundle", "Build app.js using browserify", function(mode) {
     //run in dev mode unless otherwise specified
-    var mode = mode || "dev";
+    mode = mode || "dev";
     var done = this.async();
 
     var b = browserify({ debug: mode == "dev" });
