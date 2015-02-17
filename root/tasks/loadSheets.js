@@ -37,8 +37,8 @@ module.exports = function(grunt) {
         key: key,
         worksheet: 1
       }, function(err, book) {
-        if (err) {
-          grunt.fail.warn("Unable to access book for " + key);
+        if (err || !book) {
+          grunt.fail.warn("Unable to access book for " + key + ", is it 'published' in Sheets?");
           return bookDone();
         }
         //download each worksheet
