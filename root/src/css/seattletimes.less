@@ -1,0 +1,122 @@
+@import "values";
+
+//elements
+body {
+  color: @df-off-black;
+  font-family: @df-serif;
+  font-size: @df-text-base;
+  line-height: @df-line-base;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  -webkit-tap-highlight-color: black;
+  transition: color 0.15s ease-in-out;
+  color: @df-blue;
+  text-decoration: none;
+  outline: 0 !important;
+  &:hover {
+    color: @df-navy;
+  }
+}
+
+img, video, embed, object, iframe {
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: @df-off-black;
+  margin: @df-line-base 0 (@df-line-base/2) 0;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 30px;
+  letter-spacing: -0.5px;
+
+  @media @tablet {
+    font-size: 42px;
+    line-height:46px;
+    letter-spacing: -1px;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: @df-line-base;
+}
+h3 {
+  font-size: 22px;
+  line-height: 23px;
+}
+h4 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  margin: @df-line-base/2 0 0 0;
+}
+
+//header and menu
+nav.main-nav {
+  background: white;
+  border-bottom: 1px solid @df-light-gray;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .1);
+  position: relative;
+  line-height: 1;
+
+  .wrapper {
+    max-width: 1020px;
+    margin: auto;
+    position: relative;
+    text-align: center;
+
+    @media @tablet {
+      height: 40px;
+      padding: 10px;
+    }
+  }
+
+  .logo {
+    display: block;
+    vertical-align: middle;
+
+    img {
+      width: 310px;
+      height: 70px;
+      max-height: 100%;
+
+      @media @tablet {
+        height: 24px;
+        width: auto;
+      }
+    }
+  }
+
+  .share {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+
+    @media @tablet {
+      top: 10px;
+      right: 4px;
+      width: auto !important;
+    }
+
+    label {
+      background: white !important;
+    }
+
+    @media @mobile {
+      label {
+        span {
+          display: none;
+        }
+      }
+
+      .left {
+        margin-left: -275px !important;
+      }
+    }
+  }
+}
