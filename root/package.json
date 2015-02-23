@@ -25,9 +25,7 @@
     "typogr": "^0.6.4"
   },
   "browser": {
-    "share": "./src/js/lib/share.min.js",
-    "jquery": "./src/js/lib/jquery/dist/jquery.min.js",
-    "angular": "./src/js/lib/angular/angular.min.js"
+    "share": "./src/js/lib/share.min.js"
   },
   "browserify": {
     "transform": [
