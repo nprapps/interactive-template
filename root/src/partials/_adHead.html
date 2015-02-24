@@ -22,11 +22,12 @@
 
 <!-- start ad set-up -->
 <script>
-//modify for specific page info
-OAS_sitepage = 'www.seattletimes.com/business';
-OAS_query = '?<%= grunt.data.json.project.tags && grunt.data.json.project.tags.join("&") %>';
-//uncomment the ad positions you're going to use ("Top" and "TopRight" usually)
-OAS_listpos = '';//'Position1,TopRight,Right1,Top,Top1,Middle3,Position3,Right,Right2,Bottom,Top3';
+window.googletag = {
+  cmd: [],
+  seatimes: {
+    tags: <%= JSON.stringify(json.project.tags) %>,
+    unit: "/81279359/seattletimes.com"
+  }
+};
 </script>
-<script src="http://seattletimes.com/js/standardFunctionality/AdTags.js"></script>
 <!-- end ad set-up -->

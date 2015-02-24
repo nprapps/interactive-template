@@ -1,0 +1,29 @@
+<% /* "You must include the type, and optionally an ID, to load ads" */ %>
+<div class="ad" id="<%= typeof id != "undefined" ? id : "" %>">
+  <script>
+(function() {
+  var scripts = document.getElementsByTagName("script");
+  var here = scripts[scripts.length - 1];
+  var div = here.parentElement;
+  var id = div.id;
+  if (!id) {
+    //generate an ID if none exists
+    id = div.id = "dfp-ad-" + scripts.length;
+  }
+  var type = <%= JSON.stringify(type) %>;
+  var tag = window.googletag;
+
+  tag.cmd.push(function() {
+
+    var options = tag.seatimes.presets[type] || tag.seatimes.presets.square;
+    var ad = tag.defineSlot(tag.seatimes.unit, options.sizes, id);
+    ad.setTargeting("pos", options.position);
+    ad.addService(tag.pubads());
+    tag.enableServices();
+    tag.display(id);
+
+  });
+
+})();
+  </script>
+</div>
