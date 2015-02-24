@@ -1,10 +1,12 @@
   var tag = window.googletag = window.googletag || { cmd: [], seatimes: { unit: "/81279359/seattletimes.com" } };
   
   tag.seatimes.presets = {
-    banner: { sizes: [[728,90]], position: "Top" },
-    square: { sizes: [[300, 250]], position: "Right1" },
-    tall: { sizes: [[300, 600]], position: "Right" },
-    right: { sizes: [[300, 600], [300, 250]], position: "Right" }
+    banner: { sizes: [[728,90]], position: "top" },
+    square: { sizes: [[300, 250]], position: "right1" },
+    tall: { sizes: [[300, 600]], position: "right" },
+    right: { sizes: [[300, 600], [300, 250]], position: "right" },
+    bannerBottom: { sizes: [[728,90]], position: "bottom" },
+    interstitial: { sizes: [[760,300]], position: "inter" }
   };
   
   var gscript = document.createElement("script");
