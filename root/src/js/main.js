@@ -1,3 +1,3 @@
 //Use CommonJS style via browserify to load other modules
-require("./social");
-require("./ads");
+require("./lib/social");
+require("./lib/ads");
