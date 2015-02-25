@@ -6,7 +6,7 @@
     tall: { sizes: [[300, 600]], position: "right" },
     right: { sizes: [[300, 600], [300, 250]], position: "right" },
     bannerBottom: { sizes: [[728,90]], position: "bottom" },
-    interstitial: { sizes: [[760,300]], position: "inter" }
+    interstitial: { sizes: [[1,1]], position: "inter" }
   };
   
   var gscript = document.createElement("script");
