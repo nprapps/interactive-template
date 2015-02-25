@@ -16,8 +16,5 @@
     "src/js/lib",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "component-responsive-frame": "~0.0.5"
-  }
+  ]
 }
