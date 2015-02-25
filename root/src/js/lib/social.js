@@ -1,4 +1,4 @@
-var Share = require("./lib/share.min.js");
+var Share = require("./share.min.js");
 
 new Share(".share", {
   ui: {
