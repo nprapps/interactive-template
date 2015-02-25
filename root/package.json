@@ -12,6 +12,7 @@
     "aws-sdk": "^2.0.0-rc.19",
     "browserify": "^6.2.0",
     "chalk": "^0.5.1",
+    "component-responsive-frame": "^1.0.5",
     "csv": "^0.4.0",
     "exorcist": "^0.1.6",
     "google-spreadsheets": "^0.3.0",
