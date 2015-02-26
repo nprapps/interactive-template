@@ -49,18 +49,28 @@ module.exports = function(grunt) {
 
   grunt.registerTask("publish", "Pushes the build folder to S3", function(deploy) {
 
+    var done = this.async();
+
     deploy = deploy || "stage";
 
     if (deploy == "simulated") {
       var uploads = findBuiltFiles();
-      uploads.forEach(function(upload) {
+      async.each(uploads, function(upload, c) {
         var extension = upload.path.split(".").pop();
         if (gzippable.indexOf(extension) > -1) {
-          console.log("Uploading gzipped %s", upload.path);
+          gzip(upload.buffer, function(err, zipped) {
+            console.log("Uploading gzipped %s - %s => %s",
+              upload.path,
+              formatSize(upload.buffer.length),
+              formatSize(zipped.length)
+            );
+            c();
+          })
         } else {
           console.log("Uploading %s", upload.path);
+          c();
         }
-      });
+      }, done);
       return;
     }
 
@@ -68,8 +78,6 @@ module.exports = function(grunt) {
       var checklist = grunt.file.read("tasks/checklist.txt");
       grunt.fail.fatal(checklist);
     }
-
-    var done = this.async();
 
     var bucketConfig = config.s3[deploy];
 
