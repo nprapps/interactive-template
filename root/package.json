@@ -10,9 +10,10 @@
   "dependencies": {
     "async": "^0.9.0",
     "aws-sdk": "^2.0.0-rc.19",
+    "babel": "^4.7.16",
     "browserify": "^6.2.0",
     "chalk": "^1.0.0",
-    "component-responsive-frame": "^1.0.5",
+    "component-responsive-frame": "^1.0.6",
     "csv": "^0.4.0",
     "exorcist": "^0.1.6",
     "google-spreadsheets": "^0.3.0",

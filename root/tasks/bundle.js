@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 
   var browserify = require("browserify");
   var exorcist = require("exorcist");
+  var babel = require("babel");
   var fs = require("fs");
 
   grunt.registerTask("bundle", "Build app.js using browserify", function(mode) {
@@ -13,6 +14,7 @@ module.exports = function(grunt) {
     var done = this.async();
 
     var b = browserify({ debug: mode == "dev" });
+    b.transform(babel);
 
     //make sure build/ exists
     grunt.file.mkdir("build");
