@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
   var browserify = require("browserify");
   var exorcist = require("exorcist");
-  var babel = require("babel");
+  var babel = require("babelify");
   var fs = require("fs");
 
   grunt.registerTask("bundle", "Build app.js using browserify", function(mode) {
