@@ -146,17 +146,22 @@ project folder, run the following command:
 
 .. code:: sh
 
-    bower install jquery
+    npm install jquery --save
 
-All libraries installed by Bower are placed in ``src/js/lib`` by
-default, although this can be changed by editing the ``.bowerrc`` file
-in the project folder root. Now we'll change ``src/js/main.js`` to load
-jQuery:
+By default, we would prefer to use NPM for dependencies, but Bower is also
+configured in the template. All libraries installed by Bower are placed in
+``src/js/lib`` by default, although this can be changed by editing the
+``.bowerrc`` file in the project folder root. Now we'll change
+``src/js/main.js`` to load jQuery:
 
 .. code:: javascript
 
-    var $ = require("./lib/jquery/dist/jquery.min.js") //load jQuery from its relative path in src/js
-    console.log($);
+    //by default, the template loads our sharing and ad modules
+    require("./lib/social");
+    require("./lib/ads");
+
+    var $ = require("jquery"); //load jQuery from an NPM module
+    console.log($, path);
 
 When we restart our dev server by running the ``grunt`` command, the
 ``bundle`` task will scan the dependencies it finds, starting in
@@ -220,6 +225,7 @@ Where does everything go?
 
     ├── auth.json - authentication information for S3 and other endpoints
     ├── build
+    │   ├── assets
     │   ├── app.js
     │   ├── index.html
     │   └── style.css
@@ -229,21 +235,28 @@ Where does everything go?
     ├── package.json - Node dependencies and metadata
     ├── project.json - various project configuration
     ├── src
+    │   ├── assets - files will be automatically copied to /build
     │   ├── css
     │   │   └── seed.less
     │   ├── index.html
     │   ├── partials - directory containing Seattle Times boilerplate
     │   └── js
-    │       └── main.js
+    │       ├── main.js
+    │       └── lib - directory for Bower, ST site modules
     └── tasks - All Grunt tasks
         ├── build.js
+        ├── bundle.js
+        ├── checklist.js
+        ├── clean.js
         ├── connect.js
+        ├── copyAssets.js
+        ├── cron.js
         ├── less.js
         ├── loadCSV.js
         ├── loadJSON.js
         ├── loadSheets.js
+        ├── markdown.js
         ├── publish.js
-        ├── require.js
         ├── state.js
         └── watch.js
 
