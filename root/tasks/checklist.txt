@@ -1,12 +1,12 @@
-
-
 Warning: This project is not marked as production-ready. Please make sure the
 following checklist items are complete, then set `"production": true` in your
 project.json to allow live publishes.
 
 - Has this gone through QA?
-- Has it been tested in IE?
+- Has it been tested in IE 10?
 - Have ad positions been included in adHead template?
+- If it's embedded, have you disabled the adFoot template?
+- Have you checked it for color-blindness?
 
 Social media:
 - Do all share buttons work?
