@@ -14,5 +14,6 @@
   "url": "",
   "slug": "",
   "tags": [],
-  "production": false
+  "production": false,
+  "embedded": true
 }
