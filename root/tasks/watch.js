@@ -15,6 +15,7 @@ module.exports = function(grunt) {
   grunt.config.merge({
     watch: {
       options: {
+        spawn: false,
         livereload: true
       },
       less: {
