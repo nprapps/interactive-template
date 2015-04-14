@@ -25,9 +25,11 @@ module.exports = function(grunt) {
   };
 
   grunt.template.include = function(where, data) {
-    grunt.log.writeln(" - Including file: " +  where);
+    grunt.verbose.writeln(" - Including file: " +  where);
     var file = grunt.file.read(path.resolve("src/", where));
-    return grunt.template.process(file, {data: data || grunt.data});
+    var templateData = Object.create(data || grunt.data);
+    templateData.t = grunt.template;
+    return grunt.template.process(file, {data: templateData});
   };
 
   grunt.registerTask("build", "Processes index.html using shared data (if available)", function() {
@@ -36,7 +38,7 @@ module.exports = function(grunt) {
     data.t = grunt.template;
     files.forEach(function(file) {
       var src = file.src.shift();
-      grunt.log.writeln("Processing file: " +  src);
+      grunt.verbose.writeln("Processing file: " +  src);
       var input = grunt.file.read(src);
       var output = grunt.template.process(input, { data: data });
       grunt.file.write(file.dest, output);
