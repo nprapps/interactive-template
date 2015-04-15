@@ -8,32 +8,12 @@ var path = require("path");
 var typo = require("typogr");
 var stmd = require("commonmark");
 var writer = new stmd.HtmlRenderer();
-var reader = new stmd.DocParser();
+var reader = new stmd.Parser();
 
 //monkey-patch writer to handle typographical entities
 var escape = writer.escape;
 writer.escape = function(str) {
   return escape(str, true);
-};
-
-//perform typographical replacement on inline blocks
-var walkInline = function(inline) {
-  if (inline.t == "Str") {
-    inline.c = typo.smartypants(inline.c);
-  } else if (inline.c instanceof Array) {
-    inline.c.forEach(walkInline);
-  }
-};
-
-//look for inline blocks to process
-var walk = function(block) {
-  var leaves = ["Paragraph", "ATXHeader"];
-  if (leaves.indexOf(block.t) > -1) {
-    block.inline_content.forEach(walkInline);
-  }
-  for (var i = 0; i < block.children.length; i++) {
-    walk(block.children[i]);
-  }
 };
 
 module.exports = function(grunt) {
@@ -48,7 +28,14 @@ module.exports = function(grunt) {
     files.forEach(function(filename) {
       var input = grunt.file.read(filename);
       var parsed = reader.parse(input);
-      walk(parsed);
+      var walker = parsed.walker();
+      var event;
+      while (event = walker.next()) {
+        var node = event.node;
+        if (event.entering && node.type == "Text") {
+          node.literal = typo.smartypants(node.literal);
+        }
+      }
       var output = writer.render(parsed);
       var sansExtension = path.basename(filename).replace(/\..*?$/, "");
       grunt.data.markdown[sansExtension] = output;
