@@ -10,7 +10,9 @@
   <body>
 
     <script src="app.js"></script>
-    <%= json.project.production && !json.project.embedded ? t.include("partials/_adFoot.html") : "" %>
-    <%= json.project.production ? t.include("partials/_workHere.html") : "" %>
+    <% if (json.project.production) { %>
+    <%= !json.project.embedded ? t.include("partials/_adFoot.html") : "" %>
+    <%= t.include("partials/_workHere.html") %>
+    <% } %>
   </body>
 </html>

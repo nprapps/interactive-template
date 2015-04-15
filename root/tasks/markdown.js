@@ -6,7 +6,7 @@ Use Commonmark to parse *.md files and make them available via grunt.data.markdo
 
 var path = require("path");
 var typo = require("typogr");
-var stmd = require("./lib/stmd");
+var stmd = require("commonmark");
 var writer = new stmd.HtmlRenderer();
 var reader = new stmd.DocParser();
 
