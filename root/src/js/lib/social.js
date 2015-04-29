@@ -31,4 +31,4 @@ var s = new Share(".share", {
   }
 });
 
-s.config.email.description += " " + addQuery(here, utm("email_share", "email"));
+s.config.networks.email.description += " " + addQuery(here, utm("email_share", "email"));
