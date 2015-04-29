@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
     grunt.task.requires("state");
 
-    var files = grunt.file.expand("csv/**/*.csv");
+    var files = grunt.file.expand("data/**/*.csv");
 
     grunt.data.csv = {};
 

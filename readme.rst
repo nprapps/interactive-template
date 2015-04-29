@@ -80,11 +80,11 @@ Data and Templating
 The ``index.html`` template (and any other templates you choose to add
 to the project) are processed using Grunt's built in Lo-dash templating
 (HTML files starting with an ``_`` will be ignored). If you have any CSV
-files located in your ``csv`` directory, these will be parsed and made
+files located in your ``data`` directory, these will be parsed and made
 available to your templates via the ``csv`` object (likewise, JSON files
-in the ``json`` directory will be loaded to the ``json`` object, keyed
+in the ``data`` directory will be loaded to the ``json`` object, keyed
 by their filename). For example, maybe you have a CSV file located at
-``csv/ceoData.csv`` containing columns of data named "company", "name",
+``data/ceoData.csv`` containing columns of data named "company", "name",
 "age", "gender", and "salary". We could write the following template in
 our ``index.html`` file to output this as an HTML table:
 
@@ -229,8 +229,7 @@ Where does everything go?
     │   ├── app.js
     │   ├── index.html
     │   └── style.css
-    ├── json - folder for all JSON data files
-    ├── csv - folder for all CSV data files
+    ├── data - folder for all JSON/CSV data files
     ├── Gruntfile.js
     ├── package.json - Node dependencies and metadata
     ├── project.json - various project configuration
@@ -246,7 +245,7 @@ Where does everything go?
     └── tasks - All Grunt tasks
         ├── build.js
         ├── bundle.js
-        ├── checklist.js
+        ├── checklist.txt
         ├── clean.js
         ├── connect.js
         ├── copyAssets.js
