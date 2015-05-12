@@ -20,7 +20,7 @@ var formatSize = function(input) {
   return input + "B";
 };
 
-var gzippable = ["js", "html", "json", "map", "css", "txt"];
+var gzippable = ["js", "html", "json", "map", "css", "txt", "svg"];
 
 module.exports = function(grunt) {
 
