@@ -9,6 +9,10 @@
   </head>
   <body>
 
+    <responsive-child>
+      <!-- content goes here -->
+    </responsive-child>
+
     <script src="app.js"></script>
     <% if (json.project.production) { %>
     <%= !json.project.embedded ? t.include("partials/_adFoot.html") : "" %>
