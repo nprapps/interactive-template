@@ -17,6 +17,14 @@
 
     var options = tag.seatimes.presets[type] || tag.seatimes.presets.square;
     var ad = tag.defineSlot(tag.seatimes.unit, options.sizes, id);
+    if (options.sizeMapping) {
+      var map = tag.sizeMapping();
+      for (var width in options.sizeMapping) {
+        map.addSize([width * 1,1], options.sizeMapping[width]);
+      }
+      var mapping = map.build();
+      ad.defineSizeMapping(mapping);
+    }
     ad.setTargeting("pos", options.position);
     ad.addService(tag.pubads());
     tag.enableServices();
