@@ -1,5 +1,5 @@
-//Use CommonJS style via browserify to load other modules
 // require("./lib/social");
 // require("./lib/ads");
+// var track = require("./lib/tracking");
 
 require("component-responsive-frame/child");
