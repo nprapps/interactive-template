@@ -4,8 +4,8 @@ project.json to allow live publishes.
 
 - Has this gone through QA?
 - Has it been tested in IE 10?
-- Have ad positions been included in adHead template?
-- If it's not embedded, have you enabled analytics?
+- If it's a standalone, does it have ads and related links?
+- Are you using the minified version of any third-party libraries?
 - Have you checked it for color-blindness?
 
 Social media:
