@@ -22,11 +22,17 @@ module.exports = function(grunt) {
 
     b.add("./src/js/main.js");
     var assembly = b.bundle();
+
+    assembly.on("error", function(err) {
+      grunt.log.errorlns(err.message);
+    });
+
     if (mode == "dev") {
       //output sourcemap
       assembly = assembly.pipe(exorcist("./build/app.js.map", null, null, "."));
     }
     assembly.pipe(output).on("finish", function() {
+
       //correct path separators in the sourcemap for Windows
       var sourcemap = grunt.file.readJSON("./build/app.js.map");
       sourcemap.sources = sourcemap.sources.map(function(s) { return s.replace(/\\/g, "/") });
