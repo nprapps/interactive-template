@@ -25,6 +25,7 @@ module.exports = function(grunt) {
 
     assembly.on("error", function(err) {
       grunt.log.errorlns(err.message);
+      done();
     });
 
     if (mode == "dev") {
