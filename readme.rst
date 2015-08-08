@@ -292,9 +292,4 @@ about extending the scaffolding on a per-project basis:
    ``sed``, ``grep``, and ``ln``, as well as easy access to environment
    variables. Using ShellJS means you don't have to resort to Bash
    scripting for basic ``make``-like tasks.
--  If you use the AWS CLI (as the NPR app template does), the
-   scaffolding process will preload your S3 credentials into
-   ``auth.json``. Take a look at this code (in ``template.js``) as a
-   useful example for other places you might want to load environment
-   variables into project configuration.
 
