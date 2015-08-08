@@ -89,7 +89,7 @@ module.exports = function(grunt) {
     if (!creds.accessKeyId) {
       creds = require("../auth.json").s3;
     }
-    aws.config.update(creds);    
+    aws.config.update(creds);
 
     var s3 = new aws.S3();
     s3.createBucket({
