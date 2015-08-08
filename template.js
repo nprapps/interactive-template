@@ -14,10 +14,7 @@ exports.template = function(grunt, init, done) {
     init.prompt("github_repo", "seattletimes/" + here)
   ], function(err, props) {
     //add environment variables, dynamic properties
-    props.s3_key = process.env.AWS_ACCESS_KEY_ID || "";
-    props.s3_secret = process.env.AWS_SECRET_ACCESS_KEY || "";
-    props.s3_region = process.env.AWS_DEFAULT_REGION || "us-west-1";
-
+    
     var root = init.filesToCopy(props);
     init.copyAndProcess(root, props);
     grunt.file.mkdir("data");
