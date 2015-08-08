@@ -204,19 +204,25 @@ the project.
 -  ``less`` - Compile LESS files into CSS
 -  ``bundle`` - Compile JS into the app.js file
 -  ``publish`` - Push files to S3 or other endpoints
+-  ``auth`` - Create an ``auth.json`` file from the AWS environment 
+   variables
 -  ``connect`` - Start the dev server
 -  ``watch`` - Watch various directories and perform partial builds when
    they change
 -  ``static`` - Run all generation tasks, but do not start the watches
    or dev server
 
-The publish task deserves a little more attention. When you run
-``grunt publish``, it will load your AWS credentials from ``auth.json``,
-as well as the bucket configuration from ``project.json``, then push the
-contents of the ``build`` folder up to the stage bucket. If you want to
-publish to live, you should run ``grunt publish:live``. Make sure your
-files have been rebuilt first, either by running the default task or by
-running the ``static`` task (``grunt static publish`` will do both).
+The publish task deserves a little more attention. When you run ``grunt 
+publish``, it will read your AWS credentials from the standard AWS 
+environment variables (``AWS_ACCESS_KEY_ID`` and 
+``AWS_SECRET_ACCESS_KEY``), falling back on keys found in ``auth.json`` 
+(useful for Windows users without admin access). The bucket 
+configuration is loaded from ``project.json``. The task will then push 
+the contents of the ``build`` folder up to the stage bucket. If you want 
+to publish to live, you should run ``grunt publish:live``. Make sure 
+your files have been rebuilt first, either by running the default task 
+or by running the ``static`` task (``grunt static publish`` will do 
+both).
 
 Where does everything go?
 -------------------------
