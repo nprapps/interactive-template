@@ -4,11 +4,11 @@ Seattle Times News App Template
 What is it?
 -----------
 
-This template for `grunt-init <http://gruntjs.com/project-scaffolding>`__
+This template for `grunt-init <http://gruntjs.com/project-scaffolding>`_
 contains all the setup required to start building a flat-file news application
 (It may be useful for dynamic apps as well). The goal is to have a set of
 sensible defaults and automatic tasks similar to those provided by `Tarbell
-<http://tarbell.tribapps.com/>`__, but optimized for a NodeJS workflow. Among
+<http://tarbell.tribapps.com/>`_, but optimized for a NodeJS workflow. Among
 other things, app built on this scaffolding will automatically parse CSV and
 JSON for your HTML templates, import data from Google Drive, build LESS into
 CSS, browserify JavaScript from CommonJS modules, and set up a local
@@ -285,7 +285,7 @@ about extending the scaffolding on a per-project basis:
    is named "key", the result will be an object mapping the key value to
    the row data. This is useful for localization, among other purposes.
 -  The setup process will install the
-   `ShellJS <https://github.com/arturadib/shelljs>`__ module in your
+   `ShellJS <https://github.com/arturadib/shelljs>`_ module in your
    project, which is used by several of the built-in tasks for file
    management and setup. In addition to UNIX file operations like ``cp``
    and ``mv``, ShellJS also provides cross-platform implementations of
