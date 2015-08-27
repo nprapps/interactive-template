@@ -19,11 +19,26 @@ var camelCase = function(str) {
   });
 };
 
+var cast = function(str) {
+  if (typeof str !== "string") return str;
+  if (str.match(/^[\d\.,]+$/)) {
+    //number
+    return Number(str.replace(/,/g, ""));
+  }
+  if (str.toLowerCase() == "true" || str.toLowerCase() == "false") {
+    return str.toLowerCase() == "true" ? true : false;
+  }
+  return str;
+};
+
 module.exports = function(grunt) {
 
   grunt.registerTask("sheets", "Downloads from Google Sheets -> JSON", function() {
 
-    var auth = require("../auth.json");
+    var auth = {};
+    try {
+      auth = require("../auth.json");
+    } catch (_) { /* no auth.json, that's fine */ }
     var sheetKeys = project.sheets || (auth.google && auth.google.sheets);
 
     if (!sheetKeys || !sheetKeys.length) {
@@ -61,6 +76,7 @@ module.exports = function(grunt) {
                 if (typeof prop == "object" && "$t" in prop && prop.$t === "") {
                   row[key] = "";
                 }
+                row[key] = cast(prop);
               }
             });
             //is this a keyed sheet, instead of a numbered list?
