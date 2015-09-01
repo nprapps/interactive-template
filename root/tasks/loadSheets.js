@@ -74,7 +74,7 @@ module.exports = function(grunt) {
               for (var key in row) {
                 var prop = row[key];
                 if (typeof prop == "object" && "$t" in prop && prop.$t === "") {
-                  row[key] = "";
+                  prop = "";
                 }
                 row[key] = cast(prop);
               }
