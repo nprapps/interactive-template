@@ -3,6 +3,7 @@ Build a bundled app.js file using browserify
 */
 module.exports = function(grunt) {
 
+  var async = require("async");
   var babel = require("babelify");
   var browserify = require("browserify");
   var exorcist = require("exorcist");
@@ -13,34 +14,43 @@ module.exports = function(grunt) {
     mode = mode || "dev";
     var done = this.async();
 
-    var b = browserify({ debug: mode == "dev" });
-    b.transform(babel);
+    //specify starter files here - if you need additionally built JS, just add it.
+    var seeds = {
+      "./src/js/main.js": "build/app.js"
+    };
 
-    //make sure build/ exists
-    grunt.file.mkdir("build");
-    var output = fs.createWriteStream("build/app.js");
+    async.forEachOf(seeds, function(dest, src, c) {
+      var b = browserify({ debug: mode == "dev" });
+      b.transform(babel);
 
-    b.add("./src/js/main.js");
-    var assembly = b.bundle();
+      //make sure build/ exists
+      grunt.file.mkdir("build");
+      var output = fs.createWriteStream(dest);
 
-    assembly.on("error", function(err) {
-      grunt.log.errorlns(err.message);
-      done();
-    });
+      b.add(src);
+      var assembly = b.bundle();
 
-    if (mode == "dev") {
-      //output sourcemap
-      assembly = assembly.pipe(exorcist("./build/app.js.map", null, null, "."));
-    }
-    assembly.pipe(output).on("finish", function() {
+      assembly.on("error", function(err) {
+        grunt.log.errorlns(err.message);
+        done();
+      });
+      var mapFile = dest + ".map"
 
-      //correct path separators in the sourcemap for Windows
-      var sourcemap = grunt.file.readJSON("./build/app.js.map");
-      sourcemap.sources = sourcemap.sources.map(function(s) { return s.replace(/\\/g, "/") });
-      grunt.file.write("./build/app.js.map", JSON.stringify(sourcemap, null, 2));
-      
-      done();
-    });
+      if (mode == "dev") {
+        //output sourcemap
+        assembly = assembly.pipe(exorcist(mapFile, null, null, "."));
+      }
+      assembly.pipe(output).on("finish", function() {
+        if (mode != "dev") return;
+
+        //correct path separators in the sourcemap for Windows
+        var sourcemap = grunt.file.readJSON(mapFile);
+        sourcemap.sources = sourcemap.sources.map(function(s) { return s.replace(/\\/g, "/") });
+        grunt.file.write(mapFile, JSON.stringify(sourcemap, null, 2));
+        
+        c();
+      });
+    }, done);
 
   });
 
