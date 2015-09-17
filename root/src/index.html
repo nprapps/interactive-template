@@ -13,7 +13,7 @@
       <!-- content goes here -->
     </responsive-child>
 
-    <script src="app.js"></script>
+    <script src="app.js" async></script>
     <% if (json.project.production) { %>
     <%= !json.project.embedded ? t.include("partials/_adFoot.html") : "" %>
     <%= t.include("partials/_workHere.html") %>
