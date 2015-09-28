@@ -1,4 +1,5 @@
 @import "values";
+@import "flexbox";
 
 //elements
 body {
@@ -133,4 +134,54 @@ nav.main-nav {
   color: @df-blue;
   cursor: pointer;
   margin: 20px 0;
+}
+
+.thin-div {
+  border-bottom: 1px solid @df-light-gray;
+  margin-bottom: 15px;
+  font-family: @df-sans;
+  margin: auto;
+  max-width: 900px;
+
+  .center {
+    position: relative;
+    top: 15px;
+    margin: auto;
+    width: 105px;
+    text-align: center;
+    font-size: 20px;
+    background: white;
+  }
+}
+
+.dont-miss {
+  .display-flex;
+  .flex-wrap(wrap);
+  margin: auto;
+  margin-top: 15px;
+  max-width: 900px;
+  font-size: 17px;
+  font-family: @df-sans;
+
+  .story {
+    .flex(0 0 25%);
+
+    @media @mobile {
+      .flex(1 1 50%)
+    }
+  }
+  .padded {
+    padding: 10px;
+  }
+  img {
+    width: 100%;
+  }
+  a {
+    color: @df-dark-gray;
+    transition: color .1s linear;
+
+    &:hover {
+      color: @df-blue;
+    }
+  }
 }
