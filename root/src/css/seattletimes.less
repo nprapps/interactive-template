@@ -23,6 +23,9 @@ a {
   &:hover {
     color: @df-navy;
   }
+  img {
+    border: none;
+  }
 }
 
 img, video, embed, object, iframe {
@@ -72,33 +75,27 @@ nav.main-nav {
     max-width: 1020px;
     margin: auto;
     position: relative;
-    text-align: center;
-
-    @media @tablet {
-      height: 40px;
-      padding: 10px;
+    padding: 10px;
     }
   }
 
   .logo {
     display: block;
     vertical-align: middle;
+    
+    @media @mobile {
+      padding: 0;
 
     img {
-      width: 310px;
-      height: 70px;
+      // width: 310px;
+      height: 24px;
       max-height: 100%;
-
-      @media @tablet {
-        height: 24px;
-        width: auto;
-      }
     }
   }
 
   .share {
     position: absolute;
-    top: 20px;
+    top: 10px;
     right: 10px;
 
     @media @tablet {
