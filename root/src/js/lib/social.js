@@ -9,26 +9,43 @@ var utm = function(source, medium) {
   return `utm_source=${source}&utm_medium=${medium || "social"}&utm_campaign=projects`;
 };
 
-var here = window.location.href;
+var makeShare = function(selector, position, url) {
 
-var s = new Share(".share", {
-  ui: {
-    flyout: "bottom left"
-  },
-  networks: {
-    google_plus: {
-      url: addQuery(here, utm("google+"))
+  var here = url || window.location.href;
+
+  var config = {
+    ui: {
+      flyout: position || "bottom left"
     },
-    twitter: {
-      url: addQuery(here, utm("twitter"))
-    },
-    facebook: {
-      url: addQuery(here, utm("facebook"))
-    },
-    pinterest: {
-      url: addQuery(here, utm("pinterest"))
+    networks: {
+      google_plus: {
+        url: addQuery(here, utm("google+"))
+      },
+      twitter: {
+        url: addQuery(here, utm("twitter"))
+      },
+      facebook: {
+        url: addQuery(here, utm("facebook"))
+      },
+      pinterest: {
+        url: addQuery(here, utm("pinterest"))
+      }
     }
-  }
-});
+  };
 
-s.config.networks.email.description += " " + addQuery(here, utm("email_share", "email"));
+  var s = new Share(selector, config);
+
+  s.config.networks.email.description += " " + addQuery(here, utm("email_share", "email"));
+
+  return s;
+};
+
+var top = makeShare(".share.top");
+var bottom = makeShare(".share.bottom", "top left");
+
+module.exports = {
+  Share,
+  makeShare,
+  utm,
+  buttons: [top, bottom]
+}
