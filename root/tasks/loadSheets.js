@@ -55,8 +55,7 @@ module.exports = function(grunt) {
 
     async.each(sheetKeys, function(key, bookDone) {
       sheets({
-        key: key,
-        worksheet: 1
+        key: key
       }, function(err, book) {
         if (err || !book) {
           grunt.fail.warn("Unable to access book for " + key + ", is it 'published' in Sheets?");
@@ -66,7 +65,7 @@ module.exports = function(grunt) {
         async.each(book.worksheets, function(page, pageDone) {
           sheets.cells({ key: key, worksheet: page.id }, function(err, cells) {
             if (err) {
-              grunt.fail.warn("Couldn't load sheet for " + book.title);
+              grunt.fail.warn("Couldn't load sheet " + page.id + " for " + book.title);
               return pageDone();
             }
             cells = cells.cells;
@@ -107,14 +106,9 @@ module.exports = function(grunt) {
             grunt.file.write(filename, JSON.stringify(output, null, 2));
             pageDone();
           });
-        }, function() {
-          //when done with all sheets, continue
-          bookDone();
-        });
+        }, bookDone);
       });
-    }, function() {
-      return done();
-    });
+    }, done);
 
   });
 
