@@ -29,7 +29,7 @@ module.exports = function(grunt) {
               if (!filename) return next();
               var dir = path.dirname(location);
               fs.readdir(dir, function(err, list) {
-                if (list.indexOf(filename) == -1) {
+                if (!err && list.indexOf(filename) == -1) {
                   response.statusCode = 404;
                   response.end();
                 } else {
