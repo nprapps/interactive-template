@@ -80,6 +80,8 @@ module.exports = function(grunt) {
     }
 
     var bucketConfig = config.s3[deploy];
+    //strip slashes for safety
+    bucketConfig.path = bucketConfig.path.replace(/^\/|\/$/g, "");
 
     var creds = {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,

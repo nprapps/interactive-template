@@ -31,7 +31,7 @@ module.exports = function(grunt) {
               fs.readdir(dir, function(err, list) {
                 if (!err && list.indexOf(filename) == -1) {
                   response.statusCode = 404;
-                  response.end();
+                  response.end("<pre>            404 Not Found\n-this space intentionally left blank-</pre>");
                 } else {
                   next();
                 }
