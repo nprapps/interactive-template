@@ -6,8 +6,14 @@ and loadSheets, which import data in a compatible way.
 */
 
 var path = require("path");
+var template = require("./lib/template");
 
 module.exports = function(grunt) {
+
+  var process = function(source, data, filename) {
+    var fn = template(source, { imports: { grunt: grunt }, sourceURL: filename });
+    return fn(data);
+  };
 
   grunt.template.formatNumber = function(s) {
     s = s + "";
@@ -29,7 +35,7 @@ module.exports = function(grunt) {
     var file = grunt.file.read(path.resolve("src/", where));
     var templateData = Object.create(data || grunt.data);
     templateData.t = grunt.template;
-    return grunt.template.process(file, {data: templateData});
+    return process(file, templateData, where);
   };
 
   grunt.registerTask("build", "Processes index.html using shared data (if available)", function() {
@@ -40,7 +46,7 @@ module.exports = function(grunt) {
       var src = file.src.shift();
       grunt.verbose.writeln("Processing file: " +  src);
       var input = grunt.file.read(src);
-      var output = grunt.template.process(input, { data: data });
+      var output = process(input, data, src);
       grunt.file.write(file.dest, output);
     });
   });
