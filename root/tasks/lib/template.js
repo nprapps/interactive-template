@@ -4,13 +4,15 @@ Templating code adapted liberally from lodash.template: https://github.com/lodas
 
 What we changed:
 * Line breaks are now reproduced in the compiled template, for easier debugging
-* Template escapes are now inline, for the same reason
-* Reduced the compiled function boilerplate and made it more consistent
+* Template escapes are now inline, for the same reason.
 * Added a wrapper that rethrows after logging out the line where errors occur
 
 */
 
 var chalk = require("chalk");
+
+/** Used to figure out how long the boilerplate is in the compiled template **/
+var sentinel = "/**end prefx**/";
 
 /** Used to match empty string literals in compiled template source. */
 var reEmptyStringLeading = /\b__p \+= '';/g,
@@ -68,6 +70,7 @@ var template = function(string, options) {
   var isEscaping,
       isEvaluating,
       index = 0,
+      prefixLength,
       interpolate = options.interpolate || reNoMatch,
       source = "__p += '";
 
@@ -109,6 +112,7 @@ var template = function(string, options) {
     return match;
   });
 
+  source = sentinel + source;
   source += "';\n";
 
   // If `variable` is not specified wrap a with-statement around the generated
@@ -122,7 +126,7 @@ var template = function(string, options) {
   source = 'function(' + (variable || 'obj') + ') {' +
     (variable
       ? ''
-      : 'obj || (obj = {});'
+      : 'obj || (obj = {});\n'
     ) +
     "var __t, __p = ''" +
     (isEscaping
@@ -130,17 +134,22 @@ var template = function(string, options) {
        : ''
     ) +
     (isEvaluating
-      ? ', __j = Array.prototype.join; ' +
-        "function print() { __p += __j.call(arguments, '') }"
+      ? ', __j = Array.prototype.join;\n' +
+        "function print() { __p += __j.call(arguments, '') }\n"
       : ';'
-    ) +
-    source +
+    ) + 
+    source + 
     'return __p\n}';
 
   try {
     var keys = Object.keys(options.imports || []);
     var values = keys.map(k => options.imports[k]);
-    var result = (new Function(keys, sourceURL + 'return ' + source)).apply(undefined, values);
+    var f = new Function(keys, sourceURL + 'return ' + source);
+    var compiled = f.toString();
+    var prefix = compiled.slice(0, compiled.indexOf(sentinel));
+    var breaks = prefix.match(/(\n)/g);
+    prefixLength = breaks ? breaks.length + 1 : 1;
+    var result = f.apply(undefined, values);
   } catch(err) {
     console.error("Couldn't compile template", err.message, err.stack);
   };
@@ -156,8 +165,8 @@ var template = function(string, options) {
       var stack = err.stack;
       var match = stack.match(new RegExp(options.sourceURL + ":(\\d+)"));
       if (match) {
-        //hack, there's 5 lines of boilerplate at the top of the template function
-        var line = match[1] * 1 - 5;
+        var line = match[1] * 1 - prefixLength;
+        console.log(match[0], result.toString().indexOf("\n"));
         err.line = line;
         console.log(chalk.bgRed.white("Template execution error: %s:%s"), options.sourceURL, line + 1);
         var split = result.source.split("\n");
