@@ -143,7 +143,7 @@ var template = function(string, options) {
 
   try {
     var keys = Object.keys(options.imports || []);
-    var values = keys.map(k => options.imports[k]);
+    var values = keys.map(function(k) { return options.imports[k] });
     var f = new Function(keys, sourceURL + 'return ' + source);
     var compiled = f.toString();
     var prefix = compiled.slice(0, compiled.indexOf(sentinel));
