@@ -27,8 +27,6 @@ var track = function(category, action, label) {
 };
 
 //set up default tracking events
-["click", "touchstart"].forEach(e => track.bind(null, `interactive-page-${e}`));
-
 var oneScroll = function() {
   track("interactive-page-scrolled");
   window.removeEventListener("scroll", oneScroll);
