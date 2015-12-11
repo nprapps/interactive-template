@@ -1,39 +1,7 @@
-/*global fyre, callback, authDelegate*/
-//note that these libraries require jQuery or a jQuery shim, or they will throw errors
-//a no-op shim is included below, but may be disabled with the following variable:
-
-var shim$ = !("$" in window);
-
-if (shim$) {
-  var noop = function() {};
-  var ish = {
-    ready: function(f) { f() }
-  };
-  ["append", "bind", "html", "removeClass", "one"].forEach(function(p) { ish[p] = () => console.log(p) });
-
-  window.$ = function() { return ish; };
-}
-
-var css = ["http://discussions.seattletimes.com/comments/css/st-commenting.css"];
-var async = [
-  "http://zor.livefyre.com/wjs/v3.0/javascripts/livefyre.js",
-  "http://cdn.livefyre.com/Livefyre.js"
-];
-
-var head = document.querySelector("head");
-
-css.forEach(function(url) {
-  var link = document.createElement("link");
-  link.type = "text/css";
-  link.rel = "stylesheet";
-  link.href = url;
-  head.appendChild(link);
-});
-
-var scriptIndex = -1;
-
 var configure = function() {
   Livefyre.require(['fyre.conv#3'], function(Conv) {
+
+    console.log(Conv.RemoteAuthDelegate);
 
     var authDelegate = new fyre.conv.RemoteAuthDelegate();
     authDelegate.login = function() {
@@ -86,17 +54,22 @@ var configure = function() {
 var viewLink = document.querySelector(".show-comments");
 
 var asyncScripts = function(callback) {
-  //console.log(this, scriptIndex);
-  scriptIndex++;
-  var url = async[scriptIndex];
-  if (!url) {
-    return configure();
-  }
+  console.log(viewLink);
+  var head = document.querySelector("head");
+
+  var link = document.createElement("link");
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.href = "http://discussions.seattletimes.com/comments/css/st-commenting.css";
+  head.appendChild(link);
+
   var script = document.createElement("script");
-  script.src = url;
-  script.onload = asyncScripts;
+  script.src = "//cdn.livefyre.com/Livefyre.js";
+  script.onload = function() {
+    viewLink.parentElement.removeChild(viewLink);
+    configure();
+  };
   head.appendChild(script);
-  viewLink.parentElement.removeChild(viewLink);
 };
 
 viewLink.addEventListener("click", function() {
