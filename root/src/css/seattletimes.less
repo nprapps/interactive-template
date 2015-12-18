@@ -21,6 +21,8 @@ body {
   line-height: @df-line-base;
   padding: 0;
   margin: 0;
+  //remove 300ms click delay in Safari, AKA still the worst
+  touch-action: manipulation;
 }
 
 main {
