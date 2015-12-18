@@ -103,7 +103,7 @@ var template = function(string, options) {
     } else if (interpolateValue) {
       source += "' + ((__t = (" + interpolateValue + ")) == null ? '' : __t) + '";
     } else if (match.match(reLineBreak)) {
-      source += "';\n__p +='";
+      source += "\\n';\n__p +='";
     }
     index = offset + match.length;
 
