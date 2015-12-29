@@ -11,7 +11,7 @@ var template = require("./lib/template");
 module.exports = function(grunt) {
 
   var process = function(source, data, filename) {
-    var fn = template(source, { imports: { grunt: grunt }, sourceURL: filename });
+    var fn = template(source, { imports: { grunt: grunt, require: require }, sourceURL: filename });
     return fn(data);
   };
 
