@@ -1,8 +1,6 @@
 var configure = function() {
   Livefyre.require(['fyre.conv#3'], function(Conv) {
 
-    console.log(Conv.RemoteAuthDelegate);
-
     var authDelegate = new fyre.conv.RemoteAuthDelegate();
     authDelegate.login = function() {
       document.cookie  = `st-return=${location.href};domain=.seattletimes.com;path=/`;
@@ -54,7 +52,6 @@ var configure = function() {
 var viewLink = document.querySelector(".show-comments");
 
 var asyncScripts = function(callback) {
-  console.log(viewLink);
   var head = document.querySelector("head");
 
   var link = document.createElement("link");
