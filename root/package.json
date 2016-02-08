@@ -23,6 +23,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "less": "^2.0.0",
     "mime": "^1.2.11",
+    "resolve": "^1.1.7",
     "shelljs": "^0.5.1",
     "through2": "^2.0.0",
     "typogr": "^0.6.4"
