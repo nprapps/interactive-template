@@ -5,15 +5,19 @@ var strings = {
   },
   requestAnimationFrame: {
     on: window,
-    props: ["requestAnimationFrame", "webkitRequestAnimationFrame", "setTimeout"]
+    props: ["webkitRequestAnimationFrame", "requestAnimationFrame", "setTimeout"]
   },
   requestFullScreen: {
     on: document.body,
-    props: ["requestFullscreen", "webkitRequestFullscreen", "mozRequestFullScreen", "msRequestFullscreen"]
+    props: ["webkitRequestFullscreen", "mozRequestFullScreen", "msRequestFullscreen", "requestFullscreen"]
   },
   transform: {
     on: document.body.style,
     props: ["transform", "webkitTransform"]
+  },
+  transformOrigin: {
+    on: document.body.style,
+    props: ["transformOrigin", "webkitTransformOrigin"]
   }
 };
 
