@@ -18,7 +18,7 @@
     "csv": "^0.4.2",
     "exorcist": "^0.4.0",
     "google-spreadsheets": "^0.5.1",
-    "grunt": "^0.4.5",
+    "grunt": "^1.0.0",
     "grunt-contrib-connect": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "less": "^2.6.1",
