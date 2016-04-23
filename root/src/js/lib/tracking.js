@@ -1,11 +1,6 @@
 //module for interfacing with GA
 //automatically fires GA tracking on click/touch, require it for custom events
-//NOTE: requires the _adFoot partial to load for GTM (embedded: false in project.json)
-
-//ensure dataLayer exists
-if (!window.dataLayer) {
-  window.dataLayer = [];
-}
+//NOTE: requires the _foot partial to load for tracking (embedded: false in project.json)
 
 /**
 @param [category] - usually "interaction"
@@ -18,12 +13,15 @@ var track = function(category, action, label) {
     category = "interaction";
   }
   label = label || document.title || window.location.href;
-  window.dataLayer.push({
-    event: "analyticsEvent",
-    eventCategory: category,
-    eventAction: action,
-    eventLabel: label
-  });
+  //send through GTM
+  // window.dataLayer.push({
+  //   event: "analyticsEvent",
+  //   eventCategory: category,
+  //   eventAction: action,
+  //   eventLabel: label
+  // });
+  //send through GA
+  if (window.ga) ga("send", "event", category, action, label);
 };
 
 //set up default tracking events
