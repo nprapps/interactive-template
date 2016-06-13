@@ -5,11 +5,11 @@ var strings = {
   },
   requestAnimationFrame: {
     on: window,
-    props: ["webkitRequestAnimationFrame", "requestAnimationFrame", "setTimeout"]
+    props: ["requestAnimationFrame", "webkitRequestAnimationFrame", "setTimeout"]
   },
   requestFullScreen: {
     on: document.body,
-    props: ["webkitRequestFullscreen", "mozRequestFullScreen", "msRequestFullscreen", "requestFullscreen"]
+    props: ["requestFullscreen", "webkitRequestFullscreen", "mozRequestFullScreen", "msRequestFullscreen"]
   },
   transform: {
     on: document.body.style,
