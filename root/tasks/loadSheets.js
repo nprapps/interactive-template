@@ -102,7 +102,7 @@ module.exports = function(grunt) {
               }
             });
 
-            var filename = "data/" + camelCase(book.title) + "_" + camelCase(page.title) + ".sheet.json";
+            var filename = "data/" + camelCase(page.title) + ".sheet.json";
             grunt.file.write(filename, JSON.stringify(output, null, 2));
             pageDone();
           });
