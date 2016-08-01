@@ -1,4 +1,4 @@
-var raf = window[require("./lib/prefixed").requestAnimationFrame];
+var raf = window[require("./prefixed").requestAnimationFrame];
 
 var animating = false;
 
