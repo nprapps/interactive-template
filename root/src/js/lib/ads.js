@@ -1,6 +1,6 @@
   var tag = window.googletag = window.googletag || { cmd: [], seatimes: { unit: "/81279359/seattletimes.com" } };
-  
-  var bannerMapping = { 
+
+  var bannerMapping = {
     768: [[728,90]],
     1: [[300, 50]]
   };
@@ -13,13 +13,13 @@
     bannerBottom: { sizes: [[728,90]], sizeMapping: bannerMapping, position: "bottom" },
     interstitial: { sizes: [[1,1]], position: "inter" }
   };
-  
+
   var gscript = document.createElement("script");
   gscript.async = true;
   gscript.defer = true;
   gscript.src = "//www.googletagservices.com/tag/js/gpt.js";
-  document.head.appendChild(gscript);
-  
+  setTimeout(() => document.head.appendChild(gscript), 3000);
+
   //initialize
   tag.cmd.push(function() {
     tag.pubads().setTargeting('tag', tag.seatimes.tags || []);
