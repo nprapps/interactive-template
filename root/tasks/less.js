@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         file = file.replace("npm://", "");
         var resolved = resolve(file, {
           extensions: [".less", ".css"],
-          packageFilter: function(package) { 
+          packageFilter: function(package) {
             if (package.style) package.main = package.style;
             return info;
           }
@@ -49,15 +49,15 @@ module.exports = function(grunt) {
     },
     minVersion: [2, 1, 1]
   };
-  
+
   var options = {
     paths: ["src/css"],
     filename: "seed.less",
     plugins: [npmImporter]
   };
-  
-  grunt.registerTask("less", function() {
-    
+
+  grunt.registerTask("less", "Compile styles from src/css/seed.less", function() {
+
     var done = this.async();
 
     var seeds = {
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
     async.forEachOf(seeds, function(dest, src, c) {
 
       var seed = grunt.file.read(src);
-      
+
       less.render(seed, options, function(err, result) {
         if (err) {
           grunt.fail.fatal(err.message + " - " + err.filename + ":" + err.line);
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
       });
 
     }, done)
-    
+
   });
 
 };

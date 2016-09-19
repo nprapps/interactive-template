@@ -48,7 +48,7 @@ var cron = function() {
 
 module.exports = function(grunt) {
 
-  grunt.registerTask("cron", function() {
+  grunt.registerTask("cron", "Run the build on a timer", function() {
     //never completes!
     this.async();
 
