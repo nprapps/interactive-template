@@ -1,0 +1,140 @@
+// Photo gallery styles
+.gallery {
+  margin: 40px 0;
+  text-align: center;
+  overflow: hidden;
+
+  .caption {
+    font-family: @df-serif;
+    font-style: italic;
+    font-size: 15px;
+    color: @df-middle-gray;
+    line-height: 1.5em;
+  }
+
+  .image-wrapper {
+    position: relative;
+    background: @df-charcoal;
+    min-height: 300px;
+
+    @media @tablet {
+      min-height: 200px;
+    }
+
+    @media @mobile {
+      min-height: 100px;
+    }
+
+    &:hover {
+      .arrow {
+        opacity: 1;
+      }
+    }
+  }
+
+  .gallery-img {
+    display: none;
+    // max-height: 95vh;
+
+    &.active {
+      display: block;
+    }
+
+    &.post-active {
+      position: absolute;
+      display: block;
+      top: 0;
+      &.fade {
+        opacity: 0;
+      }
+    }
+
+    &.left {
+      transform: translateX(-100%);
+    }
+
+    &.right {
+      transform: translateX(100%);
+    }
+
+    &.animate {
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  .arrow {
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    color: white;
+    background: transparent;
+    position: absolute;
+    height: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    font-size: 35px;
+    cursor: pointer;
+    .display-flex();
+    .align-items(center);
+
+    @media @mobile {
+      font-size: 25px;
+    }
+
+    &:hover {
+      background: rgba(0,0,0,0.4);
+
+      .arrow-icon {
+        background: transparent;
+      }
+    }
+
+    &.prev {
+      left: 0px;
+    }
+    &.next {
+      right: 0px;
+    }
+
+    .arrow-icon {
+      padding: 20px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 5px;
+      transition: all 0.3s ease-in-out;
+
+      @media @mobile {
+        padding: 15px;
+      }
+    }
+  }
+
+  img {
+    margin: auto;
+    display: block;
+    max-height: 700px;
+
+    @media @mobile {
+      max-height: 300px;
+    }
+  }
+  .photo-info {
+    .display-flex();
+    background: white;
+  }
+  .index {
+    .flex(0 0 60px);
+    font-family: @df-sans;
+    color: @df-middle-gray;
+    line-height: 1.5em;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px 0 20px 10px;
+  }
+  .caption {
+    .flex(1);
+    text-align: left;
+    padding: 20px;
+  }
+}
