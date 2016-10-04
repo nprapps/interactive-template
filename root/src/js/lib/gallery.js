@@ -2,6 +2,10 @@ var Hammer = require("hammerjs");
 var $ = require("./qsa");
 var closest = require("./closest");
 
+var fontAwesome = document.createElement("script");
+fontAwesome.src = "https://use.fontawesome.com/bd870dfa49.js";
+document.head.appendChild(fontAwesome);
+
 var loadGalleryImage = function(frame) {
   var img = frame.querySelector("img");
   if (!img.src) img.src = img.getAttribute("data-src");
