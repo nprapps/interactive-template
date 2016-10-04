@@ -1,0 +1,28 @@
+<div class="gallery">
+  <div class="image-wrapper">
+    <% var photos = grunt.data.csv.gallery.filter(function(c) {
+      return c.gallery == keyword;
+    }) %>
+
+    <% photos.forEach(function(c, i) { %>
+        <% if (!i) { %>
+          <div class="active gallery-img">
+            <img alt="<%= c.caption %>" data-index="<%= i %>" class="lazy-load" src="./assets/<%= c.image %>">
+          </div>
+        <% } else { %>
+          <div class="gallery-img" data-index="<%= i %>">
+            <img alt="<%= c.caption %>" data-index="<%= i %>" data-src="./assets/<%= c.image %>">
+          </div>
+        <% } %>
+
+    <% }); %>
+    <div class="prev arrow"><i class="prev arrow-icon fa fa-chevron-left" aria-hidden="true"></i></div>
+    <div class="next arrow"><i class="next arrow-icon fa fa-chevron-right" aria-hidden="true"></i></div>
+  </div>
+  <div class="photo-info">
+    <div class="index">
+      <i class="fa fa-camera" aria-hidden="true"></i>
+      <br><span class="count">1</span> of <%= photos.length %></div>
+    <div class="caption"></div>
+  </div>
+</div>
