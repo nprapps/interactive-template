@@ -10,9 +10,10 @@
         <img src="./assets/<%= story.image %>"></img>
       </a>
       <div class="small"><%= story.category %></div>
-      <a href="<%= story.link %>">
-        <div><%= story.category %></div>
-      </a>
+      <div>
+        <a href="<%= story.link %>">
+          <%= story.head %>
+        </a>
       </div>
     </div>
   <% }); %>
