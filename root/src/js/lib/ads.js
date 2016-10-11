@@ -18,7 +18,7 @@
   gscript.async = true;
   gscript.defer = true;
   gscript.src = "//www.googletagservices.com/tag/js/gpt.js";
-  setTimeout(() => document.head.appendChild(gscript), 3000);
+  setTimeout(() => document.head.appendChild(gscript), 1000);
 
   //initialize
   tag.cmd.push(function() {
