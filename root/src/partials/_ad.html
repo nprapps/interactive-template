@@ -1,5 +1,5 @@
 <% /* "You must include the type, and optionally an ID, to load ads" */ %>
-<div class="ad" id="<%= typeof id != "undefined" ? id : "" %>">
+<div class="pending ad" id="<%= typeof id != "undefined" ? id : "" %>" data-type="<%= type %>">
   <script>
 (function() {
   var scripts = document.getElementsByTagName("script");
@@ -35,6 +35,7 @@
       ad.addService(tag.pubads());
       tag.enableServices();
       tag.display(id);
+      div.classList.remove("pending");
       window.removeEventListener("scroll", debounced);
       return true;
     };
