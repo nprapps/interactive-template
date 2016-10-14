@@ -1,3 +1,8 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title><%= grunt.data.json.project.title %></title>
+
 <!-- Favicon -->
 <link rel="shortcut icon" href="http://apps-production.s3.amazonaws.com/static/images/favicon.ico" type="image/x-icon">
 
@@ -17,6 +22,9 @@
 <meta property="og:image" content="<%= grunt.data.json.project.url + grunt.data.json.project.image %>">
 <meta property="og:description" content="<%= grunt.data.json.project.description %>">
 <meta property="fb:app_id" content="225286600856790"/>
+
+<!-- Safari, you're the worst -->
+<meta name='format-detection' content='telephone=no'>
 
 <!-- Chartbeat top -->
 <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
