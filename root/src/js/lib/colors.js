@@ -1,5 +1,5 @@
-var rgb = (r, g, b) => `rgb(${r}, ${g}, ${b})`;
-var rgba = (r, g, b, a) => `rgba(${r}, ${g}, ${b}, ${a || 1})`;
+var rgb = (r, g, b) => `rgb(${r | 0}, ${g | 0}, ${b | 0})`;
+var rgba = (r, g, b, a) => `rgba(${r | 0}, ${g | 0}, ${b | 0}, ${a || 1})`;
 var hsl = (h, s, l) => `hsl(${h}, ${s}%, ${l}%)`;
 
 var palette = {
