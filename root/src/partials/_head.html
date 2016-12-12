@@ -34,7 +34,7 @@
 window.googletag = {
   cmd: [],
   seatimes: {
-    tags: <%= JSON.stringify(json.project.tags) %>,
+    tags: <%= JSON.stringify(json.project.tags || []) %>,
     unit: "/81279359/seattletimes.com"
   }
 };
