@@ -152,20 +152,31 @@ nav.main-nav {
   margin: 16px auto;
 
   &.pending {
+    &::before {
+      display: block;
+      content: "";
+    }
+
     &[data-type="banner"],
-    &[data-type="bannerBottom"] {
+    &[data-type="bannerBottom"]{
       max-width: 728px;
-      padding-bottom: percentage(90 / 728);
+      &::before {
+        padding-bottom: percentage(90 / 728);
+      }
     }
 
     &[data-type="tall"] {
       max-width: 300px;
-      padding-bottom: percentage(600 / 300);
+      &::before {
+        padding-bottom: percentage(600 / 300);
+      }
     }
 
     &[data-type="square"] {
       max-width: 300px;
-      padding-bottom: percentage(250 / 300);
+      &::before {
+        padding-bottom: percentage(250 / 300);
+      }
     }
   }
 }
