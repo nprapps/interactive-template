@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 
     async.forEachOf(seeds, function(dest, src, c) {
       var b = browserify({ debug: mode == "dev" });
-      b.transform(babel, { presets: ["es2015"]});
+      b.transform(babel, { global: true, presets: ["es2015"]});
 
       //make sure build/ exists
       grunt.file.mkdir("build");
