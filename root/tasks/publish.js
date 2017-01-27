@@ -82,6 +82,9 @@ module.exports = function(grunt) {
     var bucketConfig = config.s3[deploy];
     //strip slashes for safety
     bucketConfig.path = bucketConfig.path.replace(/^\/|\/$/g, "");
+    if (!bucketConfig.path) {
+      grunt.fail.fatal("You must specify a destination path in your project.json.");
+    }
 
     var creds = {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -89,8 +92,7 @@ module.exports = function(grunt) {
       region: process.env.AWS_DEFAULT_REGION || "us-west-1"
     };
     if (!creds.accessKeyId) {
-      console.error("Missing AWS configuration variables.")
-      return done();
+      grunt.fail.fatal("Missing AWS configuration variables.")
     }
     aws.config.update(creds);
 
