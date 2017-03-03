@@ -5,7 +5,7 @@ var animating = false;
 var noop = function() {};
 var ease = v => 0.5 - Math.cos( v * Math.PI ) / 2;
 
-module.exports = function(element, done = noop) {
+module.exports = function(element, duration = 500, done = noop) {
   if (animating) return;
   if (typeof element == "string") element = document.querySelector(element);
 
@@ -15,14 +15,16 @@ module.exports = function(element, done = noop) {
   var finish = start + bounds.top - 10;
   var distance = finish - start;
   if (Math.abs(distance) < 10) return;
-  var duration = 500;
 
   var frame = function() {
     var t = Date.now();
     var elapsed = t - now;
     var d = elapsed / duration;
     document.body.scrollTop = document.documentElement.scrollTop = start + distance * ease(d);
-    if (elapsed > duration) return animating = false;
+    if (elapsed > duration) {
+      animating = false;
+      return done();
+    }
     raf(frame);
   };
 
