@@ -27,7 +27,7 @@ var cast = function(str) {
       return str;
     }
   }
-  if (str.match(/^[\d\.,]+$/)) {
+  if (str.match(/^-?[\d\.,]+$/)) {
     //number
     return Number(str.replace(/,/g, ""));
   }

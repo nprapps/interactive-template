@@ -27,8 +27,8 @@ Before you begin, you'll need to have the following installed:
 -  The Grunt command line utility (grunt-cli, installed globally)
 -  Grunt project scaffolding (grunt-init, installed globally)
 
-Find your ``.grunt-init`` folder and clone this repo into it using the
-following command:
+Find (or create) the ``.grunt-init`` folder in your user's home folder and
+clone this repo into it using the following command:
 
 .. code:: sh
 
@@ -37,7 +37,9 @@ following command:
 (We want to clone into the "newsapp" folder so that we can run
 ``grunt-init newsapp`` and not ``grunt-init newsapp-template``.)
 
-That's it! Now let's start a sample project to see how it all works.
+If it works, you should be able to ``ls ~/.grunt-init/newsapp`` and get back a
+list of files. That's it! Now let's start a sample project to see how it all
+works.
 
 Getting Started
 ---------------
@@ -127,19 +129,27 @@ following template:
 
 ::
 
-    <%= t.include("_head.html") %>
+    <%= t.include("partials/_head.html") %>
     This space intentionally left blank.
-    <%= t.include("_foot.html") %>
+    <%= t.include("partials/_foot.html") %>
+
+You can also pass data to an included template file using the second argument
+to ``t.include()``, like so:
+
+::
+
+    <%= t.include("partials/_ad.html", { type: "banner" }) %>
+
+This will load our ad block, sized for a "banner" slot (other common slots are "square" and "tall"). We include a number of partials as useful building blocks for Seattle Times content, such as:
+
+* ``_ad.html`` - inserts standard ads (same as the site) with lazy-loading code. Specify the type and an optional ID for styling
+* ``_comments.html`` - loads LiveFyre comments. Specify the LF application ID with ``article``.
+* ``_dontMiss.html`` - Creates the "Don't miss" quads. The ``data`` property should be an array of objects with ``head``, ``category``, ``image``, and ``link`` properties.
+* ``_gallery.html`` - a re-implementation of the main site's scrolling gallery code.
+* ``_nav.html`` and ``_navBottom.html`` - The top and bottom Seattle Times nav bars, with built-in share widget
 
 Client-side Code
 ----------------
-
-**Note:** This template previously used RequireJS to build from AMD modules,
-but has switched over to CommonJS and Browserify in order to support
-asynchronous build processes. If you have old projects that you update to a
-new version of the template, you will need to either bring over the old
-``amd`` task (located in ``tasks/require.js``) or convert to the new CommonJS
-module style.
 
 Let's install jQuery and add it to our JavaScript bundle. From the
 project folder, run the following command:
@@ -148,31 +158,49 @@ project folder, run the following command:
 
     npm install jquery --save
 
-By default, we would prefer to use NPM for dependencies, but Bower is also
-configured in the template. All libraries installed by Bower are placed in
-``src/js/lib`` by default, although this can be changed by editing the
-``.bowerrc`` file in the project folder root. Now we'll change
-``src/js/main.js`` to load jQuery:
+Now we'll change ``src/js/main.js`` to load jQuery:
 
 .. code:: javascript
 
-    //by default, the template loads our sharing and ad modules
-    require("./lib/social");
-    require("./lib/ads");
-
     var $ = require("jquery"); //load jQuery from an NPM module
-    console.log($, path);
+    console.log($);
 
 When we restart our dev server by running the ``grunt`` command, the
 ``bundle`` task will scan the dependencies it finds, starting in
 ``src/js/main.js``, and build those into a single file at ``build/app.js``
-(which is already included in the default HTML template). Browserify plugins
-for loading text files (with extensions ``.txt`` and ``.html``) and LESS files
-(for creating web components) are included with the template.
+(which is already included in the default HTML template). 
 
-In a similar fashion, to add more CSS to our project, we would create a
-new LESS file in ``src/css``, then update our ``src/css/seed.less`` file
-to import it like so:
+The template also includes a number of smaller helper modules that we didn't
+think were important enough to publish to NPM. You can always load these
+modules with the relative path:
+
+.. code:: javascript
+
+    //this enables social widgets and ad code
+    //no return value is needed
+    require("./lib/social");
+    require("./lib/ads");
+
+    //load our animated scroll and FLIP animation helpers for use
+    var animateScroll = require("./lib/animateScroll");
+    var flip = require("./lib/flip");
+
+Browserify plugins for loading text files (with extensions ``.txt`` and
+``.html``) and LESS files (for creating web components) are included with the
+template, so you can also just ``require()`` those files the same way you
+would other local modules. We often use this for our client-side templating:
+
+.. code:: javascript
+
+    //load the templating library preset
+    var dot = require("./lib/dot");
+
+    //get the template source and compile it
+    var template = dot.compile( require("./_tmpl.html") );
+
+In a similar fashion, to add more CSS to our project, we would create a new
+LESS file in ``src/css``, then update our ``src/css/seed.less`` file to import
+it like so:
 
 .. code:: less
 
@@ -185,6 +213,11 @@ JavaScript files, and new LESS imports, just by following these
 conventions. Our page will be regenerated as we make changes as long as
 the default Grunt task is running, and the built-in live reload server
 will even refresh the page for us!
+
+Note that both the LESS and JS bundle tasks are designed to be easily
+extensible: if you need to output multiple bundles for separate pages (such as
+a primary page and a secondary embedded widget), you can add new seeds to
+these files relatively easily, and then share code between both bundles.
 
 What else does it do?
 ---------------------
@@ -230,7 +263,7 @@ Where does everything go?
 ::
 
     ├── auth.json - authentication information for S3 and other endpoints
-    ├── build
+    ├── build - generated, not checked in or included before the first build
     │   ├── assets
     │   ├── app.js
     │   ├── index.html
