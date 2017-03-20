@@ -12,8 +12,13 @@ module.exports = function(grunt) {
 
   var process = function(source, data, filename) {
     var fn = template(source, { imports: { grunt: grunt, require: require }, sourceURL: filename });
-    return fn(data);
+    var input = Object.create(data || grunt.data);
+    input.t = grunt.template
+    return fn(input);
   };
+
+  //expose this for other tasks to use
+  grunt.template.process = process;
 
   grunt.template.formatNumber = function(s) {
     s = s + "";

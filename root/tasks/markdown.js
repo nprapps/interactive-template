@@ -28,6 +28,10 @@ module.exports = function(grunt) {
 
     files.forEach(function(filename) {
       var input = grunt.file.read(filename);
+
+      //run this through the template system
+      input = grunt.template.process(input);
+
       var parsed = reader.parse(input);
 
       var walker = parsed.walker();
