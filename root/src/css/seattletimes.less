@@ -40,9 +40,15 @@ main {
 a {
   color: @df-blue;
   text-decoration: none;
-  &:hover {
+
+  &:visited {
+    color: @df-middle-gray;
+  }
+
+  &:hover, &:focus {
     color: @df-navy;
   }
+
   img {
     border: none;
   }

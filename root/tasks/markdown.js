@@ -57,7 +57,11 @@ module.exports = function(grunt) {
         }
       }
 
+
       var output = writer.render(parsed);
+      //strip HTML block hack
+      output = output.replace(/\<\?|\?\>/g, "");
+      
       var sansExtension = path.basename(filename).replace(/\..*?$/, "");
       grunt.data.markdown[sansExtension] = output;
     });
