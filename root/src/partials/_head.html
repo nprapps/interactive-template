@@ -23,6 +23,10 @@
 <meta property="og:description" content="<%= grunt.data.json.project.description %>">
 <meta property="fb:app_id" content="225286600856790"/>
 
+<% if (grunt.data.json.project.standout) { %>
+<meta name="standout" content="<%= grunt.data.json.project.url %>">
+<% } %>
+
 <!-- Safari, you're the worst -->
 <meta name='format-detection' content='telephone=no'>
 
@@ -34,7 +38,7 @@
 window.googletag = {
   cmd: [],
   seatimes: {
-    tags: <%= JSON.stringify(json.project.tags || []) %>,
+    tags: <%= JSON.stringify(grunt.data.json.project.tags || []) %>,
     unit: "/81279359/seattletimes.com"
   }
 };
