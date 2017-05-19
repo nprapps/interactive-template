@@ -1,30 +1,61 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title><%= grunt.data.json.project.title %></title>
+<title><%= project.title %></title>
 
 <!-- Favicon -->
 <link rel="shortcut icon" href="http://apps-production.s3.amazonaws.com/static/images/favicon.ico" type="image/x-icon">
 
 <!-- BEGIN TWITTER SUMMARY CARD -->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="<%= grunt.data.json.project.title %>">
+<meta name="twitter:title" content="<%= project.title %>">
 <meta name="twitter:site" content="@seattletimes">
-<meta name="twitter:url" content="<%= grunt.data.json.project.url %>">
-<meta name="twitter:image" content="<%= grunt.data.json.project.url + grunt.data.json.project.image %>">
-<meta name="twitter:description" content="<%= grunt.data.json.project.description %>">
+<meta name="twitter:url" content="<%= project.url %>">
+<meta name="twitter:image" content="<%= project.url + project.image %>">
+<meta name="twitter:description" content="<%= project.description %>">
 
 <!-- Social sharing meta -->
 <meta property="og:type" content="article">
-<meta property="og:title" content="<%= grunt.data.json.project.title %>">
+<meta property="og:title" content="<%= project.title %>">
 <meta property="og:site_name" content="The Seattle Times">
-<meta property="og:url" content="<%= grunt.data.json.project.url %>">
-<meta property="og:image" content="<%= grunt.data.json.project.url + grunt.data.json.project.image %>">
-<meta property="og:description" content="<%= grunt.data.json.project.description %>">
+<meta property="og:url" content="<%= project.url %>">
+<meta property="og:image" content="<%= project.url + project.image %>">
+<meta property="og:description" content="<%= project.description %>">
 <meta property="fb:app_id" content="225286600856790"/>
 
-<% if (grunt.data.json.project.standout) { %>
-<meta name="standout" content="<%= grunt.data.json.project.url %>">
+<!-- Google structured data -->
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "<%= project.url %>"
+  },
+  "headline": "<%= project.title %>",
+  "image": {
+    "@type": "ImageObject",
+    "url": "<%= project.url + project.image %>"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Seattle Times Staff"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "The Seattle Times",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "<%= project.url %>assets/logo.jpg",
+      "width": 1000,
+      "height": 147
+    }
+  },
+  "description": "<%= project.description %>"
+</script>
+
+<% if (project.standout) { %>
+<meta name="standout" content="<%= project.url %>">
 <% } %>
 
 <!-- Safari, you're the worst -->
@@ -38,7 +69,7 @@
 window.googletag = {
   cmd: [],
   seatimes: {
-    tags: <%= JSON.stringify(grunt.data.json.project.tags || []) %>,
+    tags: <%= JSON.stringify(project.tags || []) %>,
     unit: "/81279359/seattletimes.com"
   }
 };
