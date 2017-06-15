@@ -10,6 +10,24 @@ ga('send', 'pageview');
 </script>
 <!-- End Google Analytics -->
 
+<!-- Mather -->
+<script>
+(function () {
+  window._matherq = [
+    ["setCustomerId", "ma39482"],
+    ["setMarket", "93382992"],
+    ["trackPageView"]
+  ];
+
+  var script = document.createElement('script');
+  script.async = true;
+  script.src = "https://js.matheranalytics.com/s/ma39482/93382992/sp.js?cb=" + Date.now();
+  document.head.appendChild(script);
+
+})();
+</script>
+<!-- End Mather -->
+
 <!-- Chartbeat bottom -->
 <script>
 var _sf_async_config={
@@ -23,8 +41,6 @@ var _sf_async_config={
   function loadChartbeat() {
     window._sf_endpt=(new Date()).getTime();
     var e = document.createElement('script');
-    e.setAttribute('language', 'javascript');
-    e.setAttribute('type', 'text/javascript');
     e.setAttribute('src',
 (("https:" == document.location.protocol) ? "https://a248.e.akamai.net/chartbeat.download.akamai.com/102508/" : "http://static.chartbeat.com/") + "js/chartbeat.js");
     document.body.appendChild(e);
