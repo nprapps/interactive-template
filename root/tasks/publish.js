@@ -100,7 +100,7 @@ module.exports = function(grunt) {
     s3.createBucket({
       Bucket: bucketConfig.bucket
     }, function(err) {
-      if (err && err.code != "BucketAlreadyOwnedByYou") {
+      if (err && (err.code != "BucketAlreadyOwnedByYou" && err.code != "BucketAlreadyExists")) {
         return console.log(err);
       }
       var uploads = findBuiltFiles();
