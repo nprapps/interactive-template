@@ -97,50 +97,43 @@ module.exports = function(grunt) {
     aws.config.update(creds);
 
     var s3 = new aws.S3();
-    s3.createBucket({
-      Bucket: bucketConfig.bucket
-    }, function(err) {
-      if (err && (err.code != "BucketAlreadyOwnedByYou" && err.code != "BucketAlreadyExists")) {
-        return console.log(err);
-      }
-      var uploads = findBuiltFiles();
-      async.eachLimit(uploads, 10, function(upload, c) {
-        var obj = {
-          Bucket: bucketConfig.bucket,
-          Key: join(bucketConfig.path, upload.path.replace(/^\\?build/, "")),
-          Body: upload.buffer,
-          ACL: "public-read",
-          ContentType: mime.lookup(upload.path),
-          CacheControl: "public,max-age=300"
-        };
-        //if this matches GZip support, compress them before uploading to S3
-        var extension = upload.path.split(".").pop();
-        if (gzippable.indexOf(extension) > -1) {
-          var before = upload.buffer.length;
-          return gzip(upload.buffer, function(err, zipped) {
-            if (!err) {
-              obj.Body = zipped;
-              var after = zipped.length;
-              obj.ContentEncoding = "gzip";
-              console.log("Uploading gzipped %s - %s %s %s (%s)",
-                obj.Key,
+    var uploads = findBuiltFiles();
+    async.eachLimit(uploads, 10, function(upload, c) {
+      var obj = {
+        Bucket: bucketConfig.bucket,
+        Key: join(bucketConfig.path, upload.path.replace(/^\\?build/, "")),
+        Body: upload.buffer,
+        ACL: "public-read",
+        ContentType: mime.lookup(upload.path),
+        CacheControl: "public,max-age=300"
+      };
+      //if this matches GZip support, compress them before uploading to S3
+      var extension = upload.path.split(".").pop();
+      if (gzippable.indexOf(extension) > -1) {
+        var before = upload.buffer.length;
+        return gzip(upload.buffer, function(err, zipped) {
+          if (!err) {
+            obj.Body = zipped;
+            var after = zipped.length;
+            obj.ContentEncoding = "gzip";
+            console.log("Uploading gzipped %s - %s %s %s (%s)",
+              obj.Key,
 
-                chalk.cyan(formatSize(before)),
-                chalk.yellow("=>"),
-                chalk.cyan(formatSize(after)),
-                chalk.bold.green(Math.round(after / before * 100) + "%")
-              );
-              s3.putObject(obj, c);
-            }
-          });
-        }
-        console.info("Uploading", obj.Key);
-        s3.putObject(obj, c);
-      }, function(err) {
-        if (err) return console.log(err);
-        console.log("All files uploaded successfully");
-        done();
-      });
+              chalk.cyan(formatSize(before)),
+              chalk.yellow("=>"),
+              chalk.cyan(formatSize(after)),
+              chalk.bold.green(Math.round(after / before * 100) + "%")
+            );
+            s3.putObject(obj, c);
+          }
+        });
+      }
+      console.info("Uploading", obj.Key);
+      s3.putObject(obj, c);
+    }, function(err) {
+      if (err) return console.log(err);
+      console.log("All files uploaded successfully");
+      done();
     });
   });
 
