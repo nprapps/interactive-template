@@ -89,6 +89,37 @@ h4 {
   margin: @df-line-base/2 0 0 0;
 }
 
+
+//common style elements
+
+.byline {
+  font-size: 18px;
+  margin: 24px auto;
+
+  @media @tablet {
+    padding: 0 16px;
+    padding-top: 40px;
+
+  }
+
+  @media @mobile {
+    padding: 0 16px;
+    padding-top: 40px;
+
+  }
+
+  .staff {
+    font-style: italic;
+    font-size: 16px;
+  }
+
+  .date {
+    font-size: 16px;
+    font-family: @df-sans;
+    color: @df-dark-gray;
+  }
+}
+
 //header and menu
 nav.main-nav {
   background: white;
