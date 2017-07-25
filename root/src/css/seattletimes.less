@@ -219,6 +219,52 @@ nav.main-nav {
   }
 }
 
+.subscribe-box {
+  padding: 0;
+
+  h2 {
+    margin: 0;
+  }
+
+  img {
+    display: inline-block;
+    padding-right: 10px;
+    height: 24px;
+
+    @media @mobile {
+      display: block;
+      margin: 24px auto;
+      padding-right: 0;
+    }
+  }
+
+  .button-box {
+    padding-top: 10px;
+    .display-flex();
+    .justify-content(center);
+    .align-items(center);
+
+    @media @mobile {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  .subscribe-button {
+    display: inline-block;
+    background: @df-blue;
+    padding: 12px 15px 10px 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: .08em;
+
+    &:hover {
+      background: @df-light-gray;
+    }
+  }
+}
+
 .show-comments {
   border: 1px solid @df-blue;
   padding: 20px;
