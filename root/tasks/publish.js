@@ -53,33 +53,14 @@ module.exports = function(grunt) {
 
     deploy = deploy || "stage";
 
-    if (deploy == "simulated") {
-      var uploads = findBuiltFiles();
-      async.each(uploads, function(upload, c) {
-        var extension = upload.path.split(".").pop();
-        if (gzippable.indexOf(extension) > -1) {
-          gzip(upload.buffer, function(err, zipped) {
-            console.log("Uploading gzipped %s - %s => %s",
-              upload.path,
-              formatSize(upload.buffer.length),
-              formatSize(zipped.length)
-            );
-            c();
-          })
-        } else {
-          console.log("Uploading %s", upload.path);
-          c();
-        }
-      }, done);
-      return;
-    }
-
     if (deploy == "live" && !config.production) {
       var checklist = grunt.file.read("tasks/checklist.txt");
       grunt.fail.fatal(checklist);
     }
 
-    var bucketConfig = config.s3[deploy];
+    var bucketConfig = deploy != "simulated" ? config.s3[deploy] : {
+      path: "SIMULATION"
+    };
     //strip slashes for safety
     bucketConfig.path = bucketConfig.path.replace(/^\/|\/$/g, "");
     if (!bucketConfig.path) {
@@ -99,37 +80,44 @@ module.exports = function(grunt) {
     var s3 = new aws.S3();
     var uploads = findBuiltFiles();
     async.eachLimit(uploads, 10, function(upload, c) {
-      var obj = {
-        Bucket: bucketConfig.bucket,
-        Key: join(bucketConfig.path, upload.path.replace(/^\\?build/, "")),
-        Body: upload.buffer,
-        ACL: "public-read",
-        ContentType: mime.lookup(upload.path),
-        CacheControl: "public,max-age=300"
-      };
-      //if this matches GZip support, compress them before uploading to S3
-      var extension = upload.path.split(".").pop();
-      if (gzippable.indexOf(extension) > -1) {
+
+      async.waterfall([function(next) {
+        //create the config object
+        next(null, {
+          Bucket: bucketConfig.bucket,
+          Key: join(bucketConfig.path, upload.path.replace(/^\\?build/, "")),
+          Body: upload.buffer,
+          ACL: "public-read",
+          ContentType: mime.lookup(upload.path),
+          CacheControl: "public,max-age=300"
+        });
+      }, function(obj, next) {
+        //check for GZIP support
+        var extension = upload.path.split(".").pop();
+        if (gzippable.indexOf(extension) == -1) return next(null, obj);
+        // run compression
         var before = upload.buffer.length;
         return gzip(upload.buffer, function(err, zipped) {
-          if (!err) {
-            obj.Body = zipped;
-            var after = zipped.length;
-            obj.ContentEncoding = "gzip";
-            console.log("Uploading gzipped %s - %s %s %s (%s)",
-              obj.Key,
-
-              chalk.cyan(formatSize(before)),
-              chalk.yellow("=>"),
-              chalk.cyan(formatSize(after)),
-              chalk.bold.green(Math.round(after / before * 100) + "%")
-            );
-            s3.putObject(obj, c);
-          }
+          if (err) return next(err);
+          obj.Body = zipped;
+          var after = zipped.length;
+          obj.ContentEncoding = "gzip";
+          next(null, obj);
         });
-      }
-      console.info("Uploading", obj.Key);
-      s3.putObject(obj, c);
+      }, function(obj, next) {
+        var before = upload.buffer.length;
+        var after = obj.Body.length;
+        console.log("... %s - %s %s %s (%s)",
+          obj.Key,
+
+          chalk.cyan(formatSize(before)),
+          chalk.yellow("=>"),
+          chalk.cyan(formatSize(after)),
+          obj.ContentEncoding == "gzip" ? chalk.bold.green(Math.round(after / before * 100).toFixed(1) + "% gzip") : "no compression"
+        );
+        if (deploy != "simulated") s3.putObject(obj, next);
+      }], c);
+      
     }, function(err) {
       if (err) return console.log(err);
       console.log("All files uploaded successfully");
