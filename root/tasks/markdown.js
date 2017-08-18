@@ -28,43 +28,52 @@ module.exports = function(grunt) {
 
     files.forEach(function(filename) {
       var input = grunt.file.read(filename);
-
-      //run this through the template system
-      input = grunt.template.process(input);
-
-      var parsed = reader.parse(input);
-
-      var walker = parsed.walker();
-      //merge text nodes together
-      var e;
-      var previous;
-      while (e = walker.next()) {
-        var node = e.node;
-        //is this an adjacent text node?
-        if (node && previous && previous.parent == node.parent && previous.type == "Text" && node.type == "Text") {
-          previous.literal += node.literal;
-          // grunt.log.oklns(previous.literal);
-          node.unlink();
-        } else {
-          previous = node;
-        }
-      }
-      //second pass, run Typogr on the text
-      walker = parsed.walker();
-      while (e = walker.next()) {
-        if (e.node && e.node.type == "Text") {
-          e.node.literal = typo.smartypants(e.node.literal);
-        }
-      }
-
-
-      var output = writer.render(parsed);
-      //strip HTML block hack
-      output = output.replace(/\<\?|\?\>/g, "");
-      
       var sansExtension = path.basename(filename).replace(/\..*?$/, "");
-      grunt.data.markdown[sansExtension] = output;
+
+      //define these as getters, so that templating can be processed out-of-order at runtime
+
+      Object.defineProperty(grunt.data.markdown, sansExtension, {
+        get: function() {
+          //run this through the template system
+          input = grunt.template.process(input);
+
+          var parsed = reader.parse(input);
+
+          var walker = parsed.walker();
+          //merge text nodes together
+          var e;
+          var previous;
+          while (e = walker.next()) {
+            var node = e.node;
+            //is this an adjacent text node?
+            if (node && previous && previous.parent == node.parent && previous.type == "Text" && node.type == "Text") {
+              previous.literal += node.literal;
+              // grunt.log.oklns(previous.literal);
+              node.unlink();
+            } else {
+              previous = node;
+            }
+          }
+          //second pass, run Typogr on the text
+          walker = parsed.walker();
+          while (e = walker.next()) {
+            if (e.node && e.node.type == "Text") {
+              e.node.literal = typo.smartypants(e.node.literal);
+            }
+          }
+
+
+          var output = writer.render(parsed);
+          //strip HTML block hack
+          output = output.replace(/\<\?|\?\>/g, "");
+          return output;
+        }
+      });
+
+
     });
+
+    console.log(grunt.data.markdown);
 
   });
 
