@@ -1,6 +1,7 @@
 var async = require("async");
 var fs = require("fs");
 var path = require("path");
+var util = require("util");
 var chalk = require("chalk");
 var gzip = require("zlib").gzip;
 var mime = require("mime");
@@ -107,14 +108,15 @@ module.exports = function(grunt) {
       }, function(obj, next) {
         var before = upload.buffer.length;
         var after = obj.Body.length;
-        console.log("... %s - %s %s %s (%s)",
-          obj.Key,
-
-          chalk.cyan(formatSize(before)),
+        var compressed = obj.ContentEncoding == "gzip";
+        var logString = compressed ? "... %s - %s %s %s (%s)" : "... %s - %s";
+        var args = [logString, obj.Key, chalk.cyan(formatSize(before))];
+        if (compressed) args.push(
           chalk.yellow("=>"),
           chalk.cyan(formatSize(after)),
-          obj.ContentEncoding == "gzip" ? chalk.bold.green(Math.round(after / before * 100).toFixed(1) + "% gzip") : "no compression"
+          chalk.bold.green(Math.round(after / before * 100).toFixed(1) + "% via gzip")
         );
+        console.log.apply(console, args);
         if (deploy != "simulated") s3.putObject(obj, next);
       }], c);
       
