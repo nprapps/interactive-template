@@ -12,6 +12,7 @@
     "aws-sdk": "^2.2.45",
     "babel-preset-env": "^1.6.0",
     "babelify": "^7.3.0",
+    "browser-pack-flat": "^3.0.5",
     "browserify": "^13.0.0",
     "chalk": "^1.0.0",
     "commonmark": "^0.24.0",
