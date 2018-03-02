@@ -2,7 +2,7 @@
 // do not call this function multiple times
 var walled = false;
 
-var paywall = function(pageId) {
+var paywall = function(pageID) {
   if (walled) return;
   walled = true;
 
