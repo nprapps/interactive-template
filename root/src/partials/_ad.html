@@ -1,5 +1,5 @@
 <% /* "You must include the type, and optionally an ID, to load ads" */ %>
-<div class="pending ad" id="<%= typeof id != "undefined" ? id : "" %>" data-type="<%= type %>">
+<div class="pending ad" id="<%= typeof id != "undefined" ? id : "" %>" data-type="<%= type %>" aria-hidden="true">
   <script>
 (function() {
   var scripts = document.getElementsByTagName("script");
