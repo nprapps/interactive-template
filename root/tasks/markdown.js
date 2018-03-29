@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     //ignore markdown files inside the JS folder that come from Bower or libraries
     var files = grunt.file.expand("src/**/*.md", "!src/js/**/*.md");
     grunt.data.markdown = {};
-    grunt.renderMarkdown = function(text) { return writer.render(reader.parse(text)) };
+    grunt.template.renderMarkdown = function(text) { return writer.render(reader.parse(text)) };
 
     files.forEach(function(filename) {
       var input = grunt.file.read(filename);
