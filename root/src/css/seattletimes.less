@@ -201,6 +201,10 @@ nav.main-nav {
       max-width: 728px;
       &::before {
         padding-bottom: percentage(90 / 728);
+
+        @media @mobile {
+          padding-bottom: percentage(50 / 300);
+        }
       }
     }
 
