@@ -24,7 +24,8 @@ module.exports = function(grunt) {
       b.plugin(require("browser-pack-flat/plugin"));
       b.transform(babel, { global: true, presets: [
         ["env", {
-          targets: { browsers: ["ie >= 10", "safari >= 8"]}
+          targets: { browsers: ["ie >= 10", "safari >= 8"]},
+          loose: true
         }]
       ]});
 
