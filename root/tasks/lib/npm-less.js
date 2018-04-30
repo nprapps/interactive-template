@@ -19,7 +19,7 @@ var npmImporter = {
           extensions: [".less", ".css"],
           packageFilter: function(package) { 
             if (package.style) package.main = package.style;
-            return info;
+            return package;
           }
         });
         return resolved;
