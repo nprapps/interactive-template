@@ -97,11 +97,9 @@ module.exports = function(grunt) {
         var extension = upload.path.split(".").pop();
         if (gzippable.indexOf(extension) == -1) return next(null, obj);
         // run compression
-        var before = upload.buffer.length;
         return gzip(upload.buffer, function(err, zipped) {
           if (err) return next(err);
           obj.Body = zipped;
-          var after = zipped.length;
           obj.ContentEncoding = "gzip";
           next(null, obj);
         });
