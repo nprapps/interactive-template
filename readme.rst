@@ -158,18 +158,18 @@ You can still use Markdown syntax in ArchieML files by using the
 Client-side Code
 ----------------
 
-Let's install jQuery and add it to our JavaScript bundle. From the
+Let's install Leaflet and add it to our JavaScript bundle. From the
 project folder, run the following command:
 
 .. code:: sh
 
-    npm install jquery --save
+    npm install leaflet --save
 
-Now we'll change ``src/js/main.js`` to load jQuery:
+Now we'll change ``src/js/main.js`` to load Leaflet:
 
 .. code:: javascript
 
-    var $ = require("jquery"); //load jQuery from an NPM module
+    var $ = require("leaflet"); //load Leaflet from an NPM module
     console.log($);
 
 When we restart our dev server by running the ``grunt`` command, the
@@ -191,6 +191,27 @@ modules with the relative path:
     //load our animated scroll and FLIP animation helpers for use
     var animateScroll = require("./lib/animateScroll");
     var flip = require("./lib/flip");
+
+Typically, you shouldn't need to load jQuery on a project, because these
+micro-modules cover most of its functionality, as well as some additional
+useful tools:
+
+* ``ads.js`` - Enables ads when combined with the template partial
+* ``animateScroll.js`` - Scroll to an element with a nice transition
+* ``closest.js`` - Equivalent of jQuery.closest()
+* ``colors.js`` - Contains JS versions of our style palette
+* ``comments.js`` - Enables LiveFyre comments
+* ``debounce.js`` - Equivalent of Underscore's debounce()
+* ``delegate.js`` - Equivalent of calling jQuery.on() with event delegation
+* ``dom.js`` - Build HTML in JS, similar to React.createElement()
+* ``dot.js`` - Compile client-side EJS templates with the same syntax used by the build system
+* ``flip.js`` - Animate smoothly using `FLIP <https://aerotwist.com/blog/flip-your-animations/>`_
+* ``geolocation.js`` - Geocode addresses to lat/longs, or get the user's current location
+* ``paywall.js`` - Enables the paywall, requires the ID of the link post from WordPress
+* ``prefixed.js`` - Used to access prefixed features in other browsers (mostly used by other modules)
+* ``qsa.js`` - Equivalent to jQuery's DOM search functions
+* ``tracking.js`` - Lets you fire custom events into GA for analytics
+* ``xhr.js`` - Equivalent to jQuery.ajax()
 
 Browserify plugins for loading text files (with extensions ``.txt`` and
 ``.html``) and LESS files (for creating web components) are included with the
