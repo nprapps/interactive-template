@@ -4,13 +4,16 @@
 <title><%= project.title %></title>
 
 <!-- Favicon -->
-<link rel="shortcut icon" href="https://apps-production.s3.amazonaws.com/static/images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" sizes="180x180" href="https://media.npr.org/templates/favicon/favicon-180x180.png" />
+<link rel="icon" sizes="96x96" href="https://media.npr.org/templates/favicon/favicon-96x96.png" />
+<link rel="icon" sizes="32x32" href="https://media.npr.org/templates/favicon/favicon-32x32.png" />
+<link rel="icon" sizes="16x16" href="https://media.npr.org/templates/favicon/favicon-16x16.png" />
 
 <% if (!project.embedded) { %>
 <!-- BEGIN TWITTER SUMMARY CARD -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="<%= project.title %>">
-<meta name="twitter:site" content="@seattletimes">
+<meta name="twitter:site" content="@nprviz">
 <meta name="twitter:url" content="<%= project.url %>">
 <meta name="twitter:image" content="<%= project.url + project.image %>">
 <meta name="twitter:description" content="<%= project.description %>">
@@ -18,11 +21,11 @@
 <!-- Social sharing meta -->
 <meta property="og:type" content="article">
 <meta property="og:title" content="<%= project.title %>">
-<meta property="og:site_name" content="The Seattle Times">
+<meta property="og:site_name" content="NPR Visuals">
 <meta property="og:url" content="<%= project.url %>">
 <meta property="og:image" content="<%= project.url + project.image %>">
 <meta property="og:description" content="<%= project.description %>">
-<meta property="fb:app_id" content="225286600856790"/>
+<meta property="fb:app_id" content="TODO"/>
 
 <!-- Google structured data -->
 <script type="application/ld+json">
@@ -40,11 +43,11 @@
   },
   "author": {
     "@type": "Person",
-    "name": "Seattle Times Staff"
+    "name": "NPR Staff"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "The Seattle Times",
+    "name": "NPR",
     "logo": {
       "@type": "ImageObject",
       "url": "<%= project.url %>assets/logo.jpg",
@@ -56,14 +59,8 @@
 }
 </script>
 
-<% if (project.standout) { %>
-<meta name="standout" content="<%= project.url %>">
-<% } %>
-
 <!-- Chartbeat top -->
 <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
-
-<% } %>
 
 <!-- Safari, you're the worst -->
 <meta name='format-detection' content='telephone=no'>
@@ -79,14 +76,3 @@ window.googletag = {
 };
 </script>
 <!-- end ad set-up -->
-
-<!-- typekit fonts -->
-<script>
-(function(d) {
-var config = {
-  kitId: 'rvq5yyp',
-  scriptTimeout: 3000
-},
-h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-})(document);
-</script>

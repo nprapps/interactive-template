@@ -1,0 +1,21 @@
+@import "values";
+
+//defensive coding
+* {
+  //border-box, you're the best
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+
+  //Safari, you're the worst
+  -webkit-tap-highlight-color: transparent;
+}
+
+//elements
+body {
+  padding: 0;
+  margin: 0;
+  //remove 300ms click delay in Safari, AKA still the worst
+  touch-action: manipulation;
+}

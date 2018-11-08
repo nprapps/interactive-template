@@ -1,5 +1,5 @@
-Seattle Times News App Template
-===============================
+Interactives Template
+=====================
 
 What is it?
 -----------
@@ -16,7 +16,7 @@ development server with watch tasks and live reload to make rapid development
 easy as pie.
 
 *Executive summary:* Provides everything you need to start building a
-news app for the Seattle Times (or anywhere else).
+news app or interactive graphic.
 
 Installation
 ------------
@@ -32,7 +32,7 @@ clone this repo into it using the following command:
 
 .. code:: sh
 
-    git clone git@github.com:seattletimes/newsapp-template newsapp
+    git clone git@github.com:thomaswilburn/newsapp-template newsapp
 
 (We want to clone into the "newsapp" folder so that we can run
 ``grunt-init newsapp`` and not ``grunt-init newsapp-template``.)
@@ -134,12 +134,7 @@ to ``t.include()``, like so::
 
     <%= t.include("partials/_ad.html", { type: "banner" }) %>
 
-This will load our ad block, sized for a "banner" slot (other common slots are "square" and "tall"). We include a number of partials as useful building blocks for Seattle Times content, such as:
-
-* ``_ad.html`` - inserts standard ads (same as the site) with lazy-loading code. Specify the type and an optional ID for styling
-* ``_comments.html`` - loads LiveFyre comments. Specify the LF application ID with ``article``.
-* ``_dontMiss.html`` - Creates the "Don't miss" quads. The ``data`` property should be an array of objects with ``head``, ``category``, ``image``, and ``link`` properties.
-* ``_nav.html`` and ``_navBottom.html`` - The top and bottom Seattle Times nav bars, with built-in share widget
+This will load our ad block, sized for a "banner" slot (other common slots are "square" and "tall"). We include a number of partials as useful building blocks.
 
 If you need to pull in article text, you can do so easily by placing a
 Markdown file with a ``.md`` extension in the project folder. These files will
@@ -307,7 +302,7 @@ Where does everything go?
     │   ├── css
     │   │   └── seed.less
     │   ├── index.html
-    │   ├── partials - directory containing Seattle Times boilerplate
+    │   ├── partials - directory containing boilerplate template sections
     │   └── js
     │       ├── main.js
     │       └── lib - directory for Bower, ST site modules

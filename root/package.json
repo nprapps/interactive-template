@@ -17,7 +17,6 @@
     "browserify": "^13.0.0",
     "chalk": "^1.0.0",
     "commonmark": "^0.24.0",
-    "component-responsive-frame": "^1.0.6",
     "csv": "^0.4.2",
     "dot": "^1.1.2",
     "exorcist": "^0.4.0",

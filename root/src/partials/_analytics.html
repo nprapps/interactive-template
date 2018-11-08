@@ -10,25 +10,6 @@ ga('send', 'pageview');
 </script>
 <!-- End Google Analytics -->
 
-<!-- Mather -->
-<script>
-(function () {
-  window._matherq = [
-    ["setCustomerId", "ma39482"],
-    ["setMarket", "93382992"],
-    ["enableActivityTracking", 30, 10],
-    ["trackPageView"]
-  ];
-
-  var script = document.createElement('script');
-  script.async = true;
-  script.src = "https://js.matheranalytics.com/s/ma39482/93382992/sp.js?cb=" + Date.now();
-  document.head.appendChild(script);
-
-})();
-</script>
-<!-- End Mather -->
-
 <!-- Chartbeat bottom -->
 <script>
 var _sf_async_config={
@@ -50,6 +31,3 @@ var _sf_async_config={
   window.onload = (typeof window.onload != 'function') ? loadChartbeat : function() { oldonload(); loadChartbeat(); };
 })();
 </script>
-
-<!-- Comscore pixel -->
-<img class="comscore" alt="" style="display: none" src="https://b.scorecardresearch.com/p?c1=2&c2=6950471&cv=2.0&cj=1&c4=<%= encodeURIComponent(json.project.url) %>" />

@@ -2,7 +2,7 @@ Warning: This project is not marked as production-ready. Please make sure the
 following checklist items are complete, then set `"production": true` in your
 project.json to allow live publishes.
 
-- Has it been tested in IE 10 and iOS Safari?
+- Has it been tested in iOS Safari?
 - If it's a standalone, does it have ads and related links?
 - Are you using the minified version of any third-party libraries?
 - Have you checked it for color-blindness, and in screen readers?

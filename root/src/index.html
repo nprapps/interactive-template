@@ -6,14 +6,9 @@
   </head>
   <body>
 
-    <responsive-child>
-      <!-- content goes here -->
-    </responsive-child>
-
     <script src="app.js" async></script>
-    <% if (json.project.production) { %>
-    <%= !json.project.embedded ? t.include("partials/_analytics.html") : "" %>
-    <%= t.include("partials/_workHere.html") %>
+    <% if (json.project.production && !json.project.embedded) { %>
+    <%= t.include("partials/_analytics.html") %>
     <% } %>
   </body>
 </html>
