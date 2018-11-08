@@ -9,6 +9,9 @@
 <link rel="icon" sizes="32x32" href="https://media.npr.org/templates/favicon/favicon-32x32.png" />
 <link rel="icon" sizes="16x16" href="https://media.npr.org/templates/favicon/favicon-16x16.png" />
 
+<!-- Safari, you're the worst -->
+<meta name='format-detection' content='telephone=no'>
+
 <% if (!project.embedded) { %>
 <!-- BEGIN TWITTER SUMMARY CARD -->
 <meta name="twitter:card" content="summary">
@@ -62,9 +65,6 @@
 <!-- Chartbeat top -->
 <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
 
-<!-- Safari, you're the worst -->
-<meta name='format-detection' content='telephone=no'>
-
 <!-- start ad set-up -->
 <script>
 window.googletag = {
@@ -76,3 +76,8 @@ window.googletag = {
 };
 </script>
 <!-- end ad set-up -->
+
+<%
+// if !project.embedded...
+} 
+%>
