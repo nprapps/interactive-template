@@ -15,9 +15,8 @@ module.exports = function(grunt) {
     var done = this.async();
 
     //specify starter files here - if you need additionally built JS, just add it.
-    var seeds = {
-      "./src/js/main.js": "build/app.js"
-    };
+    var config = grunt.file.readJSON("project.json");
+    var seeds = config.scripts;
 
     async.forEachOf(seeds, function(dest, src, c) {
       var b = browserify({ debug: mode == "dev" });

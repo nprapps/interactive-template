@@ -9,6 +9,12 @@
       "path": ""
     }
   },
+  "styles": {
+    "src/css/seed.less": "build/style.css"
+  },
+  "scripts": {
+    "src/js/main.js": "build/app.js"
+  },
   "title": "",
   "description": "",
   "url": "",
