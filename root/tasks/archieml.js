@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     var files = grunt.file.expand("data/*.txt");
 
     files.forEach(function(f) {
-      var name = path.basename(f).replace(/\.txt$/, "");
+      var name = path.basename(f).replace(/(\.docs)?\.txt$/, "");
       var contents = grunt.file.read(f);
       var parsed = archieml.load(contents);
       grunt.data.archieml[name] = parsed;

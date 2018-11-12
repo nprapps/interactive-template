@@ -1,4 +1,4 @@
-Interactives Template
+Interactive Template
 =====================
 
 What is it?
@@ -32,12 +32,12 @@ clone this repo into it using the following command:
 
 .. code:: sh
 
-    git clone git@github.com:thomaswilburn/newsapp-template newsapp
+    git clone git@github.com:nprapps/interactive-template interactive
 
-(We want to clone into the "newsapp" folder so that we can run
-``grunt-init newsapp`` and not ``grunt-init newsapp-template``.)
+(We want to clone into the "interactive" folder so that we can run
+``grunt-init interactive`` and not ``grunt-init interactive-template``.)
 
-If it works, you should be able to ``ls ~/.grunt-init/newsapp`` and get back a
+If it works, you should be able to ``ls ~/.grunt-init/interactive`` and get back a
 list of files. That's it! Now let's start a sample project to see how it all
 works.
 
@@ -49,7 +49,7 @@ folder for your project, open a shell there, and type:
 
 .. code:: sh
 
-    grunt-init newsapp
+    grunt-init interactive
 
 The scaffolding wizard will ask you to fill in some information, such as
 your name, the name of the project, a description. Once that's done,
@@ -105,17 +105,17 @@ our ``index.html`` file to output this as an HTML table::
         <% }); %>
     </table>
 
-In addition to on-disk data, you can set the template to import data
-from Google Sheets. This is a great option for collaborating with other
-newsroom staff, who may find Google Drive easier than Excel (especially
-when it comes to sharing files). To configure your project for import,
-open the ``project.json`` file and add your workbook key to the
-``sheets`` array found there. You'll also need to use the "Publish to
-Web" menu item in the Sheets UI (under file) to open up API access. Once
-both of those conditions are met, running ``grunt sheets`` will download
-the data from Google and cache it as JSON (one file per worksheet). As
-with CSV, the data will be stored as an array unless one of your columns
-is named "key," in which case it'll be stored as a hash table.
+In addition to on-disk data, you can set the template to import data from
+Google Sheets. This is a great option for collaborating with other newsroom
+staff, who may find Google Drive easier than Excel (especially when it comes
+to sharing files). To configure your project for import, open the
+``project.json`` file and add your workbook key to the ``sheets`` array found
+there. You'll also need to use the "Publish to Web" menu item in the Sheets UI
+(under file) to open up API access, or run ``grunt google-auth`` to create a
+local OAuth token. Once those conditions are met, running ``grunt sheets``
+will download the data from Google and cache it as JSON (one file per
+worksheet). As with CSV, the data will be stored as an array unless one of
+your columns is named "key," in which case it'll be stored as a hash table.
 
 When placing data into your HTML via Lo-dash, there are some helper
 functions that are also made available via ``t``, as seen above with
@@ -149,6 +149,12 @@ You can still use Markdown syntax in ArchieML files by using the
     <main class="article">
       <%= t.renderMarkdown(archieml.story.intro) %>
     </main>
+
+The template also includes a task (``docs``) for downloading Google Docs, much
+the same way as Sheets. They'll be cached as ``.docs.txt`` in the data folder,
+and then loaded as ArchieML. Access to Docs requires your machine to have a
+Google OAuth token, which is largely the same as described in `this post
+<http://blog.apps.npr.org/2015/03/02/app-template-oauth.html>`_.
 
 Client-side Code
 ----------------
@@ -255,7 +261,10 @@ the project.
 -  ``csv`` - Load CSV files into the ``grunt.data.csv`` object for
    templating
 -  ``json`` - Load JSON files onto ``grunt.data.json``
+-  ``google-auth`` - Authorize against the Drive API for downloading 
+    private files from Google
 -  ``sheets`` - Download data from Google Sheets and save as JSON files
+-  ``docs`` - Download Google Docs and save as .txt
 -  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
 -  ``archieml`` - Load ArchieML files onto ``grunt.data.archieml``
 -  ``template`` - Load data files and process HTML templates
@@ -315,8 +324,10 @@ Where does everything go?
         ├── connect.js
         ├── copyAssets.js
         ├── cron.js
+        ├── googleauth.js
         ├── less.js
         ├── loadCSV.js
+        ├── loadDocs.js
         ├── loadJSON.js
         ├── loadSheets.js
         ├── markdown.js
@@ -327,7 +338,7 @@ Where does everything go?
 How do I extend the template?
 -----------------------------
 
-The news app template is just a starting place for projects, and should
+The interactive template is just a starting place for projects, and should
 not be seen as a complete end-to-end solution. As you work on a project,
 you may need to extend it with tasks to do specialized build steps, copy
 extra files, or load network resources. Here are a few tips on how to go
