@@ -12,6 +12,9 @@ can be accessed by this task.
 var project = require("../project.json");
 var async = require("async");
 var sheets = require("google-spreadsheets");
+var os = require("os");
+var path = require("path");
+var { google } = require("googleapis");
 
 var camelCase = function(str) {
   return str.replace(/[^\w]+(\w)/g, function(all, match) {
@@ -41,11 +44,16 @@ module.exports = function(grunt) {
 
   grunt.registerTask("sheets", "Downloads from Google Sheets -> JSON", function() {
 
-    var auth = {};
+    var auth = null;
     try {
-      auth = require("../auth.json");
-    } catch (_) { /* no auth.json, that's fine */ }
-    var sheetKeys = project.sheets || (auth.google && auth.google.sheets);
+      var access_token = grunt.file.read(path.join(os.homedir(), ".google_oauth_token"));
+      auth = new google.auth.OAuth2(process.env.GOOGLE_OAUTH_CLIENT_ID, process.env.GOOGLE_OAUTH_CONSUMER_SECRET);
+      auth.setCredentials({ access_token });
+    } catch (err) {
+      console.log("No access token from ~/.google_oauth_token, private spreadsheets will be unavailable.", err)
+    };
+
+    var sheetKeys = project.sheets;
 
     if (!sheetKeys || !sheetKeys.length) {
       return grunt.fail.fatal("You must specify a spreadsheet key in project.json or auth.json!");
@@ -54,17 +62,17 @@ module.exports = function(grunt) {
     var done = this.async();
 
     async.each(sheetKeys, function(key, bookDone) {
-      sheets({
-        key: key
-      }, function(err, book) {
+
+      sheets({ key, auth }, function(err, book) {
         if (err || !book) {
           grunt.fail.warn("Unable to access book for " + key + ", is it 'published' in Sheets?");
           return bookDone();
         }
         //download each worksheet
         async.each(book.worksheets, function(page, pageDone) {
-          sheets.cells({ key: key, worksheet: page.id }, function(err, cells) {
+          page.cells({ key: key, worksheet: page.id }, function(err, cells) {
             if (err) {
+              console.log(err);
               grunt.fail.warn("Couldn't load sheet " + page.id + " for " + book.title);
               return pageDone();
             }
