@@ -33,15 +33,14 @@ module.exports = function(grunt) {
     var onRequest = function(request, response) {
       response.setHeader("Connection", "close");
       if (request.url.indexOf("authenticate") > -1) {
-        onAuthenticated(request, response);
+        return onAuthenticated(request, response);
       } else if (request.url.indexOf("authorize") > -1) {
         response.setHeader("Location", authURL);
         response.writeHead(302);
-        response.end();
       } else {
         response.writeHead(404);
-        response.end();
       }
+      response.end();
     };
 
     var onAuthenticated = async function(request, response) {
