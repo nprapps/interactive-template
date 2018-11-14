@@ -1,11 +1,11 @@
 {
   "s3": {
     "stage": {
-      "bucket": "",
+      "bucket": "stage-apps.npr.org",
       "path": ""
     },
     "live": {
-      "bucket": "",
+      "bucket": "apps.npr.org",
       "path": ""
     }
   },
