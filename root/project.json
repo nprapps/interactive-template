@@ -2,11 +2,11 @@
   "s3": {
     "stage": {
       "bucket": "stage-apps.npr.org",
-      "path": ""
+      "path": "{%= app_name %}"
     },
     "live": {
       "bucket": "apps.npr.org",
-      "path": ""
+      "path": "{%= app_name %}"
     }
   },
   "styles": {
@@ -18,10 +18,9 @@
   "title": "",
   "description": "",
   "url": "",
-  "image": "assets/social.jpg",
+  "image": "assets/logo.png",
   "sheets": [],
   "docs": [],
-  "standout": false,
   "embedded": true,
   "production": false
 }
