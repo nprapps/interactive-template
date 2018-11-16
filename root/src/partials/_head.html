@@ -53,9 +53,9 @@
     "name": "NPR",
     "logo": {
       "@type": "ImageObject",
-      "url": "<%= project.url %>assets/logo.jpg",
-      "width": 1000,
-      "height": 147
+      "url": "<%= project.url %>assets/logo.png",
+      "width": 891,
+      "height": 296
     }
   },
   "description": "<%= project.description %>"
@@ -64,18 +64,6 @@
 
 <!-- Chartbeat top -->
 <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
-
-<!-- start ad set-up -->
-<script>
-window.googletag = {
-  cmd: [],
-  seatimes: {
-    tags: <%= JSON.stringify(project.tags || []) %>,
-    unit: "/81279359/seattletimes.com"
-  }
-};
-</script>
-<!-- end ad set-up -->
 
 <%
 // if !project.embedded...
