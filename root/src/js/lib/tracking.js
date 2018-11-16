@@ -7,28 +7,36 @@
 @param action - what happened
 @param [label] - not usually visible in dashboard, defaults to title or URL
 */
-var track = function(category, action, label) {
-  if (!action) {
-    action = category;
-    category = "interaction";
-  }
-  label = label || document.title || window.location.href;
-  //send through GTM
-  // window.dataLayer.push({
-  //   event: "analyticsEvent",
-  //   eventCategory: category,
-  //   eventAction: action,
-  //   eventLabel: label
-  // });
-  //send through GA
-  if (window.ga) ga("send", "event", category, action, label);
-};
 
-//set up default tracking events
-var oneScroll = function() {
-  track("interactive-page-scrolled");
-  window.removeEventListener("scroll", oneScroll);
+var DIMENSION_PARENT_URL = 'dimension1';
+var DIMENSION_PARENT_HOSTNAME = 'dimension2';
+var DIMENSION_PARENT_INITIAL_WIDTH = 'dimension3';
+
+var a = document.createElement("a");
+
+var track = function(eventName, eventLabel, eventValue) {
+  var event = {
+    eventName,
+    eventLabel,
+    eventValue,
+    hitType: "event",
+    eventCategory: document.title
+  }
+
+  var search = window.location.search.replace(/^\?/, "");
+  var query = {};
+  search.split("&").forEach(pair => {
+    var [key, value] = pair.split("=");
+    query[key] = value;
+  });
+  var parentURL = query.parentUrl;
+  a.href = parentURL;
+  var hostname = a.hostname;
+
+  event[DIMENSION_PARENT_URL] = parentURL;
+  event[DIMENSION_PARENT_HOSTNAME] = hostname;
+
+  if (window.ga) ga("send", event);
 };
-window.addEventListener("scroll", oneScroll);
 
 module.exports = track;

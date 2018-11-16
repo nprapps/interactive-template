@@ -7,8 +7,6 @@
   <body>
 
     <script src="app.js" async></script>
-    <% if (json.project.production && !json.project.embedded) { %>
     <%= t.include("partials/_analytics.html") %>
-    <% } %>
   </body>
 </html>
