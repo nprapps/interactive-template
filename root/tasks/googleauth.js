@@ -1,14 +1,31 @@
 var { google } = require("googleapis");
 var chalk = require("chalk");
+var opn = require("opn");
 
 var http = require("http");
 var os = require("os");
 var path = require("path");
 var url = require("url");
+var fs = require("fs");
 
 var tokenLocation = path.join(os.homedir(), ".google_oauth_token");
 
-module.exports = function(grunt) {
+var authenticate = function() {
+  var tokens = fs.readFileSync(path.join(os.homedir(), ".google_oauth_token"), "utf-8");
+  tokens = JSON.parse(tokens);
+  auth = new google.auth.OAuth2(process.env.GOOGLE_OAUTH_CLIENT_ID, process.env.GOOGLE_OAUTH_CONSUMER_SECRET);
+  auth.setCredentials(tokens);
+
+  auth.on("tokens", function(update) {
+    console.log("new token event", update);
+    Object.assign(tokens, update);
+    fs.writeFileSync(path.join(os.homedir(), ".google_oauth_token"), JSON.stringify(tokens, null, 2));
+  });
+
+  return auth;
+};
+
+var task = function(grunt) {
 
   grunt.registerTask("google-auth", "Authenticates with Google for document download", function() {
 
@@ -50,8 +67,8 @@ module.exports = function(grunt) {
       if (!code) return;
       try {
         var token = await client.getToken(code);
-        var { access_token } = token.tokens;
-        grunt.file.write(tokenLocation, access_token);
+        var tokens = token.tokens;
+        grunt.file.write(tokenLocation, JSON.stringify(tokens, null, 2));
         response.end("Authenticated, saving token to your home directory");
       } catch (err) {
         response.end(err);
@@ -61,8 +78,12 @@ module.exports = function(grunt) {
     };
 
     var server = http.createServer(onRequest);
-    server.listen(8000, () => console.log(`Please visit ${chalk.magenta("http://localhost:8000/authorize")} to authenticate`));
+    server.listen(8000, () => opn("http://localhost:8000/authorize"));
 
   });
 
 }
+
+task.authenticate = authenticate;
+
+module.exports = task;

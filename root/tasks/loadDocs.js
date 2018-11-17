@@ -2,16 +2,16 @@ var { google } = require("googleapis");
 var async = require("async");
 var os = require("os");
 var path = require("path");
+var { authenticate } = require("./googleauth");
 
 module.exports = function(grunt) {
 
   grunt.registerTask("docs", "Load Google Docs into the data folder", function() {
 
     var config = grunt.file.readJSON("project.json");
+    var auth = null;
     try {
-      var access_token = grunt.file.read(path.join(os.homedir(), ".google_oauth_token"));
-      auth = new google.auth.OAuth2(process.env.GOOGLE_OAUTH_CLIENT_ID, process.env.GOOGLE_OAUTH_CONSUMER_SECRET);
-      auth.setCredentials({ access_token });
+      auth = authenticate();
     } catch (err) {
       console.log(err);
       return grunt.fail.warn("Couldn't load access token for Docs, try running `grunt google-auth`");

@@ -27,6 +27,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "less": "^2.6.1",
     "mime": "^1.2.11",
+    "opn": "^5.4.0",
     "resolve": "^1.1.7",
     "shelljs": "^0.6.0",
     "through2": "^2.0.0",

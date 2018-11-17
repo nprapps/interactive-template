@@ -16,6 +16,8 @@ var os = require("os");
 var path = require("path");
 var { google } = require("googleapis");
 
+var { authenticate } = require("./googleauth");
+
 var camelCase = function(str) {
   return str.replace(/[^\w]+(\w)/g, function(all, match) {
     return match.toUpperCase();
@@ -46,9 +48,7 @@ module.exports = function(grunt) {
 
     var auth = null;
     try {
-      var access_token = grunt.file.read(path.join(os.homedir(), ".google_oauth_token"));
-      auth = new google.auth.OAuth2(process.env.GOOGLE_OAUTH_CLIENT_ID, process.env.GOOGLE_OAUTH_CONSUMER_SECRET);
-      auth.setCredentials({ access_token });
+      auth = authenticate();
     } catch (err) {
       console.log("No access token from ~/.google_oauth_token, private spreadsheets will be unavailable.", err)
     };
