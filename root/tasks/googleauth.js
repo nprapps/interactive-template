@@ -38,8 +38,8 @@ var task = function(grunt) {
     google.options({ auth: client });
 
     var scopes = [
-      "https://www.googleapis.com/auth/drive.readonly",
-      "https://www.googleapis.com/auth/spreadsheets.readonly"
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/spreadsheets"
     ];
 
     var authURL = client.generateAuthUrl({
