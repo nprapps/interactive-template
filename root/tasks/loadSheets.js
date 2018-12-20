@@ -32,9 +32,11 @@ var cast = function(str) {
       return str;
     }
   }
-  if (str.match(/^-?[\d\.,]+$/)) {
-    //number
-    return Number(str.replace(/,/g, ""));
+  if (str.match(/^-?[1-9][\d\.]*$/)) {
+    var n = Number(str);
+    // check that it back-converts correctly
+    if (n.toString() == o) return n;
+    return str;
   }
   if (str.toLowerCase() == "true" || str.toLowerCase() == "false") {
     return str.toLowerCase() == "true" ? true : false;
@@ -97,13 +99,18 @@ module.exports = function(grunt) {
               var line = cells[rowNum];
               var columnNumbers = Object.keys(line);
               var row = {};
+              var encountered = [];
               columnNumbers.forEach(function(colNum) {
                 var value = line[colNum];
+                if (!value) return;
                 var key = headers[colNum];
+                if (!key) return;
+                encountered.push(key);
                 row[key] = cast(value);
               });
+              if (!encountered.length) return;
               if (isKeyed) {
-                output[row.key] = row;
+                output[row.key] = row.value && encountered.length == 2 ? row.value : row;
                 delete row.key;
               } else {
                 output.push(row);
