@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     watch: {
       options: {
         spawn: false,
-        livereload: true
+        livereload: 35739
       },
       less: {
         files: ["src/**/*.less"],

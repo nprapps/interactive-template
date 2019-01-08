@@ -18,7 +18,8 @@ module.exports = function(grunt) {
       dev: {
         options: {
           hostname: "localhost",
-          livereload: true,
+          useAvailablePort: true,
+          livereload: 35739,
           base: "./build",
           //middleware to protect against case-insensitive file systems
           middleware: function(connect, options, ware) {
