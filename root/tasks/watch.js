@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     watch: {
       options: {
         spawn: false,
-        livereload: 35739
+        livereload: grunt.option("reload-port") * 1 || 35739
       },
       less: {
         files: ["src/**/*.less"],

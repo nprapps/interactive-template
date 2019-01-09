@@ -43,7 +43,8 @@ var task = function(grunt) {
 
     var authURL = client.generateAuthUrl({
       access_type: "offline",
-      scope: scopes.join(" ")
+      scope: scopes.join(" "),
+      prompt: "consent"
     });
 
     var onRequest = function(request, response) {
