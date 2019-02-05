@@ -52,7 +52,7 @@ module.exports = function(grunt) {
     try {
       auth = authenticate();
     } catch (err) {
-      console.log("No access token from ~/.google_oauth_token, private spreadsheets will be unavailable.", err)
+      console.log(`No access token from ~/.google_oauth_token, private spreadsheets will be unavailable. ("${err.message}")`)
     };
 
     var sheetKeys = project.sheets;
