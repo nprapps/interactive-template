@@ -8,7 +8,9 @@ module.exports = new Promise((ok, fail) => {
   document.head.appendChild(script);
 
   script.onload = function() {
-    child = new pym.Child();
+    var child = new pym.Child({
+      polling: 100
+    });
 
     child.onMessage('on-screen', function(bucket) {
       trackEvent('on-screen', bucket);

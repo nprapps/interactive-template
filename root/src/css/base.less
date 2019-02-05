@@ -18,4 +18,25 @@ body {
   margin: 0;
   //remove 300ms click delay in Safari, AKA still the worst
   touch-action: manipulation;
+  font-family: @sans;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+h1 {
+  .gotham();
+  font-size: 20px;
+  color: #666;
+}
+
+a, a:visited {
+  color: @accent-dark;
+}
+
+a:hover, a:active, a:focus {
+  color: @accent-light;
+}
+
+img:not([alt]) {
+  outline: 3px solid red;
 }

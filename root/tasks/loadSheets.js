@@ -35,7 +35,7 @@ var cast = function(str) {
   if (str.match(/^-?[1-9][\d\.]*$/)) {
     var n = Number(str);
     // check that it back-converts correctly
-    if (n.toString() == o) return n;
+    if (n.toString() == str) return n;
     return str;
   }
   if (str.toLowerCase() == "true" || str.toLowerCase() == "false") {

@@ -5,15 +5,16 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-<% if (json.project.standalone) { %>
-ga('create', 'UA-5828686-4', 'auto');
-<% } else { %>
+<% if (json.project.embedded) { %>
 ga('create', 'UA-5828686-75', 'auto');
+<% } else { %>
+ga('create', 'UA-5828686-4', 'auto');
 <% } %>
 ga('send', 'pageview');
 </script>
 <!-- End Google Analytics -->
 
+<% if (!json.project.embedded) { %>
 <!-- Chartbeat bottom -->
 <script>
 var _sf_async_config={
@@ -32,3 +33,4 @@ var _sf_async_config={
   window.onload = (typeof window.onload != 'function') ? loadChartbeat : function() { oldonload(); loadChartbeat(); };
 })();
 </script>
+<% } %>
