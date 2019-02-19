@@ -32,11 +32,10 @@ var cast = function(str) {
       return str;
     }
   }
-  if (str.match(/^-?[1-9][\d\.]*$/)) {
+  if (str.match(/^-?(0?\.|[1-9])[\d\.]*$/) || str == "0") {
     var n = Number(str);
-    // check that it back-converts correctly
-    if (n.toString() == str) return n;
-    return str;
+    if (isNaN(n)) return str;
+    return n;
   }
   if (str.toLowerCase() == "true" || str.toLowerCase() == "false") {
     return str.toLowerCase() == "true" ? true : false;
@@ -52,7 +51,7 @@ module.exports = function(grunt) {
     try {
       auth = authenticate();
     } catch (err) {
-      console.log(`No access token from ~/.google_oauth_token, private spreadsheets will be unavailable. ("${err.message}")`)
+      console.log("No access token from ~/.google_oauth_token, private spreadsheets will be unavailable.", err)
     };
 
     var sheetKeys = project.sheets;
