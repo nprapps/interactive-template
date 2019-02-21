@@ -14,9 +14,9 @@ var DIMENSION_PARENT_INITIAL_WIDTH = 'dimension3';
 
 var a = document.createElement("a");
 
-var track = function(eventName, eventLabel, eventValue) {
+var track = function(eventAction, eventLabel, eventValue) {
   var event = {
-    eventName,
+    eventAction,
     eventLabel,
     eventValue,
     hitType: "event",
