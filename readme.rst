@@ -298,19 +298,21 @@ Where does everything go?
     │   ├── app.js
     │   ├── index.html
     │   └── style.css
-    ├── data - folder for all JSON/CSV data files
+    ├── data - folder for all JSON/CSV/ArchieML data files
     ├── Gruntfile.js
     ├── package.json - Node dependencies and metadata
     ├── project.json - various project configuration
     ├── src
-    │   ├── assets - files will be automatically copied to /build
+    │   ├── assets - files will be automatically copied to /build/assets
     │   ├── css
-    │   │   └── seed.less
+    │   │   ├── base.less
+    │   │   ├── seed.less
+    │   │   └── values.less
     │   ├── index.html
     │   ├── partials - directory containing boilerplate template sections
     │   └── js
     │       ├── main.js
-    │       └── lib - directory for Bower, ST site modules
+    │       └── lib - directory for useful micro-modules
     └── tasks - All Grunt tasks
         ├── archieml.js
         ├── build.js
