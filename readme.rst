@@ -261,8 +261,7 @@ the project.
 -  ``csv`` - Load CSV files into the ``grunt.data.csv`` object for
    templating
 -  ``json`` - Load JSON files onto ``grunt.data.json``
--  ``google-auth`` - Authorize against the Drive API for downloading 
-    private files from Google
+-  ``google-auth`` - Authorize against the Drive API for downloading private files from Google
 -  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``docs`` - Download Google Docs and save as .txt
 -  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
@@ -271,13 +270,10 @@ the project.
 -  ``less`` - Compile LESS files into CSS
 -  ``bundle`` - Compile JS into the app.js file
 -  ``publish`` - Push files to S3 or other endpoints
--  ``auth`` - Create an ``auth.json`` file from the AWS environment 
-   variables
+-  ``auth`` - Create an ``auth.json`` file from the AWS environment variables
 -  ``connect`` - Start the dev server
--  ``watch`` - Watch various directories and perform partial builds when
-   they change
--  ``static`` - Run all generation tasks, but do not start the watches
-   or dev server
+-  ``watch`` - Watch various directories and perform partial builds when they change
+-  ``static`` - Run all generation tasks, but do not start the watches or dev server
 
 The publish task deserves a little more attention. When you run ``grunt 
 publish``, it will read your AWS credentials from the standard AWS 
