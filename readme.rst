@@ -57,8 +57,9 @@ folder for your project, open a shell there, and run ``grunt-init``::
 
 The scaffolding wizard will ask you to fill in some information, such as
 your name, the name of the project, a description. Once that's done,
-it'll set up some folders and source files for you, and install the NPM
-modules needed for this project. After it hands you back to the prompt,
+it'll set up some folders and source files for you in the current directory
+(the one seen in the output of ``pwd``), and install the NPM
+modules needed for this project. After ``grunt-init`` hands you back to the prompt,
 type ``grunt`` at the command line to compile the project and start a
 local development server at ``http://localhost:8000``.
 
