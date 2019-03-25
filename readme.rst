@@ -157,9 +157,12 @@ You can still use Markdown syntax in ArchieML files by using the
 
 The template also includes a task (``docs``) for downloading Google Docs, much
 the same way as Sheets. They'll be cached as ``.docs.txt`` in the data folder,
-and then loaded as ArchieML. Access to Docs requires your machine to have a
+and then loaded as ArchieML.
+
+Access to Docs requires your machine to have a
 Google OAuth token, which is largely the same as described in `this post
 <http://blog.apps.npr.org/2015/03/02/app-template-oauth.html>`_.
+You can obtain a token by running ``grunt google-auth``.
 
 Client-side Code
 ----------------
@@ -266,7 +269,7 @@ the project.
 -  ``csv`` - Load CSV files into the ``grunt.data.csv`` object for
    templating
 -  ``json`` - Load JSON files onto ``grunt.data.json``
--  ``google-auth`` - Authorize against the Drive API for downloading private files from Google
+-  ``google-auth`` - Authorize against the Drive API for downloading private files from Google, such as Docs and Sheets files.
 -  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``docs`` - Download Google Docs and save as .txt
 -  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
