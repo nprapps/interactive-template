@@ -46,7 +46,7 @@ Getting Started
 ---------------
 
 For our first project, we'll do something pretty simple. Make a new
-folder for your project, open a shell there, and run ``grunt-init``::
+folder for your project, open a shell there, and run ``grunt-init``:
 
 .. code:: sh
 
