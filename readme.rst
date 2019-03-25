@@ -35,7 +35,8 @@ clone this repo into it using the following command:
     git clone git@github.com:nprapps/interactive-template interactive
 
 (We want to clone into the "interactive" folder so that we can run
-``grunt-init interactive`` and not ``grunt-init interactive-template``.)
+``grunt-init interactive`` and not ``grunt-init interactive-template``.
+``grunt-init`` uses the name of the folder as the name of the template to init.)
 
 If it works, you should be able to ``ls ~/.grunt-init/interactive`` and get back a
 list of files. That's it! Now let's start a sample project to see how it all
@@ -45,10 +46,13 @@ Getting Started
 ---------------
 
 For our first project, we'll do something pretty simple. Make a new
-folder for your project, open a shell there, and type:
+folder for your project, open a shell there, and run ``grunt-init``::
 
 .. code:: sh
 
+    cd ~
+    mkdir example-app
+    cd example-app
     grunt-init interactive
 
 The scaffolding wizard will ask you to fill in some information, such as
