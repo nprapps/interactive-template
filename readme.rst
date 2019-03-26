@@ -85,7 +85,8 @@ Data and Templating
 -------------------
 
 The ``index.html`` template (and any other templates you choose to add
-to the project) are processed using Grunt's built in Lo-dash templating
+to the project) are processed using Grunt's built-in
+`Lo-dash templating <https://gruntjs.com/api/grunt.template>`_
 (HTML files starting with an ``_`` will be ignored). If you have any CSV
 files located in your ``data`` directory, these will be parsed and made
 available to your templates via the ``csv`` object (likewise, JSON files
@@ -143,7 +144,8 @@ This will load our ad block, sized for a "banner" slot (other common slots are "
 
 If you need to pull in article text, you can do so easily by placing a
 Markdown file with a ``.md`` extension in the project folder. These files will
-be treated as an EJS template the same as HTML, so you can mix in data and
+be treated as an `EJS template <http://lodash.com/docs/#template>`_
+the same as HTML, so you can mix in data and
 generate code inline. However, rather than embedding HTML templates into your
 content, we strongly recommend using `ArchieML <http://archieml.org>`_ to load
 content in pieces into your regular HTML templates. Any file with a ``.txt``
