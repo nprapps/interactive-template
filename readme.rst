@@ -35,7 +35,8 @@ clone this repo into it using the following command:
     git clone git@github.com:nprapps/interactive-template interactive
 
 (We want to clone into the "interactive" folder so that we can run
-``grunt-init interactive`` and not ``grunt-init interactive-template``.)
+``grunt-init interactive`` and not ``grunt-init interactive-template``.
+``grunt-init`` uses the name of the folder as the name of the template to init.)
 
 If it works, you should be able to ``ls ~/.grunt-init/interactive`` and get back a
 list of files. That's it! Now let's start a sample project to see how it all
@@ -44,17 +45,21 @@ works.
 Getting Started
 ---------------
 
-For our first project, we'll do something pretty simple. Make a new
-folder for your project, open a shell there, and type:
+For our first project, we'll do something pretty simple. Open a terminal,
+make a new folder for your project, and run ``grunt-init``:
 
 .. code:: sh
 
+    cd ~
+    mkdir example-app
+    cd example-app
     grunt-init interactive
 
 The scaffolding wizard will ask you to fill in some information, such as
 your name, the name of the project, a description. Once that's done,
-it'll set up some folders and source files for you, and install the NPM
-modules needed for this project. After it hands you back to the prompt,
+it'll set up some folders and source files for you in the current directory
+(the one seen in the output of ``pwd``), and install the NPM
+modules needed for this project. After ``grunt-init`` hands you back to the prompt,
 type ``grunt`` at the command line to compile the project and start a
 local development server at ``http://localhost:8000``.
 
@@ -152,9 +157,12 @@ You can still use Markdown syntax in ArchieML files by using the
 
 The template also includes a task (``docs``) for downloading Google Docs, much
 the same way as Sheets. They'll be cached as ``.docs.txt`` in the data folder,
-and then loaded as ArchieML. Access to Docs requires your machine to have a
+and then loaded as ArchieML.
+
+Access to Docs requires your machine to have a
 Google OAuth token, which is largely the same as described in `this post
 <http://blog.apps.npr.org/2015/03/02/app-template-oauth.html>`_.
+You can obtain a token by running ``grunt google-auth``.
 
 Client-side Code
 ----------------
@@ -261,7 +269,7 @@ the project.
 -  ``csv`` - Load CSV files into the ``grunt.data.csv`` object for
    templating
 -  ``json`` - Load JSON files onto ``grunt.data.json``
--  ``google-auth`` - Authorize against the Drive API for downloading private files from Google
+-  ``google-auth`` - Authorize against the Drive API for downloading private files from Google, such as Docs and Sheets files.
 -  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``docs`` - Download Google Docs and save as .txt
 -  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
