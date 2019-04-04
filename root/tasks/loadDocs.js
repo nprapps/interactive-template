@@ -22,23 +22,13 @@ module.exports = function(grunt) {
     var drive = google.drive({ auth, version: "v3" });
 
     /*
-     * Fetch the docs
-     *
-     * This is rate-limited to 2 concurrent async fetches at any given
-     * time to avoid hitting Google's rate limits. 2 is the default;
-     * you may be able to go higher. Read more about your quota at
+     * Large document sets may hit rate limits; you can find details on your quota at:
      * https://console.developers.google.com/apis/api/drive.googleapis.com/quotas?project=<project>
      * where <project> is the project you authenticated with using `grunt google-auth`
-     *
-     * Rate limiting added for https://github.com/nprapps/interactive-template/issues/12
-     *
-     * Thanks to the following resources:
-     *    https://caolan.github.io/async/docs.html#eachLimit
-     *    https://stackoverflow.com/a/34865245
      */
     async.eachLimit(
       config.docs,
-      2, // 2 concurrent fetches; can be higher or lower.
+      2, // adjust this up or down based on rate limiting
       async function(fileId) {
         var meta = await drive.files.get({ fileId });
         var name = meta.data.name.replace(/\s+/g, "_") + ".docs.txt";
