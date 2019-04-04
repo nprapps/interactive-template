@@ -144,7 +144,7 @@ This will load our ad block, sized for a "banner" slot (other common slots are "
 
 If you need to pull in article text, you can do so easily by placing a
 Markdown file with a ``.md`` extension in the project folder. These files will
-be treated as an `EJS template <http://lodash.com/docs/#template>`_
+be treated as an `EJS-like template <http://lodash.com/docs/#template>`_
 the same as HTML, so you can mix in data and
 generate code inline. However, rather than embedding HTML templates into your
 content, we strongly recommend using `ArchieML <http://archieml.org>`_ to load
