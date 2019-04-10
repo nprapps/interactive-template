@@ -8,11 +8,12 @@
     "url": "https://github.com/{%= github_repo %}.git"
   },
   "dependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "archieml": "^0.4.2",
     "async": "^2.0.0-rc.1",
     "aws-sdk": "^2.2.45",
-    "babel-preset-env": "^1.6.0",
-    "babelify": "^7.3.0",
+    "babelify": "^10.0.0",
     "browser-pack-flat": "^3.0.5",
     "browserify": "^13.0.0",
     "chalk": "^1.0.0",
