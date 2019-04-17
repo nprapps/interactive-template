@@ -1,12 +1,6 @@
-Warning: This project is not marked as production-ready. Please make sure the
-following checklist items are complete, then set `"production": true` in your
-project.json to allow live publishes.
+Warning: This project is not marked as production-ready. Please make sure any
+pre-launch items in the issues queue are complete, then set `"production":
+true` in your project.json to allow live publishes.
 
-- Has it been tested in iOS Safari?
-- If it's a standalone, does it have ads and related links?
-- Are you using the minified version of any third-party libraries?
-- Have you checked it for color-blindness, and in screen readers?
-- Does it have a dateline? Are all the photos credited?
-- Do all share buttons work?
-- Is there a default photo for FB?
-- Is there alternate text (< 140 characters) for Twitter?
+Issues:
+https://github.com/{%= github_repo %}/issues
