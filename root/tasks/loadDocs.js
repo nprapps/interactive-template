@@ -33,7 +33,10 @@ module.exports = function(grunt) {
         var meta = await drive.files.get({ fileId });
         var name = meta.data.name.replace(/\s+/g, "_") + ".docs.txt";
         var body = await drive.files.export({ fileId, mimeType: "text/plain" });
+        // strip Windows line breaks
         var text = body.data.replace(/\r\n/g, "\n");
+        // replace triple breaks with regular paragraph breaks
+        text = text.replace(/\n{3}/g, "\n\n");
         console.log(`Writing document as data/${name}`);
         grunt.file.write(path.join("data", name), text);
       },
