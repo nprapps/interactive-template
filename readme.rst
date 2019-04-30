@@ -116,12 +116,12 @@ Google Sheets. This is a great option for collaborating with other newsroom
 staff, who may find Google Drive easier than Excel (especially when it comes
 to sharing files). To configure your project for import, open the
 ``project.json`` file and add your workbook key to the ``sheets`` array found
-there. You'll also need to use the "Publish to Web" menu item in the Sheets UI
-(under file) to open up API access, or run ``grunt google-auth`` to create a
-local OAuth token. Once those conditions are met, running ``grunt sheets``
-will download the data from Google and cache it as JSON (one file per
-worksheet). As with CSV, the data will be stored as an array unless one of
-your columns is named "key," in which case it'll be stored as a hash table.
+there. You'll also need to run ``grunt google-auth`` to create a local OAuth
+token before you can talk to the API. Once the workbook key is set and you're
+authenticated, running ``grunt sheets`` will download the data from Google and
+cache it as JSON (one file per worksheet). As with CSV, the data will be
+stored as an array unless one of your columns is named "key," in which case
+it'll be stored as a hash table.
 
 When placing data into your HTML via Lo-dash, there are some helper
 functions that are also made available via ``t``, as seen above with
