@@ -88,7 +88,7 @@ module.exports = function(grunt) {
           Bucket: bucketConfig.bucket,
           Key: join(bucketConfig.path, upload.path.replace(/^\\?build/, "")),
           Body: upload.buffer,
-          ACL: "public-read",
+          // ACL: "public-read",
           ContentType: mime.getType(upload.path),
           CacheControl: "public,max-age=300"
         });
