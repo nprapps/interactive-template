@@ -123,12 +123,14 @@ line task:
 grunt google-create --type=sheets --name="My Document Name"
 ```
 
-You can also import existing sheets by their IDs: open the ``project.json``
-file and add your workbook key to the ``sheets`` array found there.  Once the
-workbook key is set and you're authenticated, running ``grunt sheets`` will
-download the data from Google and cache it as JSON (one file per worksheet).
-As with CSV, the data will be stored as an array unless one of your columns is
-named "key," in which case it'll be stored as a hash table.
+This will generate the file in your Drive account and add its key to the
+project configuration. You can also import existing sheets by their IDs: open
+the ``project.json`` file and add your workbook key to the ``sheets`` array
+found there.  Once the workbook key is set and you're authenticated, running
+``grunt sheets`` will download the data from Google and cache it as JSON (one
+file per worksheet). As with CSV, the data will be stored as an array unless
+one of your columns is named "key," in which case it'll be stored as a hash
+table.
 
 When placing data into your HTML via Lo-dash, there are some helper
 functions that are also made available via ``t``, as seen above with
