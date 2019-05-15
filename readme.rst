@@ -114,14 +114,21 @@ our ``index.html`` file to output this as an HTML table::
 In addition to on-disk data, you can set the template to import data from
 Google Sheets. This is a great option for collaborating with other newsroom
 staff, who may find Google Drive easier than Excel (especially when it comes
-to sharing files). To configure your project for import, open the
-``project.json`` file and add your workbook key to the ``sheets`` array found
-there. You'll also need to run ``grunt google-auth`` to create a local OAuth
-token before you can talk to the API. Once the workbook key is set and you're
-authenticated, running ``grunt sheets`` will download the data from Google and
-cache it as JSON (one file per worksheet). As with CSV, the data will be
-stored as an array unless one of your columns is named "key," in which case
-it'll be stored as a hash table.
+to sharing files). You'll also need to run ``grunt google-auth`` to create a
+local OAuth token before you can talk to the API. One authenticated, the
+easiest way to link a sheet to your project is to create it from the command
+line task:
+
+```sh
+grunt google-create --type=sheets --name="My Document Name"
+```
+
+You can also import existing sheets by their IDs: open the ``project.json``
+file and add your workbook key to the ``sheets`` array found there.  Once the
+workbook key is set and you're authenticated, running ``grunt sheets`` will
+download the data from Google and cache it as JSON (one file per worksheet).
+As with CSV, the data will be stored as an array unless one of your columns is
+named "key," in which case it'll be stored as a hash table.
 
 When placing data into your HTML via Lo-dash, there are some helper
 functions that are also made available via ``t``, as seen above with
@@ -144,22 +151,23 @@ This will load our ad block, sized for a "banner" slot (other common slots are "
 
 If you need to pull in article text, you can do so easily by placing a
 Markdown file with a ``.md`` extension in the project folder. These files will
-be treated as an `EJS-like template <http://lodash.com/docs/#template>`_
-the same as HTML, so you can mix in data and
-generate code inline. However, rather than embedding HTML templates into your
-content, we strongly recommend using `ArchieML <http://archieml.org>`_ to load
-content in pieces into your regular HTML templates. Any file with a ``.txt``
-extension in the ``data`` folder will be exposed as ``archieml.{filename}``.
-You can still use Markdown syntax in ArchieML files by using the
-``t.renderMarkdown()`` function in your templates to process content::
+be treated as an `EJS-like template <http://lodash.com/docs/#template>`_ the
+same as HTML, so you can mix in data and generate code inline. However, rather
+than embedding HTML templates into your content, we strongly recommend using
+`ArchieML <http://archieml.org>`_ to load text and data chunks into your
+regular HTML templates. Any file with a ``.txt`` extension in the ``data``
+folder will be exposed as ``archieml.{filename}``. You can still use Markdown
+syntax in ArchieML files by using the ``t.renderMarkdown()`` function in your
+templates to process content::
 
     <main class="article">
       <%= t.renderMarkdown(archieml.story.intro) %>
     </main>
 
 The template also includes a task (``docs``) for downloading Google Docs, much
-the same way as Sheets. They'll be cached as ``.docs.txt`` in the data folder,
-and then loaded as ArchieML.
+the same way as Sheets, and the ``google-create`` task can be used to
+automatically create/link them if you specify ``--type=docs``. They'll be
+cached as ``.docs.txt`` in the data folder, and then loaded as ArchieML.
 
 Access to Docs requires your machine to have a
 Google OAuth token, which is largely the same as described in `this post
