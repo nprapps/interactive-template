@@ -1,7 +1,7 @@
 var path = require("path");
 var through = require("through2");
 
-var extensions = [".html", ".txt"];
+var extensions = [".html", ".txt", ".svg"];
 
 module.exports = function(file) {
 

@@ -13,8 +13,11 @@
 <meta name='format-detection' content='telephone=no'>
 
 <% if (!project.embedded) { %>
+<!-- GDPR compliance -->
+<script src="https://apps.npr.org/gdpr/gdprCompliance.js" async defer></script>
+
 <!-- BEGIN TWITTER SUMMARY CARD -->
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="<%= project.title %>">
 <meta name="twitter:site" content="@nprviz">
 <meta name="twitter:url" content="<%= project.url %>">
@@ -54,11 +57,12 @@
     "logo": {
       "@type": "ImageObject",
       "url": "<%= project.url %>assets/logo.png",
-      "width": 891,
-      "height": 296
+      "width": 2176,
+      "height": 725
     }
   },
-  "description": "<%= project.description %>"
+  "description": "<%= project.description %>",
+  "datePublished": "<%= new Date().toISOString() %>"
 }
 </script>
 

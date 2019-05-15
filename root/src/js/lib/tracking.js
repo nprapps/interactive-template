@@ -1,6 +1,4 @@
 //module for interfacing with GA
-//automatically fires GA tracking on click/touch, require it for custom events
-//NOTE: requires the _foot partial to load for tracking (embedded: false in project.json)
 
 /**
 @param [category] - usually "interaction"

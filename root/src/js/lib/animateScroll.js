@@ -20,6 +20,7 @@ module.exports = function(element, duration = 500, done = noop) {
     var t = Date.now();
     var elapsed = t - now;
     var d = elapsed / duration;
+    if (d > 1) d = 1;
     document.body.scrollTop = document.documentElement.scrollTop = start + distance * ease(d);
     if (elapsed > duration) {
       animating = false;

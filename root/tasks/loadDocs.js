@@ -33,10 +33,28 @@ module.exports = function(grunt) {
         var meta = await drive.files.get({ fileId });
         var name = meta.data.name.replace(/\s+/g, "_") + ".docs.txt";
         var body = await drive.files.export({ fileId, mimeType: "text/plain" });
-        // strip Windows line breaks
-        var text = body.data.replace(/\r\n/g, "\n");
+        var text = body.data.trim().replace(/\r\n/g, "\n");
         // replace triple breaks with regular paragraph breaks
         text = text.replace(/\n{3}/g, "\n\n");
+        // force fields to be lower-case
+        text = text.replace(/^[A-Z]\w+\:/m, w => w[0].toLowerCase() + w.slice(1));
+        // strip out footnotes from the end
+        var lines = text.split("\n");
+        var line;
+        var refs = [];
+        while (line = lines.pop()) {
+          var match = line.match(/^\[(\w+)\]|_(re)?assigned to.+_/i);
+          if (!match) {
+            lines.push(line);
+            break;
+          }
+          refs.push(match[1]);
+        }
+        text = lines.join("\n");
+        // remove the footnote references from the rest of the doc
+        refs = refs.filter(n => n);
+        var replacer = new RegExp(`\\[(${refs.join("|")})\\]`, "g");
+        text = text.replace(replacer, "");
         console.log(`Writing document as data/${name}`);
         grunt.file.write(path.join("data", name), text);
       },

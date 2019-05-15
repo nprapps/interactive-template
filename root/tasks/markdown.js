@@ -25,7 +25,37 @@ module.exports = function(grunt) {
     //ignore markdown files inside the JS folder that come from Bower or libraries
     var files = grunt.file.expand("src/**/*.md", "!src/js/**/*.md");
     grunt.data.markdown = {};
-    grunt.template.renderMarkdown = function(text) { return writer.render(reader.parse(text)) };
+    var render = grunt.template.renderMarkdown = function(input) {
+      var parsed = reader.parse(input);
+
+      var walker = parsed.walker();
+      //merge text nodes together
+      var e;
+      var previous;
+      while (e = walker.next()) {
+        var node = e.node;
+        //is this an adjacent text node?
+        if (node && previous && previous.parent == node.parent && previous.type == "Text" && node.type == "Text") {
+          previous.literal += node.literal;
+          // grunt.log.oklns(previous.literal);
+          node.unlink();
+        } else {
+          previous = node;
+        }
+      }
+      //second pass, run Typogr on the text
+      walker = parsed.walker();
+      while (e = walker.next()) {
+        if (e.node && e.node.type == "Text") {
+          var literal = typo.smartypants(e.node.literal);
+          // widon't
+          literal = literal.replace(/\s(\S+[!.?"']+)$/, (_, w) => `&nbsp;${w}`);
+          e.node.literal = literal;
+        }
+      }
+
+      return writer.render(parsed);
+    };
 
     files.forEach(function(filename) {
       var input = grunt.file.read(filename);
@@ -37,34 +67,8 @@ module.exports = function(grunt) {
         get: function() {
           //run this through the template system
           input = grunt.template.process(input);
-
-          var parsed = reader.parse(input);
-
-          var walker = parsed.walker();
-          //merge text nodes together
-          var e;
-          var previous;
-          while (e = walker.next()) {
-            var node = e.node;
-            //is this an adjacent text node?
-            if (node && previous && previous.parent == node.parent && previous.type == "Text" && node.type == "Text") {
-              previous.literal += node.literal;
-              // grunt.log.oklns(previous.literal);
-              node.unlink();
-            } else {
-              previous = node;
-            }
-          }
-          //second pass, run Typogr on the text
-          walker = parsed.walker();
-          while (e = walker.next()) {
-            if (e.node && e.node.type == "Text") {
-              e.node.literal = typo.smartypants(e.node.literal);
-            }
-          }
-
-
-          var output = writer.render(parsed);
+          var output = render(input);
+          
           //strip HTML block hack
           output = output.replace(/\<\?|\?\>/g, "");
           return output;
