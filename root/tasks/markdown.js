@@ -43,18 +43,9 @@ module.exports = function(grunt) {
           previous = node;
         }
       }
-      //second pass, run Typogr on the text
-      walker = parsed.walker();
-      while (e = walker.next()) {
-        if (e.node && e.node.type == "Text") {
-          var literal = typo.smartypants(e.node.literal);
-          // widon't
-          literal = literal.replace(/\s(\S+[!.?"']+)$/, (_, w) => `&nbsp;${w}`);
-          e.node.literal = literal;
-        }
-      }
 
-      return writer.render(parsed);
+      var rendered = writer.render(parsed);
+      return typo.smartypants(typo.widont(rendered));
     };
 
     files.forEach(function(filename) {
