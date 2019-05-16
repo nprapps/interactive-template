@@ -215,19 +215,15 @@ Typically, you shouldn't need to load jQuery on a project, because these
 micro-modules cover most of its functionality, as well as some additional
 useful tools:
 
-* ``ads.js`` - Enables ads when combined with the template partial
 * ``animateScroll.js`` - Scroll to an element with a nice transition
 * ``closest.js`` - Equivalent of jQuery.closest()
-* ``colors.js`` - Contains JS versions of our style palette
-* ``comments.js`` - Enables LiveFyre comments
 * ``debounce.js`` - Equivalent of Underscore's debounce()
 * ``delegate.js`` - Equivalent of calling jQuery.on() with event delegation
 * ``dom.js`` - Build HTML in JS, similar to React.createElement()
 * ``dot.js`` - Compile client-side EJS templates with the same syntax used by the build system
 * ``flip.js`` - Animate smoothly using `FLIP <https://aerotwist.com/blog/flip-your-animations/>`_
-* ``geolocation.js`` - Geocode addresses to lat/longs, or get the user's current location
-* ``paywall.js`` - Enables the paywall, requires the ID of the link post from WordPress
 * ``prefixed.js`` - Used to access prefixed features in other browsers (mostly used by other modules)
+* ``pym.js`` - Initializes this page as a Pym child
 * ``qsa.js`` - Equivalent to jQuery's DOM search functions
 * ``tracking.js`` - Lets you fire custom events into GA for analytics
 * ``xhr.js`` - Equivalent to jQuery.ajax()
@@ -276,22 +272,24 @@ including some tasks that do not run as a part of the normal build.
 Remember that you can use ``grunt --help`` to list all tasks included in
 the project.
 
--  ``csv`` - Load CSV files into the ``grunt.data.csv`` object for
-   templating
--  ``json`` - Load JSON files onto ``grunt.data.json``
--  ``google-auth`` - Authorize against the Drive API for downloading private files from Google, such as Docs and Sheets files.
--  ``sheets`` - Download data from Google Sheets and save as JSON files
--  ``docs`` - Download Google Docs and save as .txt
--  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
--  ``archieml`` - Load ArchieML files onto ``grunt.data.archieml``
--  ``template`` - Load data files and process HTML templates
--  ``less`` - Compile LESS files into CSS
--  ``bundle`` - Compile JS into the app.js file
--  ``publish`` - Push files to S3 or other endpoints
+-  ``archieml`` - Load text files onto ``grunt.data.archieml``
 -  ``auth`` - Create an ``auth.json`` file from the AWS environment variables
+-  ``bundle`` - Compile JS into the app.js file
+-  ``clean`` - Delete the build folder to start again from scratch
 -  ``connect`` - Start the dev server
--  ``watch`` - Watch various directories and perform partial builds when they change
+-  ``copy`` - Copy all assets over to the build folder
+-  ``csv`` - Load CSV files onto ``grunt.data.csv``
+-  ``docs`` - Download Google Docs and save as .txt
+-  ``google-auth`` - Authorize against the Drive API for downloading private files from Google, such as Docs and Sheets files.
+-  ``google-create`` - Create a Google Drive file and link it into the project config
+-  ``json`` - Load JSON files onto ``grunt.data.json``
+-  ``less`` - Compile LESS files into CSS
+-  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
+-  ``publish`` - Push files to S3 or other endpoints
+-  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``static`` - Run all generation tasks, but do not start the watches or dev server
+-  ``template`` - Load data files and process HTML templates
+-  ``watch`` - Watch various directories and perform partial builds when they change
 
 The publish task deserves a little more attention. When you run ``grunt 
 publish``, it will read your AWS credentials from the standard AWS 
@@ -322,34 +320,13 @@ Where does everything go?
     ├── project.json - various project configuration
     ├── src
     │   ├── assets - files will be automatically copied to /build/assets
-    │   ├── css
-    │   │   ├── base.less
-    │   │   ├── seed.less
-    │   │   └── values.less
+    │   ├── css - LESS files
     │   ├── index.html
     │   ├── partials - directory containing boilerplate template sections
     │   └── js
     │       ├── main.js
     │       └── lib - directory for useful micro-modules
     └── tasks - All Grunt tasks
-        ├── archieml.js
-        ├── build.js
-        ├── bundle.js
-        ├── checklist.txt
-        ├── clean.js
-        ├── connect.js
-        ├── copyAssets.js
-        ├── cron.js
-        ├── googleauth.js
-        ├── less.js
-        ├── loadCSV.js
-        ├── loadDocs.js
-        ├── loadJSON.js
-        ├── loadSheets.js
-        ├── markdown.js
-        ├── publish.js
-        ├── state.js
-        └── watch.js
 
 How do I extend the template?
 -----------------------------
