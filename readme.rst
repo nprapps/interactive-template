@@ -117,11 +117,9 @@ staff, who may find Google Drive easier than Excel (especially when it comes
 to sharing files). You'll also need to run ``grunt google-auth`` to create a
 local OAuth token before you can talk to the API. One authenticated, the
 easiest way to link a sheet to your project is to create it from the command
-line task:
+line task::
 
-```sh
-grunt google-create --type=sheets --name="My Document Name"
-```
+    grunt google-create --type=sheets --name="My Document Name"
 
 This will generate the file in your Drive account and add its key to the
 project configuration. You can also import existing sheets by their IDs: open
