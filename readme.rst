@@ -188,8 +188,8 @@ Now we'll change ``src/js/main.js`` to load Leaflet:
 
 .. code:: javascript
 
-    var $ = require("leaflet"); //load Leaflet from an NPM module
-    console.log($);
+    var L = require("leaflet"); //load Leaflet from an NPM module
+    console.log(L);
 
 When we restart our dev server by running the ``grunt`` command, the
 ``bundle`` task will scan the dependencies it finds, starting in
