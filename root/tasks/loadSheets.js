@@ -63,6 +63,7 @@ module.exports = function(grunt) {
       var book = (await api.spreadsheets.get({ auth, spreadsheetId })).data;
       var { sheets, spreadsheetId } = book;
       for (var sheet of sheets) {
+        if (sheet.properties.title[0] == "_") continue;
         var response = await api.spreadsheets.values.get({
           auth,
           spreadsheetId,
