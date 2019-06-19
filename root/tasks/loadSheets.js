@@ -76,6 +76,8 @@ module.exports = function(grunt) {
         var isValued = header.indexOf("value") > -1;
         var out = isKeyed ? {} : [];
         for (var row of values) {
+          // skip blank rows
+          if (!row.length) continue;
           var obj = {};
           row.forEach(function(value, i) {
             var key = header[i];

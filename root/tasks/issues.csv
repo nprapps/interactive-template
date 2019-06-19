@@ -1,0 +1,28 @@
+title,body,labels
+Update ad tags (DFP),Change `ENVIRONMENT` to `NPR`; change `TESTSERVER` to `false`,Launch TODO
+"Social metadata (Twitter, Facebook)",Images should have an aspect ratio of 1.91:1 and be a minimum of 1200 x 630. Verify with debuggers: https://developers.facebook.com/tools/debug/ and https://dev.twitter.com/docs/cards/validation/validator,Launch TODO
+Short URLs and CMS redirects,"Request NPR redirect, create Seamus shell and request redirect there as well: https://github.com/nprapps/workinprivate/blob/master/shell_pages.md",Launch TODO
+Browser testing,"Edge, Chrome (OS X, Android, Windows), Firefox (OS X, Windows), Safari (iOS)",
+Double-check analytics code,,Launch TODO
+Write the team blog post,,Post-launch
+Byline for visuals team,,Launch TODO
+Add project to team projects list,Update https://github.com/nprapps/nprapps.github.com/blob/master/_data/apps.yml,Post-launch
+Update master sitemaps index and redeploy,,Post-launch
+Email media relations re: press releases,,Launch TODO
+Schedule iteration reviews,,Project Management
+Schedule sprint planning meetings,,Project Management
+Schedule sprint retrospectives,,Project Management
+Let the copy desk know an app is coming,,Project Management
+Distribute launch timeline,"Let stakeholders, social media, etc know what the launch schedule is",Project Management
+Test metrics,Lighthouse (accessibility and performance),
+Accessibility testing,"Works in screen reader, does not violate WCAG 2.1",
+Change LICENSE to MIT if open sourcing,By default things are copyright NPR,Launch TODO
+Update Google Analytics topics variable with Seamus topic ids,`app_config.NPR_GOOGLE_ANALYTICS.topics` is necessary to be tracked in all reports. You can steal this value from the source of a related npr.org story,Launch TODO
+Setup retrospective review with editor,What did we learn? How do we do better next time?,Post-launch
+Verify page title tags are good,,Launch TODO
+Optimize images,,Launch TODO
+Document custom Google Analytics events in README,,Launch TODO
+Implement completion GA event,"Could be implemented based on scroll depth, slide progress or something else",
+Make promotion plans with the social media team,Email socialmediateam@npr.org,Project Management
+Draft tweets for homepage team,,Launch TODO
+Draft Facebook post for homepage team,,Launch TODO
