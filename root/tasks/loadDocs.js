@@ -53,8 +53,10 @@ module.exports = function(grunt) {
         text = lines.join("\n");
         // remove the footnote references from the rest of the doc
         refs = refs.filter(n => n);
-        var replacer = new RegExp(`\\[(${refs.join("|")})\\]`, "g");
-        text = text.replace(replacer, "");
+        if (refs.length) {
+          var replacer = new RegExp(`\\[(${refs.join("|")})\\]`, "g");
+          text = text.replace(replacer, "");
+        }
         console.log(`Writing document as data/${name}`);
         grunt.file.write(path.join("data", name), text);
       },
