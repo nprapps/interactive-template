@@ -45,7 +45,7 @@ module.exports = function(grunt) {
       }
 
       var rendered = writer.render(parsed);
-      return typo.smartypants(typo.widont(rendered));
+      return typo.smartypants(typo.widont(rendered)).replace(/&#8211;/g, "&mdash;");
     };
 
     files.forEach(function(filename) {
