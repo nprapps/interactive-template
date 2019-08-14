@@ -121,6 +121,9 @@ module.exports = function(grunt) {
     }, function(err) {
       if (err) return console.log(err);
       console.log("All files uploaded successfully");
+      if (deploy == "stage" && config.production) {
+        grunt.log.error("CHECK YOURSELF: This project is marked as live, but you deployed to stage.")
+      }
       done();
     });
   });
