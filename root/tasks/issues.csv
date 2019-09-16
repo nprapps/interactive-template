@@ -7,7 +7,7 @@ Double-check analytics code,,Launch TODO
 Write the team blog post,,Post-launch
 Byline for visuals team,,Launch TODO
 Add project to team projects list,Update https://github.com/nprapps/nprapps.github.com/blob/master/_data/apps.yml,Post-launch
-Update master sitemaps index and redeploy,"Add the project's published URL to this XML file: https://www.npr.org/sitemap_apps.xml. Send the file to onlinetech to republish. Note in the email that this is a sys-admin request.",Post-launch
+Update master sitemaps index and redeploy,Instructions and a script for generating/publishing the sitemap are checked into workinprivate (`generate_sitemap.sh`).,Post-launch
 Email media relations re: press releases,,Launch TODO
 Schedule iteration reviews,,Project Management
 Schedule sprint planning meetings,,Project Management
