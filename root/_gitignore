@@ -4,3 +4,5 @@ temp
 auth.json
 .DS_Store
 npm-debug.log
+data/*.sheet.json
+data/*.docs.txt
