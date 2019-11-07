@@ -6,3 +6,4 @@ auth.json
 npm-debug.log
 data/*.sheet.json
 data/*.docs.txt
+src/assets/synced

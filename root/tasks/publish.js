@@ -28,7 +28,7 @@ module.exports = function(grunt) {
   var config = require("../project.json");
 
   var findBuiltFiles = function() {
-    var pattern = ["**/*"];
+    var pattern = ["**/*", "!assets/synced/**/*"];
     var embargo = config.embargo;
     if (embargo) {
       if (!(embargo instanceof Array)) embargo = [embargo];
@@ -93,6 +93,9 @@ module.exports = function(grunt) {
           CacheControl: "public,max-age=300"
         });
       }, function(obj, next) {
+        if (deploy == "live") {
+          obj.ACL = "public-read";
+        }
         //check for GZIP support
         var extension = upload.path.split(".").pop();
         if (gzippable.indexOf(extension) == -1) return next(null, obj);

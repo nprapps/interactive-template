@@ -43,4 +43,63 @@ a:hover, a:active, a:focus {
 
 img:not([alt]) {
   outline: 3px solid red;
+
+  [aria-hidden] &,
+  [role="img"] & {
+    outline: none;
+  }
+}
+
+/* NPR standard partials */
+
+footer {
+  background: black;
+  color: white;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 999;
+  justify-content: flex-start;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .constrained {
+    max-width: 700px;
+    margin: auto;
+  }
+
+  .npr {
+    margin-top: 44px;
+
+    a, a:visited {
+      color: white;
+      text-decoration: none;
+
+      &:hover, &:focus {
+        color: #888;
+      }
+    }
+
+    ul {
+      border-top: 1px solid #333;
+      color: #888;
+      font-size: 0.8rem;
+      padding-top: 11px;
+
+      li {
+        display: inline-block;
+        margin: 0 22px 3px 0;
+        padding: 0;
+        text-indent: 0;
+        white-space: nowrap;
+
+        @media @mobile-above {
+          display: inline-block;
+        }
+      }
+    }
+  }
 }

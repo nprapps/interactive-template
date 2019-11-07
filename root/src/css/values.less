@@ -14,28 +14,28 @@
 @serif: Georgia, "Times New Roman", Times, serif;
 
 .gotham() {
-    font-family: @gotham;
-    font-weight: normal;
-    font-weight: 400;
+  font-family: @gotham;
+  font-weight: normal;
+  font-weight: 400;
 }
 
 // Normal Knockout
 .knockout() {
-    font-family: @knockout;
-    font-weight: normal;
+  font-family: @knockout;
+  font-weight: normal;
 }
 
 // Knockout, uppercased
 .knockout-upper() {
-    .knockout();
-    text-transform: uppercase;
+  .knockout();
+  text-transform: uppercase;
 }
 
 // Knockout for headings
 .knockout-header() {
-    .knockout-upper();
-    letter-spacing: 0.05em;
-    -webkit-font-smoothing: antialiased;
+  .knockout-upper();
+  letter-spacing: 0.05em;
+  -webkit-font-smoothing: antialiased;
 }
 
 /*
@@ -47,3 +47,12 @@
 @rigorous: #d62021;
 @unbiased: #000005;
 @true: #237bbd;
+
+.sr-only {
+  opacity: 0;
+  position: absolute;
+  left: -1000px;
+  clip: inset(0, 0, 0, 0);
+  width: 1px;
+  height: 1px;
+}

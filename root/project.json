@@ -19,8 +19,13 @@
   "description": "",
   "url": "",
   "image": "assets/logo.png",
+  "analytics": {
+    "topicIDs": [],
+    "primaryTopic": "",
+    "secondaryTopics": []
+  },
   "sheets": [],
-  "docs": [],
+  "docs": {},
   "embedded": true,
   "production": false
 }

@@ -10,6 +10,12 @@ ga('create', 'UA-5828686-75', 'auto');
 <% } else { %>
 ga('create', 'UA-5828686-4', 'auto');
 <% } %>
+ga('set', {
+  dimension2: <%= JSON.stringify(json.project.analytics.topicIDs || []) %>,
+  dimension3: <%= JSON.stringify(json.project.analytics.primaryTopic || "News") %>,
+  dimension6: <%= JSON.stringify(json.project.analytics.secondaryTopics || []) %>,
+  dimension22: document.title
+});
 ga('send', 'pageview');
 </script>
 <!-- End Google Analytics -->
