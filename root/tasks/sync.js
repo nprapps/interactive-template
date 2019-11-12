@@ -42,24 +42,32 @@ module.exports = function(grunt) {
       }
     });
 
+    var getRemote = function(callback, list = [], Marker = null) {
+      s3.listObjects({
+        Bucket: dest.bucket,
+        Prefix: remoteSynced,
+        Marker
+      }, function(err, results) {
+        if (err) return callback(err);
+        list.push(...results.Contents.map(function(obj) {
+          return {
+            file: obj.Key.replace(/.*?assets\/synced\//, ""),
+            size: obj.Size,
+            key: obj.Key,
+            mtime: obj.LastModified
+          }
+        }));
+        if (results.IsTruncated) {
+          var last = list[list.length - 1];
+          getRemote(callback, list, last.key);
+        } else {
+          callback(null, list)
+        }
+      });
+    };
+
     async.waterfall([
-      function(next) {
-        s3.listObjects({
-          Bucket: dest.bucket,
-          Prefix: path.join(dest.path, "assets/synced")
-        }, function(err, results) {
-          if (err) return next(err);
-          var asFiles = results.Contents.map(function(obj) {
-            return {
-              file: obj.Key.replace(/.*?assets\/synced\//, ""),
-              size: obj.Size,
-              key: obj.Key,
-              mtime: obj.LastModified
-            }
-          });
-          next(null, asFiles);
-        });
-      },
+      getRemote,
       function(remote, next) {
         // compare files
         var up = [];
@@ -92,7 +100,7 @@ module.exports = function(grunt) {
       },
       function(up, down, next) {
         // get remote files
-        async.each(down, function(item, callback) {
+        async.eachLimit(down, 10, function(item, callback) {
           console.log(`Download: ${item.file}`);
           s3.getObject({
             Bucket: dest.bucket,
@@ -107,7 +115,7 @@ module.exports = function(grunt) {
       },
       function(up, next) {
         // put local files
-        async.each(up, function(item, callback) {
+        async.eachLimit(up, 10, function(item, callback) {
           console.log(`Upload: ${item.file}`);
           var buffer = fs.readFileSync(path.join(localSynced, item.file));
           var obj = {
