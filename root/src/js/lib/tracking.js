@@ -12,14 +12,18 @@ var DIMENSION_PARENT_INITIAL_WIDTH = 'dimension3';
 
 var a = document.createElement("a");
 
+var slug = window.location.pathname.replace(/^\/|\/$/g, "");
+
 var track = function(eventAction, eventLabel, eventValue) {
   var event = {
     eventAction,
     eventLabel,
     eventValue,
     hitType: "event",
-    eventCategory: document.title
+    eventCategory: "apps-" + slug
   }
+
+  console.log(`Tracking: ${eventAction} / ${eventLabel} / ${eventValue}`)
 
   var search = window.location.search.replace(/^\?/, "");
   var query = {};
