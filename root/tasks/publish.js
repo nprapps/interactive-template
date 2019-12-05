@@ -118,7 +118,8 @@ module.exports = function(grunt) {
           chalk.bold.green(Math.round(after / before * 100).toFixed(1) + "% via gzip")
         );
         console.log.apply(console, args);
-        if (deploy != "simulated") s3.putObject(obj, next);
+        if (deploy == "simulated") return next();
+        s3.putObject(obj, next);
       }], c);
       
     }, function(err) {

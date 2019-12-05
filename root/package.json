@@ -21,7 +21,7 @@
     "csv": "^5.1.1",
     "dot": "^1.1.2",
     "exorcist": "^1.0.1",
-    "googleapis": "^35.0.0",
+    "googleapis": "^45.0.0",
     "grunt": "^1.0.4",
     "grunt-contrib-connect": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
