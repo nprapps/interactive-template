@@ -13,6 +13,7 @@ Create Seamus stub/shell page and request redirects,"- [ ] Create page on live S
 - [ ] Request redirects for staging and live
 - [ ] Test redirects on staging
 - [ ] Post-launch, ask sysadmins to remove any unneded redirects
+- [ ] Note the Seamus ID, published URL and other relevant info in the [spreadsheet](https://docs.google.com/spreadsheets/d/1JuukYVK54wwYQiDedX-c-YMOc41fz-vEMrqCyiMpW2E/edit#gid=0)
 https://github.com/nprapps/workinprivate/blob/master/shell_pages.md",Launch TODO
 Add promo images and text to Seamus stub/shell page,This is especially important if the page will also be syndicated to stations. Make sure there is a prominent link to the published project URL.,Launch TODO
 Setup retrospective review with editor,What did we learn? How do we do better next time?,Post-launch
