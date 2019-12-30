@@ -174,6 +174,16 @@ Google OAuth token, which is largely the same as described in `this post
 <http://blog.apps.npr.org/2015/03/02/app-template-oauth.html>`_.
 You can obtain a token by running ``grunt google-auth``.
 
+While Sheets are specified in ``project.json`` as an array, Docs should be set
+as an object mapping filename to document ID::
+
+    "docs": {
+      "story": "id-string-here"
+    }
+
+This would cause your rig to download the document as ``story.docs.txt``, then
+accessible for templating at ``grunt.data.archieml.story``.
+
 Client-side Code
 ----------------
 
