@@ -14,7 +14,7 @@ ga("set", "location", here.protocol + "//" + here.hostname + here.pathname);
 ga("set", "page", here.pathname);
 
 // Custom dimensions & metrics
-var parentUrl = here.searchParams.has("parentUrl") ? new Url(here.searchParams.get("parentUrl")) : "";
+var parentUrl = here.searchParams.has("parentUrl") ? new URL(here.searchParams.get("parentUrl")) : "";
 var parentHostname = "";
 
 if (parentUrl) {
