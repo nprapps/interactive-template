@@ -272,18 +272,43 @@ extensible: if you need to output multiple bundles for separate pages (such as
 a primary page and a secondary embedded widget), you can add new seeds to
 these files relatively easily, and then share code between both bundles.
 
-What else does it do?
+Publishing your work
+--------------------
+
+By default, this template can publish to S3. Two publication targets are set
+in ``project.json``: stage and live. Running ``grunt publish`` will push
+contents of the build folder to the staging bucket and path. To push to the
+live bucket, you must first set ``production: true`` in your ``project.json``
+file, then run ``grunt publish:live``. This is to protect against accidental
+publication.
+
+When you run ``grunt  publish``, it will read your AWS credentials from the
+standard AWS  environment variables (``AWS_ACCESS_KEY_ID`` and 
+``AWS_SECRET_ACCESS_KEY``). You must have these variables set before
+publication. You should also make sure  your files have been rebuilt first,
+either by running the default task  or by running the ``static`` task (``grunt
+static publish`` will do  both).
+
+Thinking about tasks
 ---------------------
 
-The default Grunt task built into the template will run all the build
-processes, start the dev server, and set up watches for the various
-source files. Of course, you can also run these as individual tasks,
-including some tasks that do not run as a part of the normal build.
-Remember that you can use ``grunt --help`` to list all tasks included in
-the project.
+All of the above processes--templating, compiling styles and JavaScript, and
+running the development server--are included in the default build task. This
+process is composed out of smaller tasks, some of which in turn are themselves
+composites of smaller units of work. We organize them in the ``Gruntfile.js``
+file, but all code should be written and loaded from the ``tasks`` folder.
+
+Conceptually, applications built on this template are organized around the
+idea that we take inputs from various locations (``src``, ``data``, or a
+remote API) and produce a static set of files in ``build``. Whenever possible,
+these tasks are largely stateless: they do not retain or re-use information
+between runs.
+
+The default tasks currently defined by the rig are:
 
 -  ``archieml`` - Load text files onto ``grunt.data.archieml``
 -  ``auth`` - Create an ``auth.json`` file from the AWS environment variables
+-  ``build`` - Process HTML templates
 -  ``bundle`` - Compile JS into the app.js file
 -  ``clean`` - Delete the build folder to start again from scratch
 -  ``connect`` - Start the dev server
@@ -298,20 +323,33 @@ the project.
 -  ``publish`` - Push files to S3 or other endpoints
 -  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``static`` - Run all generation tasks, but do not start the watches or dev server
+-  ``sync`` - Synchronize gitignored assets in ``src/assets/synced`` with the S3 bucket
 -  ``template`` - Load data files and process HTML templates
 -  ``watch`` - Watch various directories and perform partial builds when they change
 
-The publish task deserves a little more attention. When you run ``grunt 
-publish``, it will read your AWS credentials from the standard AWS 
-environment variables (``AWS_ACCESS_KEY_ID`` and 
-``AWS_SECRET_ACCESS_KEY``), falling back on keys found in ``auth.json`` 
-(useful for Windows users without admin access). The bucket 
-configuration is loaded from ``project.json``. The task will then push 
-the contents of the ``build`` folder up to the stage bucket. If you want 
-to publish to live, you should run ``grunt publish:live``. Make sure 
-your files have been rebuilt first, either by running the default task 
-or by running the ``static`` task (``grunt static publish`` will do 
-both).
+Knowing that these tasks are composable, we can use it to perform selective
+operations, not just full builds. 
+
+For example, a common problem is to quickly hotfix the JavaScript bundle for a
+project. To do this, we want to clear out the contents of the build folder,
+assemble just the JS scripts, and then publish it. So we might run ``grunt
+clean bundle publish:live``.
+
+Similarly, let's say we just want to update the HTML for a project with fresh
+edits from Google, but not take the time to build or upload scripts, assets,
+and styles. We'll want to use the "template" meta-task, defined in the
+Gruntfile, which loads all our data and runs the ``build`` task to generate
+HTML against it. So for this, we might run ``grunt docs sheets clean template
+publish:live``.
+
+Finally, on some projects, it may make sense to define a validation step that
+checks data for integrity before continuing the build process (example: `our
+liveblog rig 
+<https://github.com/nprapps/liveblog-standalone/blob/master/tasks/validate.js>`_).
+By creating this task and then adding it to the "content" meta-task, it will
+run every time the template loads. Then we can run ``grunt docs sheets
+content`` to load and validate fresh data, without needing to start the entire
+rig or run all of the other things it can do.
 
 Where does everything go?
 -------------------------
