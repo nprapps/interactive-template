@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
-    "archieml": "^0.4.2",
+    "@nprapps/betty": "^1.0.9",
     "async": "^2.0.0-rc.1",
     "aws-sdk": "^2.2.45",
     "babelify": "^10.0.0",
