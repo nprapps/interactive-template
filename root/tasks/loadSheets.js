@@ -59,11 +59,11 @@ module.exports = function(grunt) {
 
     var done = this.async();
 
-    for (var spreadsheetId of sheetKeys) {
+    var bookRequests = sheetKeys.map(async function(spreadsheetId) {
       var book = (await api.spreadsheets.get({ auth, spreadsheetId })).data;
       var { sheets, spreadsheetId } = book;
-      for (var sheet of sheets) {
-        if (sheet.properties.title[0] == "_") continue;
+      var sheetRequests = sheets.map(async function(sheet) {
+        if (sheet.properties.title[0] == "_") return;
         var response = await api.spreadsheets.values.get({
           auth,
           spreadsheetId,
@@ -72,6 +72,14 @@ module.exports = function(grunt) {
         });
         var { values } = response.data;
         var header = values.shift();
+        var types = header.map(function(h, i) {
+          var [ column, type ] = h.split(":");
+          if (type) {
+            header[i] = column;
+            return type;
+          }
+          return null;
+        })
         var isKeyed = header.indexOf("key") > -1;
         var isValued = header.indexOf("value") > -1;
         var out = isKeyed ? {} : [];
@@ -81,7 +89,25 @@ module.exports = function(grunt) {
           var obj = {};
           row.forEach(function(value, i) {
             var key = header[i];
-            obj[key] = cast(value);
+            var type = types[i];
+            // manual cast
+            if (type) {
+              switch (type) {
+                case "number":
+                  obj[key] = value * 1;
+                  break;
+
+                case "boolean":
+                  obj[key] = !!value;
+                  break;
+
+                default:
+                  obj[key] = value + "";
+              }
+            } else {
+              // auto cast
+              obj[key] = cast(value);
+            }
           });
           if (isKeyed) {
             out[obj.key] = isValued ? obj.value : obj;
@@ -92,8 +118,12 @@ module.exports = function(grunt) {
         var filename = `data/${sheet.properties.title.replace(/\s+/g, "_")}.sheet.json`;
         console.log(`Saving sheet to ${filename}`);
         grunt.file.write(filename, JSON.stringify(out, null, 2));
-      }
-    }
+      });
+
+      await Promise.all(sheetRequests);
+    });
+
+    await Promise.all(bookRequests);
 
     done();
 

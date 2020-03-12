@@ -73,10 +73,9 @@ module.exports = function(grunt) {
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
       region: process.env.AWS_DEFAULT_REGION || "us-west-1"
     };
-    if (!creds.accessKeyId) {
-      grunt.fail.fatal("Missing AWS configuration variables.")
+    if (creds.accessKeyId) {
+      aws.config.update(creds);
     }
-    aws.config.update(creds);
 
     var s3 = new aws.S3();
     var uploads = findBuiltFiles();

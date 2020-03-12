@@ -6,7 +6,7 @@ Anything that has a .txt extension in /data will be loaded
 */
 
 var path = require("path");
-var archieml = require("archieml");
+var betty = require("@nprapps/betty");
 
 module.exports = function(grunt) {
 
@@ -20,7 +20,10 @@ module.exports = function(grunt) {
     files.forEach(function(f) {
       var name = path.basename(f).replace(/(\.docs)?\.txt$/, "");
       var contents = grunt.file.read(f);
-      var parsed = archieml.load(contents);
+
+      var parsed = betty.parse(contents, {
+        onFieldName: t => t[0].toLowerCase() + t.slice(1)
+      });
       grunt.data.archieml[name] = parsed;
     });
 
