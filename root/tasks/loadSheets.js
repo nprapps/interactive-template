@@ -94,10 +94,14 @@ module.exports = function(grunt) {
             if (type) {
               switch (type) {
                 case "number":
+                case "numeric":
+                case "int":
+                case "float":
                   obj[key] = value * 1;
                   break;
 
                 case "boolean":
+                case "bool":
                   obj[key] = !!value;
                   break;
 
