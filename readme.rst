@@ -115,7 +115,7 @@ In addition to on-disk data, you can set the template to import data from
 Google Sheets. This is a great option for collaborating with other newsroom
 staff, who may find Google Drive easier than Excel (especially when it comes
 to sharing files). You'll also need to run ``grunt google-auth`` to create a
-local OAuth token before you can talk to the API. One authenticated, the
+local OAuth token before you can talk to the API. Once authenticated, the
 easiest way to link a sheet to your project is to create it from the command
 line task::
 
@@ -126,9 +126,15 @@ project configuration. You can also import existing sheets by their IDs: open
 the ``project.json`` file and add your workbook key to the ``sheets`` array
 found there.  Once the workbook key is set and you're authenticated, running
 ``grunt sheets`` will download the data from Google and cache it as JSON (one
-file per worksheet). As with CSV, the data will be stored as an array unless
-one of your columns is named "key," in which case it'll be stored as a hash
-table.
+file per worksheet). 
+
+As with CSV, the data will be stored as an array unless one of your columns is
+named "key," in which case it'll be stored as a hash table to each row object.
+If there are only two columns named "key" and "value," it'll simplify that
+structure by putting the value column directly into the lookup (i.e., you can
+use ``sheet.key`` to get the value, instead of ``sheet.key.value``). You can
+also append a type notation to your column name, separating it from the key
+with a colon (e.g., "zipcode:text", "percapita:number", or "enabled:boolean").
 
 When placing data into your HTML via Lo-dash, there are some helper
 functions that are also made available via ``t``, as seen above with
