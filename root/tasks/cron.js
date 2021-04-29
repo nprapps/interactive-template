@@ -7,8 +7,8 @@ Runs tasks on an automated basis
 /** config variables **/
 var tasks = {
   local: ["sheets", "static", "connect"],
-  publish: ["sheets", "clean", "static", "publish"],
-  publishLive: ["sheets", "clean", "static", "publish:live"]
+  stage: ["sheets", "clean", "static", "publish"],
+  live: ["sheets", "clean", "static", "publish:live"]
 };
 
 /** end config **/

@@ -1,0 +1,31 @@
+# This file defines a systemd service that runs the annotation build process
+# To set up:
+# 1. Copy this file to /etc/systemd/system/annotation.service
+# 2. Start the service with `sudo systemctl start annotation`
+# 3. Halt it with `sudo systemctl stop annotation`
+# 4. Get info with `sudo systemctl status annotation`
+# 5. Follow logs with `journalctl -a -u annotation.service -f`
+# 6. If you make any changes, run `sudo systemctl daemon-reload` before restarting
+
+[Unit]
+Description=NPR Annotations
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=ubuntu
+<% for (var k in env) { %>
+Environment=<%= k %>=<%= env[k] %>
+<% } %>
+WorkingDirectory=<%= here %>
+
+# Stage - uncomment to activate
+# ExecStart=<%= home %>/.nvm/nvm-exec grunt deploy
+
+# Live - uncomment to activate
+# ExecStart=<%= home %>/.nvm/nvm-exec grunt deploy-live
+
+[Install]
+WantedBy=multi-user.target
