@@ -26,8 +26,10 @@ module.exports = function(grunt) {
           targets: { browsers: ["safari >= 11"]},
           loose: true,
           modules: false
-        }]
-      ]});
+        }]],
+        // this comes with preset-env
+        plugins: ["@babel/plugin-proposal-class-properties"]
+      });
 
       //make sure build/ exists
       grunt.file.mkdir("build");
