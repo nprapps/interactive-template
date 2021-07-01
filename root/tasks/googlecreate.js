@@ -33,8 +33,12 @@ module.exports = function(grunt) {
     var result = await drive.files.create({ resource: { name, mimeType }});
     var file = result.data;
 
-    if (!config[type]) config[type] = [];
-    config[type].push(file.id);
+    if (!config[type]) config[type] = type == "docs" ? {} : [];
+    if (type == "docs") {
+      config.doc = file.id;
+    } else {
+      config[type].push(file.id);
+    }
     grunt.file.write("project.json", JSON.stringify(config, null, 2));
 
     opn(`https://drive.google.com/open?id=${file.id}`)
