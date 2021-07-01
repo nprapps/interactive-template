@@ -35,9 +35,9 @@ module.exports = function(grunt) {
 
     if (!config[type]) config[type] = type == "docs" ? {} : [];
     if (type == "docs") {
-      config.doc = file.id;
+      config.docs[name] = file.id;
     } else {
-      config[type].push(file.id);
+      config.sheets.push(file.id);
     }
     grunt.file.write("project.json", JSON.stringify(config, null, 2));
 
