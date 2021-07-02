@@ -36,7 +36,8 @@ Browser testing,"- [ ] Edge
 - [ ] Firefox (OS X)
 - [ ] Firefox (Windows)
 - [ ] Safari (iOS)
-- [ ] Safari (iOS, in-app)",
+- [ ] Safari (iOS, in-app)
+- [ ] NPR One (iOS/Android, in-app)",
 Automated performance tests,Lighthouse (accessibility and performance),
 Accessibility testing,"Works in screen reader, does not violate WCAG 2.1",
 Update master sitemaps index and redeploy,Instructions and a script for generating/publishing the sitemap are checked into workinprivate (`generate_sitemap.sh`).,Post-launch
