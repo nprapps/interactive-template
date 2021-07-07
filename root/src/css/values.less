@@ -1,18 +1,40 @@
-/*
- * Media queries
- */
+// Media queries
 @mobile: ~"(max-width: 500px)";
 @mobile-above: ~"(min-width: 501px)";
 @tablet: ~"(max-width: 768px)";
 
-/*
- * Fonts
- */
+@portrait: ~"(max-aspect-ratio: 1 / 1)";
+@landscape: ~"(min-aspect-ratio: 1 / 1)";
+
+// Colors
+@accent-dark: #4774CC;
+@accent-light: #bccae5;
+
+@rigorous: #d62021;
+@unbiased: #000005;
+@true: #237bbd;
+
+// Fonts
 @gotham: 'Gotham SSm', Helvetica, Arial, sans-serif;
 @knockout: 'Knockout 31 4r','Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 @sans: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 @serif: Georgia, "Times New Roman", Times, serif;
 
+// Export values to CSS custom properties
+:root {
+  --accent-dark: @accent-dark;
+  --accent-light: @accent-light;
+  --rigorous: @rigorous;
+  --unbiased: @unbiased;
+  --true: @true;
+  --gotham: @gotham;
+  --knockout: @knockout;
+  --sans: @sans;
+  --serif: @serif;
+  --vh: 1vh;
+}
+
+// Font mixins
 .gotham() {
   font-family: @gotham;
   font-weight: normal;
@@ -38,16 +60,8 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/*
- * Colors
- */
-@accent-dark: #4774CC;
-@accent-light: #bccae5;
 
-@rigorous: #d62021;
-@unbiased: #000005;
-@true: #237bbd;
-
+// a11y
 .sr-only {
   opacity: 0;
   position: absolute;
@@ -56,3 +70,4 @@
   width: 1px;
   height: 1px;
 }
+

@@ -23,12 +23,9 @@ module.exports = function(grunt) {
       b.plugin(require("browser-pack-flat/plugin"));
       b.transform("babelify", { global: true, presets: [
         ["@babel/preset-env", {
-          targets: { browsers: ["safari >= 11"]},
-          loose: true,
-          modules: false
-        }]],
-        // this comes with preset-env
-        plugins: ["@babel/plugin-proposal-class-properties"]
+          targets: { browsers: ["safari >= 12"]},
+          loose: true
+        }]]
       });
 
       //make sure build/ exists
