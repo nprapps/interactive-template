@@ -7,7 +7,9 @@ Analytics config,"- [ ] Standard events for completion and click interaction
 - [ ] Document any custom events in the README",Launch TODO
 Verify page title tags are good,,Launch TODO
 Optimize images,,Launch TODO
+Determine what the publish URL will be,"Workshop w/ the engagement team. Sort this out before requesting redirects.",Launch TODO
 Create Seamus stub/shell page and request redirects,"- [ ] Create page on live Seamus
+- [ ] Make sure publish URLs are finalized
 - [ ] Publish on staging (one day later, after DB syncs to stage)
 - [ ] Publish on live
 - [ ] Request redirects for staging and live
