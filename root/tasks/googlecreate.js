@@ -1,5 +1,5 @@
 var { google } = require("googleapis");
-var { authenticate } = require("./googleauth");
+var { authenticate } = require("./googleAuth");
 var opn = require("opn");
 
 module.exports = function(grunt) {

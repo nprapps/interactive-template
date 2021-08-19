@@ -1,7 +1,7 @@
 /*
 
-Sets up a connect server to work from the /build folder. May also set up a
-livereload server at some point.
+Sets up a connect server to work from the /build folder.
+Synced asset files are served directly from src/assets.
 
 */
 
@@ -22,9 +22,9 @@ module.exports = function(grunt) {
           port: grunt.option("port") || 8000,
           livereload: grunt.option("reloadport") * 1 || 35739,
           base: "./build",
-          //middleware to protect against case-insensitive file systems
           middleware: function(connect, options, ware) {
             var base = options.base.pop();
+            //middleware to protect against case-insensitive file systems
             ware.unshift(function(req, response, next) {
               var href = url.parse(req.url).pathname;
               var location = path.join(base, href);
@@ -39,6 +39,21 @@ module.exports = function(grunt) {
                   next();
                 }
               })
+            });
+            // add ability to serve files directly from synced assets
+            ware.unshift(function(req, response, next) {
+              var href = url.parse(req.url).pathname;
+              var location = path.join(base, href);
+              var filename = path.basename(href);
+              var isSynced = /^\/?assets\/synced\//;
+              var syncedFolder = "./src/assets/synced/";
+              if (isSynced.test(href)) {
+                var file = href.replace(isSynced, "");
+                var stream = fs.createReadStream(path.join(syncedFolder, file));
+                stream.pipe(response);
+                return;
+              }
+              next();
             });
             return ware;
           }

@@ -5,9 +5,21 @@ and loadSheets, which import data in a compatible way.
 
 */
 
+// we use a custom template engine for better errors
+var template = require("./lib/template");
+
 var path = require("path");
 var typogr = require("typogr");
-var template = require("./lib/template");
+var stmd = require("commonmark");
+
+var writer = new stmd.HtmlRenderer();
+var reader = new stmd.Parser();
+
+//monkey-patch writer to handle typographical entities
+var escape = writer.escape;
+writer.escape = function(str) {
+  return escape(str, true);
+};
 
 module.exports = function(grunt) {
 
@@ -49,6 +61,31 @@ module.exports = function(grunt) {
     var templateData = Object.create(data || grunt.data);
     templateData.t = grunt.template;
     return process(file, templateData, where);
+  };
+
+  grunt.template.renderMarkdown = function(input) {
+    var parsed = reader.parse(input);
+
+    var walker = parsed.walker();
+    //merge text nodes together
+    var e;
+    var previous;
+    while (e = walker.next()) {
+      var node = e.node;
+      //is this an adjacent text node?
+      if (node && previous && previous.parent == node.parent && previous.type == "Text" && node.type == "Text") {
+        previous.literal += node.literal;
+        // grunt.log.oklns(previous.literal);
+        node.unlink();
+      } else {
+        previous = node;
+      }
+    }
+
+    var rendered = writer.render(parsed);
+    return typogr.smartypants(typogr.widont(rendered))
+      .replace(/&#8211;/g, "&mdash;")
+      .replace(/([’']) ([”"])/g, "$1&nbsp;$2");
   };
 
   grunt.registerTask("build", "Processes index.html using shared data (if available)", function() {

@@ -13,7 +13,7 @@ var path = require("path");
 var { google } = require("googleapis");
 var api = google.sheets("v4");
 
-var { authenticate } = require("./googleauth");
+var { authenticate } = require("./googleAuth");
 
 var camelCase = function(str) {
   return str.replace(/[^\w]+(\w)/g, function(all, match) {
