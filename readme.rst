@@ -5,15 +5,22 @@ What is it?
 -----------
 
 This template for `grunt-init <http://gruntjs.com/project-scaffolding>`_
-contains all the setup required to start building a flat-file news application
-(It may be useful for dynamic apps as well). The goal is to have a set of
-sensible defaults and automatic tasks similar to those provided by `Tarbell
-<http://tarbell.tribapps.com/>`_, but optimized for a NodeJS workflow. Among
-other things, app built on this scaffolding will automatically parse CSV and
-JSON for your HTML templates, import data from Google Drive, build LESS into
-CSS, browserify JavaScript from CommonJS modules, and set up a local
-development server with watch tasks and live reload to make rapid development
-easy as pie.
+contains all the setup required to start building a flat-file news application.
+Although it's a good starting place, providing reasonable defaults and data 
+sources, it is not opinionated about front-end frameworks or overall 
+application architecture. Out of the box, it provides:
+
+- HTML templating using EJS with Markdown rendering
+- JavaScript bundling using Browserify and Babel
+- CSS compilation from LESS
+- Live reload for all front-end tasks
+- Data pipelines for loading:
+
+  - Text from Google Docs
+  - Structured data from Google Sheets or CSV
+  - Automatic ArchieML parsing from text
+
+- Deployment and asset synchronization with S3
 
 *Executive summary:* Provides everything you need to start building a
 news app or interactive graphic.
@@ -155,14 +162,10 @@ to ``t.include()``, like so::
 
 This will load our ad block, sized for a "banner" slot (other common slots are "square" and "tall"). We include a number of partials as useful building blocks.
 
-If you need to pull in article text, you can do so easily by placing a
-Markdown file with a ``.md`` extension in the project folder. These files will
-be treated as an `EJS-like template <http://lodash.com/docs/#template>`_ the
-same as HTML, so you can mix in data and generate code inline. However, rather
-than embedding HTML templates into your content, we strongly recommend using
+If you need to pull in article text, we strongly recommend using
 `ArchieML <http://archieml.org>`_ to load text and data chunks into your
 regular HTML templates. Any file with a ``.txt`` extension in the ``data``
-folder will be exposed as ``archieml.{filename}``. You can still use Markdown
+folder will be exposed as ``archieml.{filename}``. You can use Markdown
 syntax in ArchieML files by using the ``t.renderMarkdown()`` function in your
 templates to process content::
 
@@ -227,22 +230,16 @@ modules with the relative path:
     var animateScroll = require("./lib/animateScroll");
     var flip = require("./lib/flip");
 
-Typically, you shouldn't need to load jQuery on a project, because these
-micro-modules cover most of its functionality, as well as some additional
-useful tools:
+These micro-modules cover most of the basic DOM manipulation that you would need
+for a news apps, short of importing a full framework.
 
-* ``animateScroll.js`` - Scroll to an element with a nice transition
-* ``closest.js`` - Equivalent of jQuery.closest()
 * ``debounce.js`` - Equivalent of Underscore's debounce()
 * ``delegate.js`` - Equivalent of calling jQuery.on() with event delegation
 * ``dom.js`` - Build HTML in JS, similar to React.createElement()
 * ``dot.js`` - Compile client-side EJS templates with the same syntax used by the build system
 * ``flip.js`` - Animate smoothly using `FLIP <https://aerotwist.com/blog/flip-your-animations/>`_
-* ``prefixed.js`` - Used to access prefixed features in other browsers (mostly used by other modules)
-* ``pym.js`` - Initializes this page as a Pym child
-* ``qsa.js`` - Equivalent to jQuery's DOM search functions
+* ``qsa.js`` - Aliases for ``document.querySelectorAll()`` (as ``$``) and ``querySelector()`` (as ``$.one()``)
 * ``tracking.js`` - Lets you fire custom events into GA for analytics
-* ``xhr.js`` - Equivalent to jQuery.ajax()
 
 Browserify plugins for loading text files (with extensions ``.txt`` and
 ``.html``) and LESS files (for creating web components) are included with the
@@ -313,23 +310,24 @@ between runs.
 The default tasks currently defined by the rig are:
 
 -  ``archieml`` - Load text files onto ``grunt.data.archieml``
--  ``auth`` - Create an ``auth.json`` file from the AWS environment variables
 -  ``build`` - Process HTML templates
 -  ``bundle`` - Compile JS into the app.js file
 -  ``clean`` - Delete the build folder to start again from scratch
 -  ``connect`` - Start the dev server
 -  ``copy`` - Copy all assets over to the build folder
+-  ``cron`` - Run a series of build tasks at regular intervals (for automated publishing, like election results)
 -  ``csv`` - Load CSV files onto ``grunt.data.csv``
 -  ``docs`` - Download Google Docs and save as .txt
 -  ``google-auth`` - Authorize against the Drive API for downloading private files from Google, such as Docs and Sheets files.
 -  ``google-create`` - Create a Google Drive file and link it into the project config
+-  ``issues`` - Create a default set of GitHub issues in a project repo, as defined in ``issues.csv``
 -  ``json`` - Load JSON files onto ``grunt.data.json``
 -  ``less`` - Compile LESS files into CSS
--  ``markdown`` - Load Markdown files onto ``grunt.data.markdown``
 -  ``publish`` - Push files to S3 or other endpoints
 -  ``sheets`` - Download data from Google Sheets and save as JSON files
 -  ``static`` - Run all generation tasks, but do not start the watches or dev server
 -  ``sync`` - Synchronize gitignored assets in ``src/assets/synced`` with the S3 bucket
+-  ``systemd`` - Generate a SystemD service file for running the build process automatically
 -  ``template`` - Load data files and process HTML templates
 -  ``watch`` - Watch various directories and perform partial builds when they change
 
@@ -382,33 +380,6 @@ Where does everything go?
     │       └── lib - directory for useful micro-modules
     └── tasks - All Grunt tasks
 
-How do I extend the template?
------------------------------
-
-The interactive template is just a starting place for projects, and should
-not be seen as a complete end-to-end solution. As you work on a project,
-you may need to extend it with tasks to do specialized build steps, copy
-extra files, or load network resources. Here are a few tips on how to go
-about extending the scaffolding on a per-project basis:
-
--  Any .js files located in ``tasks`` will be loaded automatically by
-   Grunt. Try to keep new tasks relatively self-contained, instead of
-   ending up with a sprawling Gruntfile. Each task can add its own
-   config to the overall configuration with ``grunt.config.merge``, as
-   the existing tasks do.
--  As with Tarbell, CSV files can be loaded in one of two ways. By
-   default, they will use the columns as the keys, and appear to the
-   HTML template as an array of objects. However, if one of your columns
-   is named "key", the result will be an object mapping the key value to
-   the row data. This is useful for localization, among other purposes.
--  The setup process will install the
-   `ShellJS <https://github.com/arturadib/shelljs>`_ module in your
-   project, which is used by several of the built-in tasks for file
-   management and setup. In addition to UNIX file operations like ``cp``
-   and ``mv``, ShellJS also provides cross-platform implementations of
-   ``sed``, ``grep``, and ``ln``, as well as easy access to environment
-   variables. Using ShellJS means you don't have to resort to Bash
-   scripting for basic ``make``-like tasks.
 
 Technicalities
 --------------
