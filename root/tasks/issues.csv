@@ -28,7 +28,7 @@ Email media relations re: press releases,,Launch TODO
 Email comms re: promoting the project in Nipper News,,Launch TODO
 Alert stations about project,Specifically send a heads-up to stations with local interest. Determine if the stub page also will be syndicated/communicated to stations.,Project Management
 Draft promo language for social media with engagement team,Includes Facebook and Twitter,Launch TODO
-"Social metadata and images (for Twitter, Facebook)",Images should have an aspect ratio of 1.91:1 and be a minimum of 1200 x 630. Verify with debuggers: https://developers.facebook.com/tools/debug/ and https://dev.twitter.com/docs/cards/validation/validator,Launch TODO
+"Social metadata and images (for Twitter, Facebook)","Images should have an aspect ratio of 1.91:1 and be a minimum of 1200 x 630. Verify with debuggers: https://developers.facebook.com/tools/debug/ and https://dev.twitter.com/docs/cards/validation/validator",Launch TODO
 Distribute launch timeline,"Let stakeholders, engagement, social media, etc know what the launch schedule is",Project Management
 Browser testing,"- [ ] Edge 
 - [ ] Chrome (OS X)
