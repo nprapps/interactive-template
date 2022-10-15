@@ -22,8 +22,7 @@ application architecture. Out of the box, it provides:
 
 - Deployment and asset synchronization with S3
 
-*Executive summary:* Provides everything you need to start building a
-news app or interactive graphic.
+*Executive summary:* Provides everything you need to start building a news app or interactive graphic.
 
 Installation
 ------------
@@ -143,8 +142,8 @@ use ``sheet.key`` to get the value, instead of ``sheet.key.value``). You can
 also append a type notation to your column name, separating it from the key
 with a colon (e.g., "zipcode:text", "percapita:number", or "enabled:boolean").
 
-When placing data into your HTML via Lo-dash, there are some helper
-functions that are also made available via ``t``, as seen above with
+When placing data into your HTML via Lo-dash, some helper
+functions are also made available via ``t``, as seen above with
 ``t.formatMoney()``. These are defined in ``tasks/build.js``, but you
 should feel free to add your own. One that may prove useful is
 ``t.include()``, which will import another file into the template for
@@ -160,7 +159,7 @@ to ``t.include()``, like so::
 
     <%= t.include("partials/_ad.html", { type: "banner" }) %>
 
-This will load our ad block, sized for a "banner" slot (other common slots are "square" and "tall"). We include a number of partials as useful building blocks.
+This will load our ad block, sized for a "banner" slot (other common slots are "square" and "tall"). We include several partials as useful building blocks.
 
 If you need to pull in article text, we strongly recommend using
 `ArchieML <http://archieml.org>`_ to load text and data chunks into your
@@ -231,7 +230,7 @@ modules with the relative path:
     var flip = require("./lib/flip");
 
 These micro-modules cover most of the basic DOM manipulation that you would need
-for a news apps, short of importing a full framework.
+for a news app, short of importing a full framework.
 
 * ``debounce.js`` - Equivalent of Underscore's debounce()
 * ``delegate.js`` - Equivalent of calling jQuery.on() with event delegation
@@ -254,7 +253,7 @@ would other local modules. We often use this for our client-side templating:
     //get the template source and compile it
     var template = dot.compile( require("./_tmpl.html") );
 
-In a similar fashion, to add more CSS to our project, we would create a new
+Similarly, to add more CSS to our project, we would create a new
 LESS file in ``src/css``, then update our ``src/css/seed.less`` file to import
 it like so:
 
@@ -280,7 +279,7 @@ Publishing your work
 
 By default, this template can publish to S3. Two publication targets are set
 in ``project.json``: stage and live. Running ``grunt publish`` will push
-contents of the build folder to the staging bucket and path. To push to the
+the contents of the build folder to the staging bucket and path. To push to the
 live bucket, you must first set ``production: true`` in your ``project.json``
 file, then run ``grunt publish:live``. This is to protect against accidental
 publication.
@@ -288,16 +287,16 @@ publication.
 When you run ``grunt  publish``, it will read your AWS credentials from the
 standard AWS  environment variables (``AWS_ACCESS_KEY_ID`` and 
 ``AWS_SECRET_ACCESS_KEY``). You must have these variables set before
-publication. You should also make sure  your files have been rebuilt first,
-either by running the default task  or by running the ``static`` task (``grunt
-static publish`` will do  both).
+publication. You should also make sure your files have been rebuilt first,
+either by running the default task or by running the ``static`` task (``grunt
+static publish`` will do both).
 
 Thinking about tasks
 ---------------------
 
 All of the above processes--templating, compiling styles and JavaScript, and
 running the development server--are included in the default build task. This
-process is composed out of smaller tasks, some of which in turn are themselves
+process is composed of smaller tasks, some of which in turn are themselves
 composites of smaller units of work. We organize them in the ``Gruntfile.js``
 file, but all code should be written and loaded from the ``tasks`` folder.
 
@@ -324,7 +323,7 @@ The default tasks currently defined by the rig are:
 -  ``json`` - Load JSON files onto ``grunt.data.json``
 -  ``less`` - Compile LESS files into CSS
 -  ``publish`` - Push files to S3 or other endpoints
--  ``sheets`` - Download data from Google Sheets and save as JSON files
+-  ``sheets`` - Download data from Google Sheets and save them as JSON files
 -  ``static`` - Run all generation tasks, but do not start the watches or dev server
 -  ``sync`` - Synchronize gitignored assets in ``src/assets/synced`` with the S3 bucket
 -  ``systemd`` - Generate a SystemD service file for running the build process automatically
@@ -389,6 +388,6 @@ whatever you want with it. If you update or improve the Grunt tasks contained
 inside, we'd love to hear from you.
 
 By default, the projects generated by this template are licensed under the
-GPLv3, and we whole-heartedly recommend its usage. However, given that the
+GPLv3, and we wholeheartedly recommend its usage. However, given that the
 template itself is MIT-licensed, you are free to replace ``root/license.txt``
 with the legal text of your choice, or remove it entirely.
