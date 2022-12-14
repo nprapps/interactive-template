@@ -1,4 +1,16 @@
-// creates default issues in the GitHub repo
+/*
+
+Batch-adds a set of default issues in the GitHub repo, reading from tasks/issues.csv
+
+You will need to have a personal access token set up for your account:
+https://github.com/settings/tokens
+
+and your creds stored as environment variables:
+export GITHUB_PERSONAL_TOKEN="__TOKEN__"
+export GITHUB_USER="__GITHUB_USERNAME__"
+
+*/
+
 var https = require("https");
 var csv = require("csv");
 
