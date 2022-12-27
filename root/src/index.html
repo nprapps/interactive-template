@@ -6,6 +6,9 @@
   </head>
   <body>
 
+    <script>
+        window.PROJECT_ANALYTICS = <%= JSON.stringify(json.project.analytics || {}) %>;
+    </script>
     <script src="app.js" async></script>
     <%= t.include("partials/_analytics.html") %>
   </body>
