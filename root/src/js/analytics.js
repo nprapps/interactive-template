@@ -49,13 +49,13 @@ var setupGoogleAnalytics = function() {
 		try {
 		  dim6 = window.PROJECT_ANALYTICS.secondaryTopics.join(", ");
 		} catch (error) {
-		  console.error("PROJECT_ANALYTICS.secondaryTopics is not an array, check project.json");
+		  console.log("PROJECT_ANALYTICS.secondaryTopics is not an array, check project.json");
 		}
 
 		try {
 		  dim2 = window.PROJECT_ANALYTICS.topicIDs.join(", ");
 		} catch (error) {
-		  console.error("PROJECT_ANALYTICS.topicIDs is not an array, check project.json");
+		  console.log("PROJECT_ANALYTICS.topicIDs is not an array, check project.json");
 		}
 
 		ga("create", "UA-5828686-4", "auto");
