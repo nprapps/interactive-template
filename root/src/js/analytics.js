@@ -38,11 +38,31 @@ var setupGoogleAnalytics = function() {
 		  dimension3: initialWidth
 		});
 	} else { 
+
+		// Secondary topics
+		var dim6 = "";
+		// Topic IDs
+		var dim2 = "";
+
+		// Google analytics doesn't accept arrays anymore, these must be strings.
+
+		try {
+		  dim6 = window.PROJECT_ANALYTICS.secondaryTopics.join(", ");
+		} catch (error) {
+		  console.error("PROJECT_ANALYTICS.secondaryTopics is not an array, check project.json");
+		}
+
+		try {
+		  dim2 = window.PROJECT_ANALYTICS.topicIDs.join(", ");
+		} catch (error) {
+		  console.error("PROJECT_ANALYTICS.topicIDs is not an array, check project.json");
+		}
+
 		ga("create", "UA-5828686-4", "auto");
 		ga("set", {
-		  dimension2:  window.PROJECT_ANALYTICS.topicIDs,
+		  dimension2:  dim2,
 		  dimension3:  window.PROJECT_ANALYTICS.primaryTopic || "News",
-		  dimension6:  window.PROJECT_ANALYTICS.secondaryTopics || [],
+		  dimension6:  dim6,
 		  dimension22: document.title
 		});
 	} 
