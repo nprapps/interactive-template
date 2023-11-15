@@ -52,6 +52,7 @@ module.exports = function(grunt) {
     var filters = ["amp", "widont", "smartypants", "ord"];
     filters = filters.map(k => typogr[k]);
     var filtered = filters.reduce((t, f) => f(t), text);
+    filtered = filtered.replace("s&#8217;$2 ","s&rsquo; ");
     return filtered;
   };
 
