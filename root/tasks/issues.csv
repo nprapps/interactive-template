@@ -42,6 +42,7 @@ Browser testing,"- [ ] Edge
 - [ ] NPR One (iOS/Android, in-app)",
 Automated performance tests,Lighthouse (accessibility and performance),
 Accessibility testing,"Works in screen reader, does not violate WCAG 2.1",
+Test any embedded elements in Dark Mode,Relevant to the mobile apps,
 Update master sitemaps index and redeploy,Instructions and a script for generating/publishing the sitemap are checked into workinprivate (`generate_sitemap.sh`).,Post-launch
 Add project to team projects list,Update https://github.com/nprapps/nprapps.github.com/blob/master/_data/apps.yml,Post-launch
 Write the team blog post,,Post-launch
