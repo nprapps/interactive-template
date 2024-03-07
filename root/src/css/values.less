@@ -15,10 +15,13 @@
 @true: #237bbd;
 
 // Fonts
-@lato: 'Lato', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-@sourceSansPro: 'Source Sans Pro', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-@sans: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-@serif: Georgia, "Times New Roman", Times, serif;
+@sans: 'NPRSans', @sans-base;
+@serif: 'NPRSerif', @serif-base;
+// not loaded by default. uncomment in src/partials/_webfonts.html if you want to use this
+@condensed: 'Source Sans Pro', @sans-base;
+
+@sans-base: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+@serif-base: Georgia, "Times New Roman", Times, serif;
 
 // Export values to CSS custom properties
 :root {
@@ -27,35 +30,43 @@
   --rigorous: @rigorous;
   --unbiased: @unbiased;
   --true: @true;
-  --lato: @lato;
-  --sourceSansPro: @sourceSansPro;
   --sans: @sans;
   --serif: @serif;
   --vh: 1vh;
 }
 
 // Font mixins
-.lato() {
-  font-family: @lato;
+.sans() {
+  font-family: @sans;
   font-weight: normal;
-  letter-spacing: 0.025em;
+  letter-spacing: 0.01em;
 }
 
-.sourceSansPro() {
-  font-family: @sourceSansPro;
+.serif() {
+  font-family: @serif;
+  font-weight: normal;
+  font-kerning: normal;
+  letter-spacing: 0.02em;
+}
+
+.condensed() {
+  font-family: @condensed;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
 
-.sourceSansPro-upper() {
-  .sourceSansPro();
+// small headings
+.sans-header() {
+  .sans();
   text-transform: uppercase;
-}
-
-.sourceSansPro-header() {
-  .sourceSansPro-upper();
   letter-spacing: 0.05em;
-  font-weight: bold;
+  font-weight: 500;
+  -webkit-font-smoothing: antialiased;
+}
+.condensed-header() {
+  .condensed();
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   -webkit-font-smoothing: antialiased;
 }
 
