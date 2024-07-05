@@ -21,7 +21,7 @@ var track = function(eventAction, eventLabel, eventValue) {
   // Bail early if opted out of Performance and Analytics consent groups
   if (!DataConsent.hasConsentedTo(DataConsent.PERFORMANCE_AND_ANALYTICS)) return;
 
-
+  
   var event = {
     eventAction,
     eventLabel,
@@ -45,7 +45,7 @@ var track = function(eventAction, eventLabel, eventValue) {
   event[DIMENSION_PARENT_URL] = parentURL;
   event[DIMENSION_PARENT_HOSTNAME] = hostname;
 
-  if (window.ga) ga("send", event);
+  if (window.gtag) gtag("event", slug, {'type': eventAction, 'label': eventLabel, 'value': eventValue});
 };
 
 module.exports = track;
