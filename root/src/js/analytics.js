@@ -46,7 +46,6 @@ if (window.top !== window) {
         customData["dimension2"] = parentHostname;
         customData["dimension3"] = initialWidth;
 		gtag('config', gtagID, {'custom_map': {'dimension1': 'parentUrl', 'dimension2': 'parentHostname', 'dimension3': 'initialWidth'}});
-		gtag('event', 'page_view', customData)
 	} else { 
 
 		// Secondary topics
