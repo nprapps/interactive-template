@@ -40,14 +40,12 @@ module.exports = function (grunt) {
     var remoteFiles = await s3.ls(config.bucket, remotePath);
     var localFiles = await ls(localPath);
 
-    console.log(remoteFiles);
-
     var downloads = [];
     var uploads = [];
 
     // override if the push/pull flags are set
     if (direction) {
-      if ((direction = "push")) {
+      if ((direction == "push")) {
         uploads = localFiles;
       } else {
         downloads = remoteFiles;
@@ -137,7 +135,8 @@ module.exports = function (grunt) {
     }
 
     var options = grunt.option.keys();
-    var direction = options.push ? "push" : options.pull ? pull : false;
+    var direction = options.includes("push") ? "push" : options.includes("pull") ? "pull" : false;
+    
     sync(config, direction).then(done);
   });
 };
