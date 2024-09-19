@@ -2,6 +2,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title><%= project.title %> : NPR</title>
+<meta name="description" content="<%= project.description %>">
+<link rel="canonical" href="<%= project.url %>" />
 
 <!-- Favicon -->
 <link rel="apple-touch-icon" sizes="180x180" href="https://media.npr.org/templates/favicon/favicon-180x180.png" />
@@ -28,7 +30,7 @@
 <!-- Social sharing meta -->
 <meta property="og:type" content="article">
 <meta property="og:title" content="<%= project.title %>">
-<meta property="og:site_name" content="NPR Visuals">
+<meta property="og:site_name" content="NPR">
 <meta property="og:url" content="<%= project.url %>">
 <meta property="og:image" content="<%= project.url + project.image %>">
 <meta property="og:description" content="<%= project.description %>">
