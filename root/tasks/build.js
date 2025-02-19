@@ -33,6 +33,16 @@ module.exports = function(grunt) {
   //expose this for other tasks to use
   grunt.template.process = process;
 
+  grunt.template.style = function(hash) {
+    var styles = [];
+    for (var k in hash) {
+      if (hash[k]) {
+        styles.push([k, hash[k]].join(": "));
+      }
+    }
+    return styles.join("; ");
+  };
+
   grunt.template.formatNumber = function(s) {
     s = s + "";
     var start = s.indexOf(".");
