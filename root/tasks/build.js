@@ -33,6 +33,7 @@ module.exports = function(grunt) {
   //expose this for other tasks to use
   grunt.template.process = process;
 
+  // accepts an object of css key pairs and concatenates them inline
   grunt.template.style = function(hash) {
     var styles = [];
     for (var k in hash) {
