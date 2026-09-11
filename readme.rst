@@ -21,6 +21,7 @@ application architecture. Out of the box, it provides:
   - Automatic ArchieML parsing from text
 
 - Deployment and asset synchronization with S3
+- Preset support for adding code or components via NPM modules
 
 *Executive summary:* Provides everything you need to start building a
 news app or interactive graphic.
@@ -274,6 +275,90 @@ Note that both the LESS and JS bundle tasks are designed to be easily
 extensible: if you need to output multiple bundles for separate pages (such as
 a primary page and a secondary embedded widget), you can add new seeds to
 these files relatively easily, and then share code between both bundles.
+
+Presets
+-------
+
+Presets are a way to layer shared code into a project without that code
+living in this repo. This is useful for organization-specific code that you want
+to be able to quickly, repeatably incorporate into new projects: E.g. Standard header
+or footer code, analytics, etc.
+
+Presets get added to a new project when ``grunt-init`` creates it. Once the project is created and the preset has been added, it's just like any other code in the project and can be modified or deleted. This way we can have presets that add common elements that may still need configuration on a per-project basis.
+
+Writing a preset
+----------------
+
+A preset is a folder. The only required element is a package.json, though that won't do much for you on its own. Presets can also contain an index.js file with hooks into various project files and/or an ``src/`` folder.::
+
+    preset_name/
+      package.json  <- required: {"name": "preset_name"} is all it needs
+      index.js      <- hooks (see below)
+      src/
+        css/_someCSS.less
+        partials/_anHTMLpartial.html
+
+``<preset>/src/`` gets copied into the project's ``src/`` directory as is. This is useful for page templates, partials, LESS code, etc. Any files the project needs a copy of.
+
+``<preset>/index.js`` has named functions that get rendered into the ``<%= t.presets(name) %>`` sites in the project's files. These should return a string. You can return strings with template syntax to compose your partials into the rest of the project.::
+
+    exports.site_name = function() {
+        return '<%= t.include("partials/_anHTMLpartial.html" %>'
+    }
+
+The default sites you can reach are:
+
+- ``head``: At the end of index.html's ``<head>`` tag.
+- ``header``: At the beginning of index.html's ``<body>`` tag.
+- ``footer``: At the end of index.html's ``<body>`` tag.
+- ``styles``: At the end of ``seed.less``.
+- ``client``: At the end of ``main.js``.
+
+You can add more sites in this template by adding ``<%= t.presets("site_name") %>`` in any file in ``src/`` and its corresponding function in index.js::
+
+    exports.site_name = function() {
+      return 'String to be rendered.'
+    }
+
+Multiple presets
+----------------
+
+More than one preset can contribute to the project creation.
+
+For hooks, these will compose, rendering each preset's content for that hook and joining the results, in the order the presets were listed when the project was created.
+
+For files, two presets attempting to copy the same file will clash, and the last one listed will win. This should be reported by a Terminal message if it occurs.
+
+Installing presets
+------------------
+
+``grunt-init`` asks which presets to install. Answer ``none`` to install no presets.
+
+The recommended way to organize your presets is to keep all the presets in one repo, each in its own folder::
+
+    interactive-template-presets/
+      package.json    <- overall name and version, for npm
+      preset1/
+      preset2/
+      preset3/
+
+and name that repo in ``~/.grunt-init/interactive-template-defaults.json``::
+
+    {
+      "presetsRepo": "git@github:example/interactive-template-presets.git",
+      "presets": "preset1","preset2"
+    }
+
+If you set the "presets" key, as in the example, these will be included as the default answer when creating a new project (you can override this by typing other presets or ``none``).
+
+Note that the ``interactive-template-defaults.json`` file goes next to the ``interactive`` directory, not inside it.
+
+When creating a project with a presets repo, the repo is fetched into a temp directory, the relevant information copied into the project, and then the temp directory deleted. Nothing is added to ``node_modules`` or ``package.json`` so the project doesn't need access to this later at build time.
+
+If ``presetsRepo`` is not set, you can still add presets during the grunt-init step in any format that npm can install -- a package, a git URL or a local path for example. If you're pointing at a repo, it can only contain one preset, and it should be at the root. Pointing at a local folder looks like ``"file:../path/to/directory"`` and is relative to the directory you're running grunt-init in (or you can use an absolute path).
+
+You can also point the config file's ``presetsRepo`` at a local folder, which should be structured like the repo example above. This can be useful for local development.
+
 
 Publishing your work
 --------------------

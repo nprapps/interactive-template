@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 
       var seed = grunt.file.read(src);
 
-      var o = Object.assign({}, options, { filename: seed });
+      var o = Object.assign({}, options, { filename: src });
 
       less.render(seed, o, function(err, result) {
         if (err) {

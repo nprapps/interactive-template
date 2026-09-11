@@ -3,8 +3,12 @@
   <head>
     <%= t.include("partials/_head.html", grunt.data.json) %>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <%= t.presets("head") %>
   </head>
   <body>
+    <%= t.presets("header") %>
+
+    <%= t.presets("footer") %>
 
     <script>
         window.PROJECT_ANALYTICS = <%= JSON.stringify(json.project.analytics || {}) %>;
