@@ -2,12 +2,25 @@
 
 Batch-adds a set of default issues in the GitHub repo, reading from tasks/issues.csv
 
-You will need to have a personal access token set up for your account:
+Underlying spreadsheet for the CSV of default issues:
+https://docs.google.com/spreadsheets/d/15RxPFHe4CMXMDYuPR2jkvGnbj3w3T5PhPD7BBYb3sgs/edit?gid=0#gid=0
+
+You will need to have a fine-grained personal access token set up for your account:
 https://github.com/settings/tokens
 
-and your creds stored as environment variables:
+- Repository access:
+  Specify the repos this token needs access to. Scope it to just the repo(s) you 
+  currently need to update (you can update it later).
+
+- Repository permissions:
+  - READ access to code and metadata
+  - READ and WRITE access to issues
+
+Add the token and your username to your .zshrc (or equivalent) as environment variables:
 export GITHUB_PERSONAL_TOKEN="__TOKEN__"
 export GITHUB_USER="__GITHUB_USERNAME__"
+
+Run this task with `grunt issues`
 
 */
 
