@@ -1,35 +1,34 @@
 title,body,labels
-Update publication dates,"Check footer, other locations in the document",Launch TODO
-Project credits,,Launch TODO
-Change LICENSE to MIT if open sourcing,By default things are copyright NPR,Launch TODO
-Analytics config,"- [ ] Standard events for completion and click interaction
-- [ ] Dimensions set in the project.json file--steal the primary topic, topic ID, and secondary topic IDs from related stories.
-- [ ] Document any custom events in the README",Launch TODO
-Verify page title tags are good,,Launch TODO
-Optimize images,,Launch TODO
-Determine what the publish URL will be,"Workshop w/ the engagement team. Sort this out before requesting redirects.",Launch TODO
-Create Seamus stub/shell page and request redirects,"- [ ] Create page on live Seamus
-- [ ] Make sure publish URLs are finalized
-- [ ] Publish on staging (one day later, after DB syncs to stage)
-- [ ] Publish on live
-- [ ] Request redirects for staging and live
-- [ ] Test redirects on staging
-- [ ] Post-launch, ask sysadmins to remove any unneded redirects
-- [ ] Note the Seamus ID, published URL and other relevant info in the [spreadsheet](https://docs.google.com/spreadsheets/d/1JuukYVK54wwYQiDedX-c-YMOc41fz-vEMrqCyiMpW2E/edit#gid=0)
-https://github.com/nprapps/workinprivate/blob/master/shell_pages.md",Launch TODO
-Add promo images and text to Seamus stub/shell page,This is especially important if the page will also be syndicated to stations. Make sure there is a prominent link to the published project URL.,Launch TODO
-Setup retrospective review with editor,What did we learn? How do we do better next time?,Post-launch
-Schedule iteration reviews,,Project Management
-Schedule sprint planning meetings,,Project Management
-Schedule sprint retrospectives,,Project Management
-Let the copy desk know an app is coming,,Project Management
-Copy edit,,Launch TODO
-Email media relations re: press releases,,Launch TODO
-Email comms re: promoting the project in Nipper News,,Launch TODO
+Set cadence for project team collaboration,"- [ ] Set up project Slack channel
+- [ ] Regular check-ins (during densest period of work, this might be twice a week, perhaps with Slack check-ins in between)
+- [ ] At least one stakeholder review meeting
+- [ ] Optional: Set up project board in GitHub. Grant access to other members of the project team, or at least refer to it in regular project team check-ins.
+- [ ] Optional: Link Slack channel to the project repo",Project Management
+"Let the copy desk, engagement team and other newsroom stakeholders know an app is coming",Copyedit typically likes at least a week to go through everything,Project Management
+"Final reviews with standards, legal, editorial review and copyedit","- [ ] Standards (if necessary)
+- [ ] Legal (if necessary)
+- [ ] Editorial Review
+- [ ] Copyedit",Project Management
+Distribute launch plan/toolkit,"Let stakeholders, engagement, social media, etc know what the launch schedule is and where key assets can be found",Project Management
 Alert stations about project,Specifically send a heads-up to stations with local interest. Determine if the stub page also will be syndicated/communicated to stations.,Project Management
-Draft promo language for social media with engagement team,Includes Facebook and Twitter,Launch TODO
-"Social metadata and images (for Twitter, Facebook)","Images should have an aspect ratio of 1.91:1 and be a minimum of 1200 x 630. Verify with debuggers: https://developers.facebook.com/tools/debug/ and https://dev.twitter.com/docs/cards/validation/validator",Launch TODO
-Distribute launch timeline,"Let stakeholders, engagement, social media, etc know what the launch schedule is",Project Management
+Check in with NPM about sponsorship,"- [ ] Confirm ad positions
+- [ ] Code review (if necessary)",Project Management
+Check in with Product about Piano,"- [ ] Confirm Piano slots (usually some combination of modal, ribbon and inline)
+- [ ] Coordinate prompt language and strategy
+- [ ] Test that everything is working on stage",Project Management
+User testing,"- [ ] Write testing plan (what kind of feedback do we want from users?)
+- [ ] Recruit testers around the organization
+- [ ] Run tests
+- [ ] Summarize findings and review with the project team",
+Accessibility testing,"Works in screen reader, does not violate WCAG 2.1. Also check against Lighthouse.",Launch TODO
+Analytics config,"- [ ] Standard events for completion and click interaction
+- [ ] Dimensions set in the project.json file--steal the primary topic, topic ID, and secondary topic IDs from related stories using the GA debugger extension for Chrome.
+- [ ] Document any custom events in the README",Launch TODO
+Optimize images,There are some code snippets in the [best practices repo](https://github.com/nprapps/bestpractices/blob/master/assets.md) for optimizing images and videos. Remember to take a look at ai2html-generated images — those can be huge.,Launch TODO
+Strategize promo language and visual assets for social media with engagement team,"Includes Facebook, Twitter, Instagram and other distribution channels",Launch TODO
+"Social metadata and images (for Twitter, Facebook)",Images should have an aspect ratio of 1.91:1 and be a minimum of 1200 x 630. Verify with debuggers: https://developers.facebook.com/tools/debug/ and on twitter by using the tweet composer (the debugger no longer exists). Note: sometimes the image on twitter won't work immidiately after publication. Recheck until you see it. ,Launch TODO
+Verify page title tags are good,Make sure that the page title tag is populating with either the story headline or a specially-designated SEO title,Launch TODO
+Automated performance tests,Lighthouse (accessibility and performance),Launch TODO
 Browser testing,"- [ ] Edge 
 - [ ] Chrome (OS X)
 - [ ] Chrome (Android) 
@@ -39,12 +38,26 @@ Browser testing,"- [ ] Edge
 - [ ] Firefox (Windows)
 - [ ] Safari (iOS)
 - [ ] Safari (iOS, in-app)
-- [ ] NPR One (iOS/Android, in-app)",
-Automated performance tests,Lighthouse (accessibility and performance),
-Accessibility testing,"Works in screen reader, does not violate WCAG 2.1",
-Test any embedded elements in Dark Mode,Relevant to the mobile apps,
-Update master sitemaps index and redeploy,Instructions and a script for generating/publishing the sitemap are checked into workinprivate (`generate_sitemap.sh`).,Post-launch
+- [ ] NPR One (iOS/Android, in-app)
+
+How to test in-app browsers: Send the staging link to yourself in a private message either in Facebook or Twitter on your phone. Click the link and test if the project behaves any differently in the app's browser vs. your phone's default browser.",Launch TODO
+Finalize project credits and bylines,Double-check that everyone is accounted for and credited appropriately,Launch TODO
+Update publication dates and footer copyright year,"Check title screen, footer, and any other places with dates",Launch TODO
+Determine what the publish URL will be,Workshop w/ the engagement team. Sort this out before requesting redirects.,Launch TODO
+Create Grove stub/shell page and request redirects,"- [ ] Create page on Grove
+- [ ] Make sure publish URLs are finalized
+- [ ] Request redirects [More info here](https://github.com/nprapps/workinprivate/blob/master/shell_pages.md)
+- [ ] Note the story ID, published URL and other relevant info in the [spreadsheet](https://docs.google.com/spreadsheets/d/1JuukYVK54wwYQiDedX-c-YMOc41fz-vEMrqCyiMpW2E/edit#gid=0)",Launch TODO
+Add promo images and text to Grove stub/shell page,This page is useful both for homepage promotion and for station syndication. Make sure there is a prominent link to the published project URL in the story text.,Launch TODO
+Publish the project to prod,"- [ ] Change `production` from `false` to `true` in project.json 
+- [ ] Publish project to apps.npr.org by running something like `grunt sync:live docs sheets publish:live`. You may not need all of these commands. ",Launch TODO
+Verify analytics are working correctly on prod,,Launch TODO
+Email comms re: promoting the project in Nipper News,,Launch TODO
+Email media relations,,Launch TODO
 Add project to team projects list,Update https://github.com/nprapps/nprapps.github.com/blob/master/_data/apps.yml,Post-launch
-Write the team blog post,,Post-launch
-Analytics report,Collect and study data one week after launch,
-Backport new features into the interactive template,,Launch TODO
+Backport new features into the interactive template,,Post-launch
+Analytics report,Collect and study data one week after launch,Post-launch
+Change LICENSE to MIT if open sourcing,By default things are copyright NPR,Post-launch
+Setup retrospective review with editor,What did we learn? How do we do better next time?,Post-launch
+Update master sitemaps index and redeploy,Instructions and a script for generating/publishing the sitemap are checked into workinprivate (`generate_sitemap.sh`).,Post-launch
+Write the team blog post,How did this project come together? Are there any particular learnings that others (or future us) would find useful?,Post-launch
